@@ -25,7 +25,9 @@ function edge(base: number, amp: number, wavelength: number, phase: number, seed
   const pts: [number, number][] = [];
   const k = (2 * Math.PI) / wavelength;
   const r = 0.82;
-  for (let s = -Math.PI * 2; s <= W * k + Math.PI * 2; s += 0.08) {
+  // Sample across the whole sheet whatever the phase, so every band's edge
+  // starts left of x=0 and its fill never closes with a ruled line.
+  for (let s = (-40 - phase) * k - Math.PI * 2; s <= (W + 40 - phase) * k + Math.PI * 2; s += 0.08) {
     const x = (s - r * Math.sin(s)) / k + phase;
     // A slow swell modulates each crest so no two repeat exactly.
     const swell = 0.62 + 0.38 * Math.sin(x / 150 + seed * 1.9) * Math.sin(x / 61 + seed);
