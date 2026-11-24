@@ -54,7 +54,7 @@ export function PlateTile({
       <dl className="mt-5 ml-[2.35rem] grid gap-x-3 gap-y-1.5" style={{ gridTemplateColumns: `repeat(${palette.size}, minmax(0,1fr))` }}>
         {palette.colors.map((c) => (
           <div key={c.id} className="min-w-0">
-            <dt className="line-clamp-2 text-[0.78rem] leading-snug [overflow-wrap:anywhere] text-balance">{c.name}</dt>
+            <dt className="line-clamp-3 text-[0.78rem] leading-snug [overflow-wrap:break-word] text-balance hyphens-auto" title={c.name}>{c.name}</dt>
             <dd className="font-data-narrow text-xs text-sumi-soft uppercase">{c.hex}</dd>
           </div>
         ))}

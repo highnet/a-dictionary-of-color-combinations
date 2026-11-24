@@ -21,13 +21,15 @@ function luminance(hex: string) {
 }
 
 /** Trochoid edge: x = s − r·sin(s), y = −r·cos(s) gives cusped crests. */
-function edge(base: number, amp: number, wavelength: number, phase: number) {
+function edge(base: number, amp: number, wavelength: number, phase: number, seed = 0) {
   const pts: [number, number][] = [];
   const k = (2 * Math.PI) / wavelength;
   const r = 0.82;
   for (let s = -Math.PI * 2; s <= W * k + Math.PI * 2; s += 0.08) {
     const x = (s - r * Math.sin(s)) / k + phase;
-    const y = base - amp * Math.cos(s) * 0.5 - amp * 0.5;
+    // A slow swell modulates each crest so no two repeat exactly.
+    const swell = 0.62 + 0.38 * Math.sin(x / 150 + seed * 1.9) * Math.sin(x / 61 + seed);
+    const y = base - amp * swell * (Math.cos(s) * 0.5 + 0.5);
     if (x >= -20 && x <= W + 20) pts.push([x, y]);
   }
   return pts;
@@ -59,7 +61,7 @@ export function WavePrint({ colors, className = "" }: { colors: string[]; classN
       hex,
       base,
       amp,
-      pts: edge(base, amp, 230 - i * 18, i * 57),
+      pts: edge(base, amp, 210 - i * 22 + (i % 2) * 37, i * 83, i + 1),
       dark: luminance(hex) < 0.05,
     };
   });
@@ -79,26 +81,27 @@ export function WavePrint({ colors, className = "" }: { colors: string[]; classN
           <path d={keyLine(b.pts, b.base, b.amp, 2.4 + i * 0.5)} fill={b.dark ? PAPER : INK} />
         </g>
       ))}
-      {/* Hooked lip over the front crest. */}
+      {/* The front crest curls forward into a lip: a filled hook in the band's own
+          colour, cut by the same key-line, with washi claws breaking off its edge. */}
       <path
-        d={`M${cx - 6},${cy + 3} C${cx + 24},${cy - 32} ${cx + 72},${cy - 20} ${cx + 68},${cy + 12} C${cx + 64},${cy + 32} ${cx + 40},${cy + 28} ${cx + 44},${cy + 13} C${cx + 48},${cy + 4} ${cx + 57},${cy + 8} ${cx + 55},${cy + 17}`}
-        fill="none"
+        d={`M${cx - 34},${cy + 26} C${cx - 18},${cy - 18} ${cx + 22},${cy - 46} ${cx + 62},${cy - 34} C${cx + 92},${cy - 24} ${cx + 96},${cy + 6} ${cx + 78},${cy + 18} C${cx + 64},${cy + 26} ${cx + 50},${cy + 14} ${cx + 58},${cy + 4} C${cx + 64},${cy - 4} ${cx + 52},${cy - 14} ${cx + 38},${cy - 8} C${cx + 18},${cy + 2} ${cx + 6},${cy + 20} ${cx + 2},${cy + 34} Z`}
+        fill={front.hex}
         stroke={lip}
-        strokeWidth="4.2"
-        strokeLinecap="round"
+        strokeWidth="3.2"
+        strokeLinejoin="round"
       />
-      {/* Foam: a tier of washi dots thrown off the crest. */}
-      {Array.from({ length: 11 }, (_, i) => {
-        const a = (i / 10) * Math.PI * 0.9 + 0.2;
+      {Array.from({ length: 9 }, (_, i) => {
+        const t = i / 8;
+        const x = cx + 58 + Math.cos(-1.2 + t * 2.3) * (40 + (i % 2) * 7);
+        const y = cy - 6 + Math.sin(-1.2 + t * 2.3) * (34 + (i % 3) * 5);
+        const r = 4.6 - (i % 3) * 1.1;
         return (
-          <circle
+          <path
             key={i}
-            cx={cx + 30 + Math.cos(a) * (48 + (i % 2) * 10)}
-            cy={cy - 8 - Math.sin(a) * (30 + (i % 3) * 7)}
-            r={3.4 - (i % 3) * 0.8}
+            d={`M${x - r},${y} Q${x - r * 0.2},${y - r * 1.6} ${x + r},${y - r * 0.4} Q${x + r * 0.4},${y + r * 0.9} ${x - r},${y} Z`}
             fill={PAPER}
-            stroke={INK}
-            strokeWidth="1"
+            stroke={lip}
+            strokeWidth="0.9"
           />
         );
       })}

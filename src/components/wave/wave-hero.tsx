@@ -349,9 +349,9 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
           {current.colors.map((c) => (
             <li key={c.hex + c.name} className="flex items-center gap-2.5">
               <span className="size-4 shrink-0 ring-1 ring-sumi/15" style={{ backgroundColor: c.hex }} aria-hidden="true" />
-              <span className="sr-only text-[0.8rem] leading-tight sm:not-sr-only">
-                {c.name}
-                <span className="ml-2 hidden font-data text-xs text-sumi-soft uppercase sm:inline">{c.hex}</span>
+              <span className="text-[0.8rem] leading-tight">
+                <span className="sr-only sm:not-sr-only">{c.name}</span>
+                <span className="font-data text-xs text-sumi-soft uppercase sm:ml-2">{c.hex}</span>
               </span>
             </li>
           ))}
