@@ -12,7 +12,7 @@ export function wavePosterSvg(aspect: number, t = 7.6) {
   const W = l.W;
   // stage → svg (viewBox in stage units, y flipped)
   const P = (p: V2) => `${(p[0] - l.L).toFixed(3)},${(5 - p[1]).toFixed(3)}`;
-  const { main, small } = tongues(l);
+  const { main, small, front } = tongues(l);
   const tongue = (spec: typeof main) => {
     const r = ribbon(spec, s, 120);
     return `M${r.outer.map(P).join("L")}L${[...r.inner].reverse().map(P).join("L")}Z`;
@@ -33,6 +33,7 @@ export function wavePosterSvg(aspect: number, t = 7.6) {
 <g clip-path="url(#above-${Math.round(aspect * 1000)})">
 <path d="${tongue(main)}" fill="${INKS.body.hex}" stroke="${INKS.ink.hex}" stroke-width="${sw * 1.4}" stroke-linejoin="round"/>
 <path d="${tongue(small)}" fill="${INKS.body.hex}" stroke="${INKS.ink.hex}" stroke-width="${sw * 1.2}" stroke-linejoin="round"/>
+<path d="${tongue(front)}" fill="${INKS.body.hex}" stroke="${INKS.ink.hex}" stroke-width="${sw * 1.2}" stroke-linejoin="round"/>
 </g>
 </svg>`;
 }

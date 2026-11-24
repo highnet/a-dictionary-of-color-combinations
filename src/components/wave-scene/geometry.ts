@@ -42,14 +42,14 @@ export interface TongueSpec {
 }
 
 /** The great wave and the small foreground wave, placed for this layout. */
-export function tongues(l: Layout): { main: TongueSpec; small: TongueSpec } {
+export function tongues(l: Layout): { main: TongueSpec; small: TongueSpec; front: TongueSpec } {
   return {
     main: {
       base: [l.O - 0.6, l.sea - 0.9],
-      crest: [l.crestX, 2.95],
+      crest: [l.crestX, 2.5],
       reach: 0.21 * l.C,
-      rise: 1.7,
-      width: 5.6,
+      rise: 2.1,
+      width: 6.4,
       lip: 1.15,
     },
     small: {
@@ -59,6 +59,15 @@ export function tongues(l: Layout): { main: TongueSpec; small: TongueSpec } {
       rise: 0.5,
       width: 2.6,
       lip: 0.38,
+    },
+    // The wave in front of the great wave's root, as in the print.
+    front: {
+      base: [l.O - 0.9, l.sea - 0.7],
+      crest: [l.O + 0.17 * l.C, -1.05],
+      reach: 0.1 * l.C,
+      rise: 0.75,
+      width: 3.2,
+      lip: 0.5,
     },
   };
 }
@@ -73,7 +82,7 @@ export function spine(spec: TongueSpec, s: WaveState, n: number): V2[] {
   const c = s.curl;
   const crestY = spec.crest[1] - spec.rise * (1 - sw);
   const P0 = spec.base;
-  const P1: V2 = [spec.crest[0], crestY];
+  const P1: V2 = [spec.crest[0] + spec.reach * 0.22 * c, crestY];
   const dx = spec.crest[0] - spec.base[0];
   const tip: V2 = [P1[0] + spec.reach * (0.82 + 0.28 * c), crestY - spec.rise * 0.32 - 1.85 * c * (spec.reach / 2.6)];
   // Shared tangent at the crest (G1): rising into the lip as it curls.
@@ -122,7 +131,14 @@ export function frames(p: V2[]) {
 
 /** Outer (spine) and inner edges of a tongue ribbon. */
 export function ribbon(spec: TongueSpec, s: WaveState, n: number) {
-  const outer = spine(spec, s, n);
+  const raw = spine(spec, s, n);
+  // Undulations travel up the body toward the lip.
+  const f0 = frames(raw);
+  const outer: V2[] = raw.map((p, i) => {
+    const t = i / (n - 1);
+    const a = 0.09 * spec.lip * Math.sin(t * 14 - s.phase * Math.PI * 2 * 3) * Math.sin(Math.PI * t);
+    return [p[0] + f0.nor[i][0] * a, p[1] + f0.nor[i][1] * a];
+  });
   const { tan, nor } = frames(outer);
   const inner: V2[] = outer.map((p, i) => {
     const w = tongueWidth(spec, i / (n - 1));

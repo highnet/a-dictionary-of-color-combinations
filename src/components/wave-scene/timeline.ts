@@ -3,9 +3,9 @@
  * single composition and loops with no visible reset (all curves are smooth
  * and periodic in φ).
  *
- *  0–3 s gathering · 3–6 s curling · 6–9 s breaking · 9–13 s receding
+ *  9 s: gathering · curling · breaking · receding
  */
-export const CYCLE = 13;
+export const CYCLE = 9;
 
 export interface WaveState {
   phase: number; // 0..1 through the cycle
@@ -28,9 +28,9 @@ function bump(phi: number, c: number, w: number) {
 export function stateAt(t: number, offset = 0): WaveState {
   const phase = (((t / CYCLE + offset) % 1) + 1) % 1;
   // Swell: gathers through the first half, holds, recedes. Never fully flat.
-  const swell = 0.62 + 0.38 * (0.5 - 0.5 * Math.cos(TAU * (phase - 0.12)));
+  const swell = 0.42 + 0.58 * (0.5 - 0.5 * Math.cos(TAU * (phase - 0.12)));
   // Curl lags the swell; it always keeps a hook so the print stays recognisable.
-  const curl = 0.3 + 0.7 * bump(phase, 0.58, 0.42);
+  const curl = 0.15 + 0.85 * bump(phase, 0.58, 0.45);
   const turbulence = bump(phase, 0.62, 0.22);
   const foam = 0.35 + 0.65 * bump(phase, 0.55, 0.4);
   return { phase, swell, curl, turbulence, foam };

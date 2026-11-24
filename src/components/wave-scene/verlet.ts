@@ -180,7 +180,7 @@ export class Foam {
             vx: vx * 0.6 + (this.rand() - 0.3) * 0.7,
             vy: vy * 0.6 + this.rand() * 0.6,
             life: 1,
-            size: 0.022 + this.rand() * 0.03,
+            size: 0.016 + this.rand() * 0.022,
             spin: this.rand(),
           });
         }
@@ -191,7 +191,7 @@ export class Foam {
       d.vx *= Math.exp(-0.8 * dt);
       d.x += d.vx * dt;
       d.y += d.vy * dt;
-      d.life -= dt / (1.2 + d.spin * 0.8);
+      d.life -= dt / (0.5 + d.spin * 0.5);
     }
     this.drops = this.drops.filter((d) => d.life > 0);
   }

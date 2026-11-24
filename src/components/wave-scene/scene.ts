@@ -65,15 +65,15 @@ void main() {
   float fv = max(fwidth(v), 1e-5);
   vec3 c = uBody;
   // Lighter water toward the hollow, its boundary rippling with the crest.
-  float b = 0.6 + 0.05 * sin(t * 38.0 - uTime * 0.9);
+  float b = 0.6 + 0.06 * sin(t * 30.0 - uTime * 2.6);
   float inner = smoothstep(b - fv, b + fv, v);
   c = mix(c, uMid, inner);
   // Engraved lines following the form, finer toward the outer edge.
-  float L = pow(v, 0.75) * 24.0 + 0.55 * sin(t * 26.0 - uTime * 0.7);
+  float L = pow(v, 0.75) * 24.0 + 0.6 * sin(t * 22.0 - uTime * 2.4) + 0.25 * sin(t * 61.0 - uTime * 3.7);
   float ln = lines(L, 0.45) * smoothstep(0.03, 0.12, v) * smoothstep(1.0, 0.9, v);
   c = mix(c, mix(uPale, uBody, inner), ln * 0.9);
   // Foam rim along the crest and lip, its underside scalloped.
-  float fz = (0.06 + 0.13 * uFoam) * smoothstep(0.3, 0.56, t) * (0.6 + 0.4 * abs(sin(t * 120.0 + 0.5 * uTime)));
+  float fz = (0.06 + 0.13 * uFoam) * smoothstep(0.3, 0.56, t) * (0.6 + 0.4 * abs(sin(t * 120.0 - 3.2 * uTime)));
   float foam = 1.0 - smoothstep(fz - fv, fz + fv, v);
   c = mix(c, uFoamC, foam);
   float fl = (1.0 - smoothstep(0.35, 1.15, abs(v - fz) / fv)) * step(0.004, fz);
@@ -318,6 +318,7 @@ export function createStage(canvas: HTMLCanvasElement, startTime = 0): WaveStage
     waves = [
       { spec: specs.main, offset: 0, sizeScale: 1, roots: [0.52, 0.58, 0.64, 0.7, 0.75, 0.8, 0.85, 0.89, 0.93, 0.965] },
       { spec: specs.small, offset: 0.37, sizeScale: 0.42, roots: [0.6, 0.72, 0.82, 0.91] },
+      { spec: specs.front, offset: 0.18, sizeScale: 0.55, roots: [0.58, 0.68, 0.77, 0.85, 0.92] },
     ].map(({ spec, offset, sizeScale, roots }) => {
       const geo = track(stripGeometry(TONGUE_N));
       const m = track(mat(TONGUE_FRAG, { ...shared, uFoam: { value: 0.5 } }));
@@ -377,17 +378,18 @@ export function createStage(canvas: HTMLCanvasElement, startTime = 0): WaveStage
         const x0 = l.O + fx * l.C;
         return { group, x0, y: seaY(l, stateAt(t), x0, t), vy: 0, rot: 0, scale: s, phase: ph };
       });
-    // Order: sea, great wave, boats, small wave, foam, droplets, grain.
-    const [mainMesh, smallMesh] = scene.children.slice(-2);
-    scene.remove(smallMesh);
+    // Order: sea, great wave, boats, then the small and front waves, foam, droplets, grain.
+    const [, smallMesh, frontMesh] = scene.children.slice(-3);
+    scene.remove(smallMesh, frontMesh);
+    // No renderOrder on the groups themselves: three.js would then sort the
+    // whole subtree by the group's order ahead of everything else.
     for (const b of boats) {
-      b.group.renderOrder = order++;
       b.group.children.forEach((c) => (c.renderOrder = order++));
       scene.add(b.group);
     }
     smallMesh.renderOrder = order++;
-    scene.add(smallMesh);
-    void mainMesh;
+    frontMesh.renderOrder = order++;
+    scene.add(smallMesh, frontMesh);
 
     const foamMat = track(mat(FOAM_FRAG, shared));
     for (const w of waves) add(new THREE.Mesh(w.foamGeo, foamMat));
