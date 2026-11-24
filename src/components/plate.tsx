@@ -37,7 +37,7 @@ export function PlateTile({
     );
   }
   return (
-    <article className="plate-tile group relative">
+    <article className="plate-tile group relative @container">
       <Link href={href} className="block focus-visible:outline-offset-4" aria-label={`Combination ${palette.code}: ${names}`}>
         <div className="flex gap-3">
           <span className="cartouche self-start text-[0.8rem]" aria-hidden="true">
@@ -54,7 +54,14 @@ export function PlateTile({
       <dl className="mt-5 ml-[2.35rem] grid gap-x-3 gap-y-1.5" style={{ gridTemplateColumns: `repeat(${palette.size}, minmax(0,1fr))` }}>
         {palette.colors.map((c) => (
           <div key={c.id} className="min-w-0">
-            <dt className="line-clamp-3 text-[0.78rem] leading-snug [overflow-wrap:break-word] text-balance hyphens-auto" title={c.name}>{c.name}</dt>
+            <dt
+              title={c.name}
+              className={`line-clamp-3 text-[0.78rem] leading-snug text-balance ${
+                palette.size === 4 ? "@max-[24rem]:sr-only" : palette.size === 3 ? "@max-[17rem]:sr-only" : ""
+              }`}
+            >
+              {c.name}
+            </dt>
             <dd className="font-data-narrow text-xs text-sumi-soft uppercase">{c.hex}</dd>
           </div>
         ))}

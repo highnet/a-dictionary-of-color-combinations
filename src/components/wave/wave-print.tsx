@@ -71,6 +71,12 @@ export function WavePrint({ colors, className = "" }: { colors: string[]; classN
     .filter(([x]) => x > 140 && x < W - 160)
     .reduce((a, b) => (b[1] < a[1] ? b : a));
   const lip = front.dark ? PAPER : INK;
+  // Back slope of the front crest, taken from the band's own edge.
+  const slope = front.pts.filter(([x]) => x >= cx - 90 && x <= cx);
+  const slopePath = slope.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join("");
+  const curl = `C${cx + 30},${cy - 46} ${cx + 84},${cy - 40} ${cx + 92},${cy - 8} C${cx + 98},${cy + 16} ${cx + 72},${cy + 26} ${cx + 60},${cy + 12} C${cx + 52},${cy + 2} ${cx + 62},${cy - 8} ${cx + 70},${cy - 2}`;
+  const lipLine = `${slopePath}${curl}`;
+  const lipBody = `${slopePath}${curl}C${cx + 50},${cy + 8} ${cx + 40},${cy + 30} ${cx + 34},${cy + 70}L${cx - 90},${cy + 70}Z`;
 
   return (
     <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMax slice" className={className} aria-hidden="true">
@@ -81,15 +87,11 @@ export function WavePrint({ colors, className = "" }: { colors: string[]; classN
           <path d={keyLine(b.pts, b.base, b.amp, 2.4 + i * 0.5)} fill={b.dark ? PAPER : INK} />
         </g>
       ))}
-      {/* The front crest curls forward into a lip: a filled hook in the band's own
-          colour, cut by the same key-line, with washi claws breaking off its edge. */}
-      <path
-        d={`M${cx - 34},${cy + 26} C${cx - 18},${cy - 18} ${cx + 22},${cy - 46} ${cx + 62},${cy - 34} C${cx + 92},${cy - 24} ${cx + 96},${cy + 6} ${cx + 78},${cy + 18} C${cx + 64},${cy + 26} ${cx + 50},${cy + 14} ${cx + 58},${cy + 4} C${cx + 64},${cy - 4} ${cx + 52},${cy - 14} ${cx + 38},${cy - 8} C${cx + 18},${cy + 2} ${cx + 6},${cy + 20} ${cx + 2},${cy + 34} Z`}
-        fill={front.hex}
-        stroke={lip}
-        strokeWidth="3.2"
-        strokeLinejoin="round"
-      />
+      {/* The front swell's own crest curls forward: one filled shape that rises out
+          of the band's back slope (same colour, so there is no seam), keyed only
+          along its outer contour, with washi claws breaking off its edge. */}
+      <path d={`${lipBody}`} fill={front.hex} />
+      <path d={lipLine} fill="none" stroke={lip} strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
       {Array.from({ length: 9 }, (_, i) => {
         const t = i / 8;
         const x = cx + 58 + Math.cos(-1.2 + t * 2.3) * (40 + (i % 2) * 7);

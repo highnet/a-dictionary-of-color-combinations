@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-24T17:22:30Z",
+  "generatedAt": "2026-11-24T18:22:43Z",
   "title": "Design System: A Dictionary of Color Combinations",
   "extensions": {
     "colorMeta": {
@@ -94,36 +94,6 @@
           "oklch(0.95 0.002 90)"
         ]
       },
-      "ai": {
-        "role": "secondary",
-        "displayName": "Ai Indigo",
-        "canonical": "oklch(0.255 0.055 258)",
-        "tonalRamp": [
-          "oklch(0.15 0.027 258)",
-          "oklch(0.27 0.035 258)",
-          "oklch(0.39 0.044 258)",
-          "oklch(0.51 0.052 258)",
-          "oklch(0.63 0.049 258)",
-          "oklch(0.75 0.041 258)",
-          "oklch(0.86 0.033 258)",
-          "oklch(0.95 0.027 258)"
-        ]
-      },
-      "ai-soft": {
-        "role": "secondary",
-        "displayName": "Ai Mist",
-        "canonical": "oklch(0.82 0.03 250)",
-        "tonalRamp": [
-          "oklch(0.15 0.015 250)",
-          "oklch(0.27 0.019 250)",
-          "oklch(0.39 0.024 250)",
-          "oklch(0.51 0.028 250)",
-          "oklch(0.63 0.027 250)",
-          "oklch(0.75 0.022 250)",
-          "oklch(0.86 0.018 250)",
-          "oklch(0.95 0.015 250)"
-        ]
-      },
       "rule": {
         "role": "neutral",
         "displayName": "Key-line",
@@ -133,12 +103,32 @@
         "role": "neutral",
         "displayName": "Input Line",
         "canonical": "color-mix(in oklch, var(--sumi) 45%, transparent)"
+      },
+      "sumi-soft-night": {
+        "role": "neutral",
+        "displayName": "Night Faded Sumi",
+        "canonical": "oklch(0.8 0.01 80)",
+        "tonalRamp": [
+          "oklch(0.15 0.005 80)",
+          "oklch(0.27 0.006 80)",
+          "oklch(0.39 0.008 80)",
+          "oklch(0.51 0.009 80)",
+          "oklch(0.63 0.009 80)",
+          "oklch(0.75 0.008 80)",
+          "oklch(0.86 0.006 80)",
+          "oklch(0.95 0.005 80)"
+        ]
+      },
+      "rule-night": {
+        "role": "neutral",
+        "displayName": "Night Key-line",
+        "canonical": "color-mix(in oklch, var(--washi) 24%, transparent)"
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Home title only."
+        "purpose": "Home title only; clamp(2.25rem, 14cqi, 6rem)."
       },
       "headline": {
         "displayName": "Headline",
@@ -162,15 +152,15 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Field labels, controls, captions, credits."
+        "purpose": "Field labels, controls, captions, credits; tile colour names at 0.78rem wrap to three lines."
       },
       "data": {
         "displayName": "Data",
-        "purpose": "Every value: HEX, RGB, CMYK, codes, ranges, counts."
+        "purpose": "Every value: HEX, RGB, CMYK, codes, ranges, counts. 0.75rem (12px) is the text floor."
       },
       "data-narrow": {
         "displayName": "Data Narrow",
-        "purpose": "HEX under tile columns; 75% width, no wrap."
+        "purpose": "HEX under tile columns (.font-data-narrow); 75% width, no wrap."
       },
       "cartouche": {
         "displayName": "Cartouche",
@@ -279,6 +269,22 @@
     "kento": {
       "kagi": "13x13px, 1px right+bottom, offset -8px bottom-right, currentColor 50%",
       "hikitsuke": "22px x 1px, left 10px, bottom -8px, currentColor 50%"
+    },
+    "gradients": [
+      {
+        "name": "hero-bokashi",
+        "value": "plate's first colour, mask linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%) over the top 46%",
+        "purpose": "Printed sky over the hero wave."
+      },
+      {
+        "name": "night-bokashi",
+        "value": "linear-gradient(to bottom, var(--washi), var(--sumi)), 6rem / 8rem from md",
+        "purpose": "Washi grading into sumi at the top of the home night band."
+      }
+    ],
+    "fonts": {
+      "cjkPreload": false,
+      "note": "Mincho and Gothic load via next/font with preload: false so only the used unicode-range slices are fetched."
     }
   },
   "components": [
@@ -288,7 +294,7 @@
       "refersTo": "button-primary",
       "description": "The one filled action: Open the archive.",
       "html": "<a class=\"ds-btn-primary\" href=\"#\">Open the archive <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"ds-arrow\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a>",
-      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:0 24px;background:var(--sumi);color:var(--washi);text-decoration:none;font-family:var(--font-gothic),sans-serif;border-radius:0;transition:background-color .2s;}.ds-btn-primary:hover{background:var(--ai);}.ds-btn-primary .ds-arrow{transition:transform .2s;}.ds-btn-primary:hover .ds-arrow{transform:translateX(4px);}.ds-btn-primary:focus-visible{outline:2px solid var(--sumi);outline-offset:3px;}"
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:0 24px;background:var(--sumi);color:var(--washi);text-decoration:none;font-family:var(--font-gothic),sans-serif;border-radius:0;transition:background-color .2s;}.ds-btn-primary:hover{background:var(--sumi-soft);}.ds-btn-primary .ds-arrow{transition:transform .2s;}.ds-btn-primary:hover .ds-arrow{transform:translateX(4px);}.ds-btn-primary:focus-visible{outline:2px solid var(--sumi);outline-offset:3px;}"
     },
     {
       "name": "Action Button",
@@ -310,23 +316,23 @@
       "name": "Quick Find",
       "kind": "input",
       "refersTo": "search-field",
-      "description": "Number, HEX or colour name; a single sumi underline, Mincho entry, shu caret.",
-      "html": "<form class=\"ds-find\"><label>Number, HEX or colour name</label><div class=\"ds-find-row\"><input placeholder=\"e.g. 7, 295, #d96629\"><button aria-label=\"Find\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button></div></form>",
-      "css": ".ds-find label{display:block;margin-bottom:8px;font:14px var(--font-gothic),sans-serif;color:var(--sumi-soft);}.ds-find-row{display:flex;border-bottom:2px solid var(--sumi);font-size:24px;}.ds-find input{flex:1;min-width:0;padding:10px 0;background:transparent;border:0;outline:none;font:inherit;font-family:var(--font-mincho),serif;color:var(--sumi);caret-color:var(--shu);}.ds-find input::placeholder{color:color-mix(in oklch,currentColor 62%,transparent);}.ds-find button{width:48px;display:grid;place-items:center;background:none;border:0;color:var(--sumi);cursor:pointer;}.ds-find-row:focus-within{outline:2px solid var(--sumi);outline-offset:3px;}"
+      "description": "Number, HEX or colour name; a single sumi underline, Mincho entry, currentColor caret, sumi error with a drawn alert icon.",
+      "html": "<form class=\"ds-find\"><label>Number, HEX or colour name</label><div class=\"ds-find-row\"><input placeholder=\"e.g. 7, 295, #d96629\"><button aria-label=\"Find\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button></div><p class=\"ds-find-err\" role=\"alert\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 8v4M12 16h.01\"/></svg>No combination numbered 400.</p></form>",
+      "css": ".ds-find label{display:block;margin-bottom:8px;font:14px var(--font-gothic),sans-serif;color:var(--sumi-soft);}.ds-find-row{display:flex;border-bottom:2px solid var(--sumi);font-size:24px;}.ds-find input{flex:1;min-width:0;padding:10px 0;background:transparent;border:0;outline:none;font:inherit;font-family:var(--font-mincho),serif;color:var(--sumi);caret-color:currentColor;}.ds-find input::placeholder{color:color-mix(in oklch,currentColor 62%,transparent);}.ds-find button{width:48px;display:grid;place-items:center;background:none;border:0;color:var(--sumi);cursor:pointer;}.ds-find-row:focus-within{outline:2px solid var(--sumi);outline-offset:3px;}.ds-find-err{display:flex;align-items:center;gap:6px;margin-top:8px;font:500 14px var(--font-gothic),sans-serif;color:var(--sumi);}"
     },
     {
       "name": "Plate Tile",
       "kind": "card",
       "refersTo": "cartouche",
-      "description": "One combination as a proof: cartouche, flat field with kento marks, names over HEX.",
+      "description": "One combination as a proof: cartouche, flat field with kento marks, names (wrapping, up to three lines) over HEX.",
       "html": "<a class=\"ds-plate\" href=\"#\"><div class=\"ds-plate-row\"><span class=\"ds-cartouche\" style=\"font-size:.8rem\">295</span><div class=\"ds-plate-field ds-kento\"><span style=\"background:#F0BF68\"></span><span style=\"background:#FFF200\"></span><span style=\"background:#1E0E3F\"></span><span style=\"background:#006EB8\"></span></div></div><dl class=\"ds-plate-dl\"><div><dt>Cream Yellow</dt><dd>#F0BF68</dd></div><div><dt>Yellow</dt><dd>#FFF200</dd></div><div><dt>Dull Violet Black</dt><dd>#1E0E3F</dd></div><div><dt>Blue</dt><dd>#006EB8</dd></div></dl></a>",
-      "css": ".ds-cartouche{writing-mode:vertical-rl;text-orientation:upright;background:var(--shu);color:oklch(0.985 0.004 90);font-family:var(--font-mincho),serif;font-weight:700;letter-spacing:-0.08em;line-height:1;padding:.5em .3em .62em;box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--sumi) 25%,transparent);}.ds-kento{position:relative;}.ds-kento::before,.ds-kento::after{content:'';position:absolute;pointer-events:none;border-color:currentColor;opacity:.5;}.ds-kento::after{right:-8px;bottom:-8px;width:13px;height:13px;border-right:1px solid;border-bottom:1px solid;}.ds-kento::before{left:10px;bottom:-8px;width:22px;border-bottom:1px solid;}.ds-plate{display:block;width:280px;color:var(--sumi);text-decoration:none;}.ds-plate-row{display:flex;gap:12px;}.ds-plate-field{display:flex;flex:1;aspect-ratio:4/3;transition:transform .5s cubic-bezier(0.16,1,0.3,1);}.ds-plate-field span{flex:1;}.ds-plate:hover .ds-plate-field{transform:translateY(-4px);}.ds-plate:focus-visible{outline:2px solid currentColor;outline-offset:4px;}.ds-plate-dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 12px;margin:20px 0 0 2.35rem;}.ds-plate-dl dt{font:12.5px var(--font-gothic),sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.ds-plate-dl dd{margin:0;font:12px var(--font-data),monospace;font-stretch:75%;letter-spacing:-0.02em;text-transform:uppercase;color:var(--sumi-soft);}"
+      "css": ".ds-cartouche{writing-mode:vertical-rl;text-orientation:upright;background:var(--shu);color:oklch(0.985 0.004 90);font-family:var(--font-mincho),serif;font-weight:700;letter-spacing:-0.08em;line-height:1;padding:.5em .3em .62em;box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--sumi) 25%,transparent);}.ds-kento{position:relative;}.ds-kento::before,.ds-kento::after{content:'';position:absolute;pointer-events:none;border-color:currentColor;opacity:.5;}.ds-kento::after{right:-8px;bottom:-8px;width:13px;height:13px;border-right:1px solid;border-bottom:1px solid;}.ds-kento::before{left:10px;bottom:-8px;width:22px;border-bottom:1px solid;}.ds-plate{display:block;width:280px;color:var(--sumi);text-decoration:none;}.ds-plate-row{display:flex;gap:12px;}.ds-plate-field{display:flex;flex:1;aspect-ratio:4/3;transition:transform .5s cubic-bezier(0.16,1,0.3,1);}.ds-plate-field span{flex:1;}.ds-plate:hover .ds-plate-field{transform:translateY(-4px);}.ds-plate:focus-visible{outline:2px solid currentColor;outline-offset:4px;}.ds-plate-dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 12px;margin:20px 0 0 2.35rem;}.ds-plate-dl dt{font:12.5px/1.375 var(--font-gothic),sans-serif;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;text-wrap:balance;}.ds-plate-dl dd{margin:0;font:12px var(--font-data),monospace;font-stretch:75%;letter-spacing:-0.02em;text-transform:uppercase;color:var(--sumi-soft);}"
     },
     {
       "name": "Label Slip",
       "kind": "custom",
       "refersTo": "label-slip",
-      "description": "A plain washi slip naming a full colour field; never textured.",
+      "description": "The washi caption on every plate-page swatch: name over HEX; never textured.",
       "html": "<div class=\"ds-field\" style=\"background:#D96629\"><p class=\"ds-slip\"><span class=\"ds-slip-name\">Peach Red</span><span class=\"ds-slip-hex\">#D96629</span></p></div>",
       "css": ".ds-field{display:flex;align-items:flex-end;height:220px;width:200px;padding:20px;}.ds-slip{margin:0;background:var(--washi);color:var(--sumi);padding:8px 12px;box-shadow:0 1px 2px rgb(0 0 0/.12);}.ds-slip-name{display:block;font:600 18px/1.25 var(--font-mincho),serif;}.ds-slip-hex{display:block;font:12px var(--font-data),monospace;text-transform:uppercase;}"
     },
@@ -349,11 +355,11 @@
   ],
   "narrative": {
     "northStar": "The Proof Room",
-    "overview": "The archive is a printer's proof room. Every combination is pulled as a woodblock colour proof: flat, unmodulated blocks of exact colour, registered on kozo washi by kentō marks and numbered by a vermilion cartouche. The interface is the paper, the ink and the registration; the colours are the print. Type is sumi on washi, set in a Mincho for headings and a Gothic for everything else, with a mono for every value a designer will copy.\n\nDensity favours the working designer. The archive is a packed wall of plates; the plate count and the cartouche are the only ornament. Atmosphere comes from the ground (cool unbleached washi with a faint fibre), from night interludes in ai indigo and sumi, and from one bokashi grade where the hero print meets the paper. Nothing is rounded, nothing floats, nothing is glossy.\n\nThe voice is split in two. Headings and section intros are short, original aphorisms in the cadence of *The Art of War* (\"Know the number of colours, and you know the shape of the battle.\"). Controls, values, labels and credits are plain and exact (\"Copy CSS variables\", \"#D96629\", \"Combinations by Sanzo Wada (1883–1967)\"). The swatch-card grid on a white SaaS page and the cream-serif editorial page are both refused.",
+    "overview": "The archive is a printer's proof room. Every combination is pulled as a woodblock colour proof: flat, unmodulated blocks of exact colour, registered on kozo washi by kentō marks and numbered by a vermilion cartouche. The interface is the paper, the ink and the registration; the colours are the print. Type is sumi on washi, set in a Mincho for headings and a Gothic for everything else, with a mono for every value a designer will copy.\n\nDensity favours the working designer. The archive is a packed wall of plates; the plate count and the cartouche are the only ornament. Atmosphere comes from the ground (cool unbleached washi with a faint fibre), from the sumi night interlude and the footer, and from bokashi grades: the hero's sky colour fading into the paper, and the washi grading into sumi where the night band begins. Nothing is rounded, nothing floats, nothing is glossy.\n\nThe voice is split in two. Headings and section intros are short, original aphorisms in the cadence of *The Art of War* (\"Know the number of colours, and you know the shape of the battle.\"). Controls, values, labels and credits are plain and exact (\"Copy CSS variables\", \"#D96629\", \"Combinations by Sanzo Wada (1883–1967)\"). The swatch-card grid on a white SaaS page and the cream-serif editorial page are both refused.",
     "keyCharacteristics": [
       "Kozo washi ground with a faint fibre; sumi ink for type and key-lines.",
       "Colour fields are flat, full-strength and untextured; they own whole regions.",
-      "Shu vermilion is reserved for the plate cartouche (plus the input caret and error line).",
+      "Shu vermilion is reserved for the plate cartouche; nothing else on screen is vermilion.",
       "Kentō marks (kagi corner, hikitsuke bar) register every printed field.",
       "Square everywhere: every radius token resolves to 0.",
       "State is shown by ink marks (bars, ticks, underlines, ink inversion), never by a hue.",
@@ -372,7 +378,7 @@
       },
       {
         "name": "The Colours Are the Content Rule",
-        "body": "UI colour is limited to washi, sumi, ai and shu. Any other hue on screen is one of Wada's 159 colours, at full strength and labelled with name and value.",
+        "body": "UI colour is limited to washi, sumi and shu. Any other hue on screen is one of Wada's 159 colours, at full strength and labelled with name and value.",
         "section": "colors"
       },
       {
@@ -386,6 +392,11 @@
         "section": "typography"
       },
       {
+        "name": "The 12px Floor Rule",
+        "body": "No text sets below 0.75rem (12px). When a value will not fit, it takes the narrow cut of the mono, never a smaller size; when a name will not fit, it wraps, never truncates.",
+        "section": "typography"
+      },
+      {
         "name": "The Paper Stack Rule",
         "body": "Surfaces never float. A new layer is a new paper or a new ink ground, separated by a hairline.",
         "section": "elevation"
@@ -395,17 +406,19 @@
       "**Do** keep every swatch a flat fill of its exact HEX, labelled with its name and value (Data, uppercase).",
       "**Do** register printed fields with kentō marks and number plates with the shu cartouche.",
       "**Do** mark state with ink: a 3px sumi bar, a sumi tick, a 2px underline, or a sumi inversion.",
-      "**Do** use the fibre ground on washi and deep washi only; change ground (ai, sumi, deep washi) to separate major sections.",
+      "**Do** use the fibre ground on washi and deep washi only; change ground (sumi, deep washi) to separate major sections.",
       "**Do** write headings as short aphorisms in the cadence of *The Art of War*, and controls, values and credits plainly.",
       "**Do** keep every radius at 0px and every key-line at 1px `rule`.",
-      "**Do** give every interactive target at least 44px (40px in dense toolbars)."
+      "**Do** give every interactive target at least 44px (40px in dense toolbars).",
+      "**Do** wrap long names and narrow the mono for values; keep all text at 12px or above."
     ],
     "donts": [
       "**Don't** lay texture, gradients, overlays or tints on a swatch.",
-      "**Don't** use shu for anything but the cartouche, the caret and error text; never as a button, selection or link colour.",
+      "**Don't** use shu for anything but the cartouche; not for carets, errors, buttons, selections or links.",
       "**Don't** signal state, selection or meaning by hue alone.",
       "**Don't** introduce cream grounds, rounded cards or floating shadowed panels.",
       "**Don't** set colour values in Mincho or Gothic; values are Martian Mono.",
+      "**Don't** truncate a colour name with an ellipsis, or shrink text below 12px to make it fit.",
       "**Don't** reproduce book scans, layouts or editorial text; render everything from data."
     ]
   }

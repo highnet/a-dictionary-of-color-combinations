@@ -90,7 +90,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* A wall of plates, on the indigo of the night prints. */}
+      {/* A wall of plates, on the sumi of the night band. */}
       <section aria-labelledby="selection" className="ground-sumi">
         {/* Bokashi: the washi grades into the sumi of the night band. */}
         <div aria-hidden="true" className="h-24 bg-[linear-gradient(to_bottom,var(--washi),var(--sumi))] md:h-32" />

@@ -4,7 +4,7 @@
 
 /*
  * Woodblock colour proof.
- * Washi ground, sumi ink, shu vermilion for the plate cartouche, ai indigo for
+ * Washi ground, sumi ink, shu vermilion for the plate cartouche only, sumi for
  * the night interludes. Paper texture lives on grounds only, never on a swatch.
  */
 
@@ -16,8 +16,6 @@
   --color-sumi: var(--sumi);
   --color-sumi-soft: var(--sumi-soft);
   --color-shu: var(--shu);
-  --color-ai: var(--ai);
-  --color-ai-soft: var(--ai-soft);
   --color-rule: var(--rule);
 
   --font-sans: var(--font-gothic);
@@ -60,8 +58,6 @@
   --sumi: oklch(0.215 0.008 60);
   --sumi-soft: oklch(0.43 0.012 65);
   --shu: oklch(0.535 0.185 33);
-  --ai: oklch(0.255 0.055 258);
-  --ai-soft: oklch(0.82 0.03 250);
   --rule: color-mix(in oklch, var(--sumi) 22%, transparent);
 
   --background: var(--washi);
