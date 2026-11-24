@@ -45,7 +45,7 @@ export default async function ColourPage({ params }: PageProps<"/colours/[slug]"
       </div>
       <section className="shell pt-8 pb-16">
         <div className="kento flex min-h-[min(56vh,34rem)] flex-col justify-end p-6 md:p-10" style={{ backgroundColor: c.hex, color: fg }}>
-          <p className="font-data text-xs opacity-80">No. {String(c.index).padStart(3, "0")} of 159 · {GROUPS[c.group]}</p>
+          <p className="w-fit bg-washi px-2.5 py-1.5 font-data text-xs text-sumi">No. {String(c.index).padStart(3, "0")} of 159 · {GROUPS[c.group]}</p>
           <h1 className="mt-3 font-display text-[clamp(2.4rem,6vw,5rem)] leading-none font-extrabold">
             {c.name}
             {c.variant ? <span className="ml-3 align-middle font-data text-base font-normal">({c.variant})</span> : null}
@@ -96,7 +96,7 @@ export default async function ColourPage({ params }: PageProps<"/colours/[slug]"
                 <Link href={`/colours/${colour.id}`} className="group block">
                   <span className="block aspect-[4/3] transition-transform group-hover:-translate-y-1" style={{ backgroundColor: colour.hex }} />
                   <span className="mt-2 block text-[0.78rem] leading-snug">{colour.name}</span>
-                  <span className="block font-data text-[0.65rem] text-sumi-soft">ΔE {distance.toFixed(1)}</span>
+                  <span className="block font-data text-xs text-sumi-soft">ΔE {distance.toFixed(1)}</span>
                 </Link>
               </li>
             ))}

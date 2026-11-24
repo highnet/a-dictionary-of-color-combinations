@@ -54,9 +54,9 @@
 }
 
 :root {
-  /* Kozo washi: unbleached, cool-leaning so it never reads as cream. */
-  --washi: oklch(0.948 0.009 95);
-  --washi-deep: oklch(0.912 0.012 92);
+  /* Kozo washi: unbleached grey-green fibre, deliberately not cream. */
+  --washi: oklch(0.945 0.0055 125);
+  --washi-deep: oklch(0.908 0.008 120);
   --sumi: oklch(0.215 0.008 60);
   --sumi-soft: oklch(0.43 0.012 65);
   --shu: oklch(0.535 0.185 33);
@@ -136,7 +136,7 @@
     text-decoration-thickness: 1px;
   }
   input {
-    caret-color: var(--shu);
+    caret-color: currentColor;
   }
   input::placeholder {
     color: color-mix(in oklch, currentColor 62%, transparent);
@@ -163,6 +163,13 @@
     font-family: var(--font-data), ui-monospace, monospace;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
+  }
+  .font-data-narrow {
+    font-family: var(--font-data), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-stretch: 75%;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
   .shell {
     width: 100%;

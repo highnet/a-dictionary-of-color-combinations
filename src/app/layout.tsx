@@ -14,6 +14,9 @@ const mincho = Shippori_Mincho_B1({
   weight: ["500", "700", "800"],
   subsets: ["latin"],
   display: "swap",
+  // CJK families ship hundreds of unicode-range slices; preloading would fetch
+  // them all. Without preload the browser takes only the Latin slices it uses.
+  preload: false,
 });
 
 const gothic = Zen_Kaku_Gothic_New({
@@ -21,11 +24,13 @@ const gothic = Zen_Kaku_Gothic_New({
   weight: ["400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
+  preload: false,
 });
 
 const data = Martian_Mono({
   variable: "--font-data",
   subsets: ["latin"],
+  axes: ["wdth"],
   display: "swap",
 });
 
@@ -62,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#efece4",
+  themeColor: "#eceee8",
   colorScheme: "light",
 };
 

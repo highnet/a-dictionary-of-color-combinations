@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CircleAlert } from "lucide-react";
 import { parseHex } from "@/lib/color";
 
 /** Number → plate; HEX → nearest colours; words → archive search. */
@@ -60,8 +60,13 @@ export function QuickFind({ size = "lg" }: { size?: "lg" | "md" }) {
           <ArrowRight className="size-6" strokeWidth={1.4} />
         </button>
       </div>
-      <p id={`${id}-err`} role="alert" className="mt-2 min-h-5 text-sm text-shu">
-        {error}
+      <p id={`${id}-err`} role="alert" className="mt-2 min-h-5 text-sm font-medium">
+        {error ? (
+          <>
+            <CircleAlert className="mr-1.5 inline size-4 align-[-3px]" aria-hidden="true" />
+            {error}
+          </>
+        ) : null}
       </p>
     </form>
   );

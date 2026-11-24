@@ -29,7 +29,7 @@ export function ColourSearch() {
 
   return (
     <div>
-      <div className="grid gap-8 md:grid-cols-12 md:items-end">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:items-end">
         <div className="md:col-span-5">
           <label htmlFor="hex" className="mb-2 block text-sm text-sumi-soft">
             Your colour (HEX)
@@ -44,6 +44,7 @@ export function ColourSearch() {
             />
             <input
               id="hex"
+              size={8}
               value={text}
               onChange={(e) => commit(e.target.value)}
               spellCheck={false}
@@ -54,7 +55,7 @@ export function ColourSearch() {
             />
           </div>
           <p id="hex-help" role="status" className="mt-2 min-h-5 text-sm text-sumi-soft">
-            {hex ? "Nearest by CIEDE2000. Under 2 is hard to tell apart." : <span className="text-shu">Enter a HEX value such as #1C4286.</span>}
+            {hex ? "Nearest by CIEDE2000. Under 2 is hard to tell apart." : <span className="font-medium text-sumi">That is not a HEX value. Try #1C4286.</span>}
           </p>
         </div>
         <div className="md:col-span-7">
@@ -75,7 +76,7 @@ export function ColourSearch() {
                   style={{ backgroundColor: colour.hex }}
                 />
                 <span className={`mt-2 block h-px bg-sumi transition-opacity ${picked === i ? "opacity-100" : "opacity-0"}`} />
-                <span className="mt-1.5 block font-data text-[0.65rem] text-sumi-soft">ΔE {distance.toFixed(1)}</span>
+                <span className="mt-1.5 block font-data text-xs text-sumi-soft">ΔE {distance.toFixed(1)}</span>
               </button>
             ))}
           </div>

@@ -6,6 +6,50 @@ import { useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { PALETTES, type Palette } from "@/lib/dictionary";
 
+// Layout: hue by rank (Wada's palette leans warm, so an angle axis would pile
+// half the archive into the reds), lightness by value. Each plate then snaps to
+// the nearest free cell so no two overlap and every one stays clickable.
+const COLS = 34;
+const ROWS = 22;
+
+const LAYOUT: Map<number, { col: number; row: number }> = (() => {
+  const chromatic = PALETTES.filter((p) => p.metrics.hue !== null).sort(
+    (a, b) => a.metrics.hue! - b.metrics.hue!,
+  );
+  const rank = new Map(chromatic.map((p, i) => [p.id, i / (chromatic.length - 1)]));
+  const taken = new Set<string>();
+  const out = new Map<number, { col: number; row: number }>();
+  const order = [...PALETTES].sort((a, b) => a.metrics.chroma - b.metrics.chroma).reverse();
+  for (const p of order) {
+    const wantCol = p.metrics.hue === null ? COLS - 1 : Math.round((rank.get(p.id) ?? 0) * (COLS - 3));
+    const wantRow = Math.round(((100 - Math.min(Math.max(p.metrics.lightness, 5), 97)) / 100) * (ROWS - 1));
+    let best: { col: number; row: number } | null = null;
+    for (let r = 0; r < Math.max(COLS, ROWS) && !best; r++) {
+      let bestD = Infinity;
+      for (let dc = -r; dc <= r; dc++) {
+        for (let dr = -r; dr <= r; dr++) {
+          if (Math.max(Math.abs(dc), Math.abs(dr)) !== r) continue;
+          const col = wantCol + dc;
+          const row = wantRow + dr;
+          if (col < 0 || row < 0 || col >= COLS || row >= ROWS) continue;
+          if (p.metrics.hue !== null && col >= COLS - 2) continue; // neutral lane
+          if (taken.has(`${col}:${row}`)) continue;
+          const d = dc * dc * 1.6 + dr * dr;
+          if (d < bestD) {
+            bestD = d;
+            best = { col, row };
+          }
+        }
+      }
+    }
+    if (best) {
+      taken.add(`${best.col}:${best.row}`);
+      out.set(p.id, best);
+    }
+  }
+  return out;
+})();
+
 type Temp = "all" | "warm" | "cool" | "mixed" | "neutral";
 type Contrast = "all" | "soft" | "medium" | "strong";
 type Count = "all" | 2 | 3 | 4;
@@ -67,12 +111,13 @@ export function CompositionMap() {
   }, [temp, contrast, count]);
 
   function place(p: Palette) {
-    // x: mean hue (neutrals gather in a lane at the right); y: mean lightness.
-    const x = p.metrics.hue === null ? 96 : (p.metrics.hue / 360) * 90 + 2;
-    const y = 100 - Math.min(Math.max(p.metrics.lightness, 8), 96);
-    // Deterministic jitter so equal positions don't stack exactly.
-    const j = ((p.id * 9301 + 49297) % 233280) / 233280 - 0.5;
-    return { left: `${x + j * 1.6}%`, top: `${Math.min(Math.max(y + j * 3, 1), 96)}%` };
+    const cell = LAYOUT.get(p.id)!;
+    return {
+      left: `${(cell.col / COLS) * 100}%`,
+      top: `${(cell.row / ROWS) * 100}%`,
+      width: `${100 / COLS}%`,
+      height: `${100 / ROWS}%`,
+    };
   }
 
   function activate(p: Palette) {
@@ -85,7 +130,7 @@ export function CompositionMap() {
 
   return (
     <div>
-      <div className="grid gap-6 border-y border-rule py-6 md:grid-cols-[repeat(3,auto)_1fr] md:gap-10">
+      <div className="grid grid-cols-1 gap-6 border-y border-rule py-6 md:grid-cols-[repeat(3,auto)_1fr] md:gap-10">
         <Chips<Count>
           label="Colours"
           value={count}
@@ -148,19 +193,20 @@ export function CompositionMap() {
         ) : null}
       </div>
 
-      <div className="relative mt-4 h-[min(78vh,46rem)] min-h-[32rem] border-l border-b border-sumi/40">
-        <span className="absolute -top-1 -left-px -translate-y-full pb-2 text-xs text-sumi-soft">Light</span>
+      <div className="-mx-[var(--gutter)] overflow-x-auto px-[var(--gutter)] pb-10">
+      <div className="relative mt-8 h-[min(76vh,44rem)] min-h-[30rem] min-w-[46rem] border-l border-b border-sumi/40">
+        <span className="absolute -top-1 left-1 -translate-y-full pb-1 text-xs text-sumi-soft">Light</span>
         <span className="absolute bottom-2 left-2 text-xs text-sumi-soft">Dark</span>
         <span className="absolute right-0 -bottom-7 text-xs text-sumi-soft">Neutral</span>
         <div className="absolute inset-x-0 -bottom-7 flex justify-between pr-20 text-xs text-sumi-soft" aria-hidden="true">
-          <span>Red</span><span>Yellow</span><span>Green</span><span>Blue</span><span>Purple</span>
+          <span>Red</span><span>Orange</span><span>Yellow</span><span>Green</span><span>Blue</span><span>Purple</span>
         </div>
         <ul aria-label="Combinations by hue and lightness">
           {PALETTES.map((p) => {
             const visible = on.has(p.id);
             const isPicked = picked.includes(p.id);
             return (
-              <li key={p.id} className="absolute -translate-x-1/2 -translate-y-1/2" style={place(p)}>
+              <li key={p.id} className="absolute grid place-items-center hover:z-10 focus-within:z-10" style={place(p)}>
                 <button
                   type="button"
                   disabled={!visible}
@@ -169,7 +215,7 @@ export function CompositionMap() {
                   onFocus={() => setHover(p)}
                   aria-label={`${p.code}: ${p.colors.map((c) => c.name).join(", ")}${selecting ? (isPicked ? ", picked" : "") : ""}`}
                   aria-pressed={selecting ? isPicked : undefined}
-                  className={`flex h-2.5 w-7 transition-[opacity,transform] duration-300 hover:z-10 hover:scale-[2.2] focus-visible:z-10 focus-visible:scale-[2.2] md:h-3 md:w-10 ${visible ? "opacity-100" : "pointer-events-none opacity-[0.07]"} ${isPicked ? "scale-[1.8] outline-2 outline-offset-2 outline-sumi" : ""}`}
+                  className={`relative flex h-[46%] w-[86%] transition-[opacity,transform] duration-300 hover:z-10 hover:scale-[1.9] focus-visible:z-10 focus-visible:scale-[1.9] ${visible ? "opacity-100" : "pointer-events-none opacity-[0.07]"} ${isPicked ? "scale-[1.8] outline-2 outline-offset-2 outline-sumi" : ""}`}
                 >
                   {p.colors.map((c) => (
                     <span key={c.id} className="flex-1" style={{ backgroundColor: c.hex }} />
@@ -179,6 +225,7 @@ export function CompositionMap() {
             );
           })}
         </ul>
+      </div>
       </div>
     </div>
   );

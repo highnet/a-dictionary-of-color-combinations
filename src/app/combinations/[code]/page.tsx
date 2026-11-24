@@ -47,7 +47,7 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
   if (!p) notFound();
   const prev = getPalette(p.id === 1 ? PALETTES.length : p.id - 1)!;
   const next = getPalette(p.id === PALETTES.length ? 1 : p.id + 1)!;
-  const related = relatedPalettes(p, 8);
+  const related = relatedPalettes(p, 9);
   const chapter = p.size === 2 ? "Two colours" : p.size === 3 ? "Three colours" : "Four colours";
 
   return (
@@ -100,13 +100,11 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
 
         <div className="kento mt-10 flex h-[min(62vh,40rem)] min-h-[22rem] flex-col sm:flex-row">
           {p.colors.map((c) => (
-            <div
-              key={c.id}
-              className="flex flex-1 flex-col justify-end p-4 md:p-6"
-              style={{ backgroundColor: c.hex, color: c.ink === "ink" ? "#1f1c19" : "#f6f3ec" }}
-            >
-              <p className="font-display text-lg leading-tight font-semibold md:text-xl">{c.name}</p>
-              <p className="font-data text-xs uppercase opacity-85">{c.hex}</p>
+            <div key={c.id} className="flex flex-1 items-end p-3 md:p-5" style={{ backgroundColor: c.hex }}>
+              <p className="bg-washi px-3 py-2 text-sumi shadow-[0_1px_2px_rgb(0_0_0/0.12)]">
+                <span className="block font-display text-base leading-tight font-semibold md:text-lg">{c.name}</span>
+                <span className="block font-data text-xs uppercase">{c.hex}</span>
+              </p>
             </div>
           ))}
         </div>
@@ -129,7 +127,7 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
         </nav>
       </section>
 
-      <div className="shell grid gap-x-12 border-t border-rule lg:grid-cols-[11rem_minmax(0,1fr)]">
+      <div className="shell grid grid-cols-1 gap-x-12 border-t border-rule lg:grid-cols-[11rem_minmax(0,1fr)]">
         <aside className="sticky top-[var(--topbar-h)] z-20 -mx-[var(--gutter)] border-b border-rule bg-washi/95 px-[var(--gutter)] py-2 backdrop-blur-[2px] lg:top-0 lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:px-0 lg:py-16">
           <SectionIndex sections={SECTIONS} />
         </aside>
@@ -165,7 +163,7 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
                       <td className="py-1"><CopyValue value={formatRgb(c.rgb)} display={c.rgb.join(" ")} label={`${c.name} RGB`} /></td>
                       <td className="py-1"><CopyValue value={formatCmyk(c.cmyk)} label={`${c.name} CMYK`} /></td>
                       <td className="py-3 text-right">
-                        <Link href={`/colours/${c.id}`} className="link-quiet font-data text-xs">{c.combinations.length} combinations</Link>
+                        <Link href={`/colours/${c.id}`} className="link-quiet inline-block py-2 font-data text-xs">{c.combinations.length} combinations</Link>
                       </td>
                     </tr>
                   ))}
@@ -196,7 +194,7 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
             <h2 id="allies-title" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold">
               Allies: combinations that share its colours.
             </h2>
-            <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 xl:grid-cols-3">
               {related.map((r) => (
                 <PlateTile key={r.id} palette={r} />
               ))}

@@ -16,7 +16,7 @@ export function ColourIndex() {
                 <Link href={`/colours/${c.id}`} className="group block">
                   <span className="block aspect-[4/3] transition-transform duration-300 group-hover:-translate-y-1" style={{ backgroundColor: c.hex }} />
                   <span className="mt-2 block text-[0.78rem] leading-snug">{c.name}{c.variant ? ` (${c.variant})` : ""}</span>
-                  <span className="block font-data text-[0.65rem] text-sumi-soft uppercase">{c.hex}</span>
+                  <span className="block font-data text-xs text-sumi-soft uppercase">{c.hex}</span>
                 </Link>
               </li>
             ))}

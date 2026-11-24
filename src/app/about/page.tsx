@@ -22,10 +22,13 @@ export default function AboutPage() {
     <div>
       <div className="shell pb-20">
         <Crumbs items={[{ href: "/about", label: "About" }]} className="pt-6" />
-        <header className="grid gap-6 pt-10 pb-16 md:grid-cols-12 md:pt-16">
-          <h1 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[0.98] font-extrabold tracking-[-0.025em] md:col-span-8">
-            Know the source, and the colours will not deceive you.
+        <header className="grid grid-cols-1 gap-6 pt-10 pb-16 md:grid-cols-12 md:pt-16">
+          <h1 className="font-display text-[clamp(2.6rem,6vw,5.2rem)] leading-[0.98] font-extrabold tracking-[-0.025em] md:col-span-7">
+            Know the source.
           </h1>
+          <p className="self-end text-lg leading-relaxed text-sumi-soft md:col-span-4 md:col-start-9">
+            Then the colours will not deceive you.
+          </p>
         </header>
         <dl className="grid border-t border-sumi md:grid-cols-2">
           {FACTS.map(([k, v]) => (
@@ -38,7 +41,7 @@ export default function AboutPage() {
       </div>
 
       <section aria-labelledby="method" className="ground-deep">
-        <div className="shell grid gap-12 py-20 md:grid-cols-12 md:py-28">
+        <div className="shell grid grid-cols-1 gap-12 py-20 md:grid-cols-12 md:py-28">
           <h2 id="method" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold md:col-span-4">
             Method
           </h2>
@@ -105,7 +108,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="shell grid gap-8 py-20 md:grid-cols-12 md:py-28">
+      <section className="shell grid grid-cols-1 gap-8 py-20 md:grid-cols-12 md:py-28">
         <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-snug font-bold md:col-span-7">
           Credit the general, Sanzo Wada, whenever his orders are used.
         </p>

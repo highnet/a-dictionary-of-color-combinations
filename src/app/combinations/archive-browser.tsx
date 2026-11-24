@@ -168,6 +168,7 @@ export function ArchiveBrowser() {
         ) : null}
       </div>
 
+      <h2 className="sr-only">Results</h2>
       {list.length === 0 ? (
         <div className="py-24">
           <p className="font-display text-3xl">No combination answers.</p>

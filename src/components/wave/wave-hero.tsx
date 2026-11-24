@@ -77,11 +77,13 @@ void main() {
   // Key-block: a sumi line at every band edge, finer hatching inside the crests.
   float w = fwidth(f);
   float d = abs(fract(f + 0.5) - 0.5);
-  float key = 1.0 - smoothstep(w * 0.55, w * 1.55, d);
+  // Lines thin out with distance and vanish where they would alias.
+  float key = (1.0 - smoothstep(w * 0.55, w * 1.55, d)) * (1.0 - smoothstep(0.12, 0.3, w));
   float f2 = f * 4.0;
   float w2 = fwidth(f2);
   float d2 = abs(fract(f2 + 0.5) - 0.5);
-  float hatch = (1.0 - smoothstep(w2 * 0.35, w2 * 1.1, d2)) * step(n - 1.0, idx) * 0.5;
+  float hatch = (1.0 - smoothstep(w2 * 0.35, w2 * 1.1, d2)) * step(n - 1.0, idx) * 0.5
+    * (1.0 - smoothstep(0.08, 0.2, w2));
   col = mix(col, uInk, max(key, hatch));
   gl_FragColor = vec4(col, 1.0);
 }
@@ -127,8 +129,23 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
     let cleanup = () => {};
 
     (async () => {
+      // Wait for an idle moment so the wave never competes with first paint.
+      await new Promise<void>((r) =>
+        "requestIdleCallback" in window ? requestIdleCallback(() => r(), { timeout: 1500 }) : setTimeout(r, 300),
+      );
+      if (disposed) return;
       const probe = document.createElement("canvas");
-      if (!probe.getContext("webgl2") && !probe.getContext("webgl")) {
+      const gl = (probe.getContext("webgl2") ?? probe.getContext("webgl")) as WebGLRenderingContext | null;
+      if (!gl) {
+        setWebgl("off");
+        return;
+      }
+      // Software rasterisers (SwiftShader, llvmpipe) would run the wave on the
+      // CPU and drain the device: keep the static print instead.
+      const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+      const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
+      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      if (/swiftshader|llvmpipe|software|basic render/i.test(gpu)) {
         setWebgl("off");
         return;
       }
@@ -152,7 +169,8 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-      const geo = new THREE.PlaneGeometry(26, 18, 260, 180);
+      const small = host.clientWidth < 700;
+      const geo = new THREE.PlaneGeometry(26, 18, small ? 150 : 260, small ? 104 : 180);
       geo.rotateX(-Math.PI / 2);
 
       const toVecs = (p: WavePlate) => {
@@ -319,14 +337,14 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         </Link>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-start justify-between gap-x-6 gap-y-3 px-[var(--gutter)] lg:px-0">
-        <ul className="flex min-w-0 flex-1 flex-wrap gap-x-5 gap-y-2" aria-live="polite" aria-label={`Colours of combination ${current.code}`}>
+      <div className="mt-3 flex items-start justify-between gap-x-4 px-[var(--gutter)] lg:px-0">
+        <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={`Colours of combination ${current.code}`}>
           {current.colors.map((c) => (
             <li key={c.hex + c.name} className="flex items-center gap-2.5">
               <span className="size-4 shrink-0 ring-1 ring-sumi/15" style={{ backgroundColor: c.hex }} aria-hidden="true" />
               <span className="text-[0.8rem] leading-tight">
                 {c.name}
-                <span className="ml-2 font-data text-[0.7rem] text-sumi-soft uppercase">{c.hex}</span>
+                <span className="ml-2 hidden font-data text-xs text-sumi-soft uppercase sm:inline">{c.hex}</span>
               </span>
             </li>
           ))}

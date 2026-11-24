@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T17:22:30Z",
+  "title": "Design System: A Dictionary of Color Combinations",
+  "extensions": {
+    "colorMeta": {
+      "washi": {
+        "role": "neutral",
+        "displayName": "Kozo Washi",
+        "canonical": "oklch(0.945 0.0055 125)",
+        "tonalRamp": [
+          "oklch(0.15 0.003 125)",
+          "oklch(0.27 0.004 125)",
+          "oklch(0.39 0.004 125)",
+          "oklch(0.51 0.005 125)",
+          "oklch(0.63 0.005 125)",
+          "oklch(0.75 0.004 125)",
+          "oklch(0.86 0.003 125)",
+          "oklch(0.95 0.003 125)"
+        ]
+      },
+      "washi-deep": {
+        "role": "neutral",
+        "displayName": "Deep Washi",
+        "canonical": "oklch(0.908 0.008 120)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 120)",
+          "oklch(0.27 0.005 120)",
+          "oklch(0.39 0.006 120)",
+          "oklch(0.51 0.008 120)",
+          "oklch(0.63 0.007 120)",
+          "oklch(0.75 0.006 120)",
+          "oklch(0.86 0.005 120)",
+          "oklch(0.95 0.004 120)"
+        ]
+      },
+      "sumi": {
+        "role": "primary",
+        "displayName": "Sumi Ink",
+        "canonical": "oklch(0.215 0.008 60)",
+        "tonalRamp": [
+          "oklch(0.15 0.004 60)",
+          "oklch(0.27 0.005 60)",
+          "oklch(0.39 0.006 60)",
+          "oklch(0.51 0.008 60)",
+          "oklch(0.63 0.007 60)",
+          "oklch(0.75 0.006 60)",
+          "oklch(0.86 0.005 60)",
+          "oklch(0.95 0.004 60)"
+        ]
+      },
+      "sumi-soft": {
+        "role": "neutral",
+        "displayName": "Faded Sumi",
+        "canonical": "oklch(0.43 0.012 65)",
+        "tonalRamp": [
+          "oklch(0.15 0.006 65)",
+          "oklch(0.27 0.008 65)",
+          "oklch(0.39 0.010 65)",
+          "oklch(0.51 0.011 65)",
+          "oklch(0.63 0.011 65)",
+          "oklch(0.75 0.009 65)",
+          "oklch(0.86 0.007 65)",
+          "oklch(0.95 0.006 65)"
+        ]
+      },
+      "shu": {
+        "role": "primary",
+        "displayName": "Shu Vermilion",
+        "canonical": "oklch(0.535 0.185 33)",
+        "tonalRamp": [
+          "oklch(0.15 0.091 33)",
+          "oklch(0.27 0.119 33)",
+          "oklch(0.39 0.147 33)",
+          "oklch(0.51 0.176 33)",
+          "oklch(0.63 0.166 33)",
+          "oklch(0.75 0.138 33)",
+          "oklch(0.86 0.112 33)",
+          "oklch(0.95 0.091 33)"
+        ]
+      },
+      "cartouche-ink": {
+        "role": "neutral",
+        "displayName": "Cartouche Paper",
+        "canonical": "oklch(0.985 0.004 90)",
+        "tonalRamp": [
+          "oklch(0.15 0.002 90)",
+          "oklch(0.27 0.003 90)",
+          "oklch(0.39 0.003 90)",
+          "oklch(0.51 0.004 90)",
+          "oklch(0.63 0.004 90)",
+          "oklch(0.75 0.003 90)",
+          "oklch(0.86 0.002 90)",
+          "oklch(0.95 0.002 90)"
+        ]
+      },
+      "ai": {
+        "role": "secondary",
+        "displayName": "Ai Indigo",
+        "canonical": "oklch(0.255 0.055 258)",
+        "tonalRamp": [
+          "oklch(0.15 0.027 258)",
+          "oklch(0.27 0.035 258)",
+          "oklch(0.39 0.044 258)",
+          "oklch(0.51 0.052 258)",
+          "oklch(0.63 0.049 258)",
+          "oklch(0.75 0.041 258)",
+          "oklch(0.86 0.033 258)",
+          "oklch(0.95 0.027 258)"
+        ]
+      },
+      "ai-soft": {
+        "role": "secondary",
+        "displayName": "Ai Mist",
+        "canonical": "oklch(0.82 0.03 250)",
+        "tonalRamp": [
+          "oklch(0.15 0.015 250)",
+          "oklch(0.27 0.019 250)",
+          "oklch(0.39 0.024 250)",
+          "oklch(0.51 0.028 250)",
+          "oklch(0.63 0.027 250)",
+          "oklch(0.75 0.022 250)",
+          "oklch(0.86 0.018 250)",
+          "oklch(0.95 0.015 250)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Key-line",
+        "canonical": "color-mix(in oklch, var(--sumi) 22%, transparent)"
+      },
+      "input-line": {
+        "role": "neutral",
+        "displayName": "Input Line",
+        "canonical": "color-mix(in oklch, var(--sumi) 45%, transparent)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section aphorisms on home and landing pages."
+      },
+      "headline-plate": {
+        "displayName": "Headline Plate",
+        "purpose": "Section headings on plate and colour pages."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Chapter names, empty states."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Intros and notes."
+      },
+      "body-lead": {
+        "displayName": "Body Lead",
+        "purpose": "Lead paragraphs and author notes."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, controls, captions, credits."
+      },
+      "data": {
+        "displayName": "Data",
+        "purpose": "Every value: HEX, RGB, CMYK, codes, ranges, counts."
+      },
+      "data-narrow": {
+        "displayName": "Data Narrow",
+        "purpose": "HEX under tile columns; 75% width, no wrap."
+      },
+      "cartouche": {
+        "displayName": "Cartouche",
+        "purpose": "Vertical plate numerals in the shu seal."
+      }
+    },
+    "shadows": [
+      {
+        "name": "slip-lift",
+        "value": "0 1px 2px rgb(0 0 0 / 0.12)",
+        "purpose": "Label slip resting on a colour field."
+      },
+      {
+        "name": "toast",
+        "value": "0 6px 24px -8px rgb(0 0 0 / 0.35)",
+        "purpose": "Sumi toast slip at the foot of the page."
+      },
+      {
+        "name": "cartouche-edge",
+        "value": "inset 0 0 0 1px color-mix(in oklch, var(--sumi) 25%, transparent)",
+        "purpose": "Cut edge of the shu seal."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The one ease: field lifts, strip shifts, sidebar width."
+      },
+      {
+        "name": "lift",
+        "value": "500ms",
+        "purpose": "Plate field and chapter strip hover lift."
+      },
+      {
+        "name": "tick",
+        "value": "300ms",
+        "purpose": "Index swatch lift, section-index tick."
+      },
+      {
+        "name": "sidebar",
+        "value": "350ms",
+        "purpose": "Sidebar open/rail width."
+      },
+      {
+        "name": "fade",
+        "value": "200ms",
+        "purpose": "Underline, label and icon opacity."
+      },
+      {
+        "name": "print-fade",
+        "value": "700ms",
+        "purpose": "Hero print canvas fade-in."
+      },
+      {
+        "name": "bokashi",
+        "value": "1600ms",
+        "purpose": "Hero sky colour crossfade between plates."
+      },
+      {
+        "name": "copy-confirm",
+        "value": "1400ms",
+        "purpose": "Check icon after a copy."
+      },
+      {
+        "name": "toast",
+        "value": "1800ms",
+        "purpose": "Toast duration."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "All animation and transition under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "purpose": "Sidebar app frame replaces topbar."
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "2xl",
+        "value": "1536px"
+      }
+    ],
+    "textures": [
+      {
+        "name": "fibre",
+        "value": "SVG feTurbulence fractalNoise, baseFrequency .9, 2 octaves, 240px tile, opacity .22",
+        "purpose": "Washi grounds only; never on a swatch."
+      }
+    ],
+    "kento": {
+      "kagi": "13x13px, 1px right+bottom, offset -8px bottom-right, currentColor 50%",
+      "hikitsuke": "22px x 1px, left 10px, bottom -8px, currentColor 50%"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one filled action: Open the archive.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Open the archive <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" class=\"ds-arrow\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:12px;min-height:48px;padding:0 24px;background:var(--sumi);color:var(--washi);text-decoration:none;font-family:var(--font-gothic),sans-serif;border-radius:0;transition:background-color .2s;}.ds-btn-primary:hover{background:var(--ai);}.ds-btn-primary .ds-arrow{transition:transform .2s;}.ds-btn-primary:hover .ds-arrow{transform:translateX(4px);}.ds-btn-primary:focus-visible{outline:2px solid var(--sumi);outline-offset:3px;}"
+    },
+    {
+      "name": "Action Button",
+      "kind": "button",
+      "refersTo": "button-action",
+      "description": "Hairline, unfilled; every copy, download, save and compare action.",
+      "html": "<button class=\"ds-btn-action\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\"/><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"/></svg>Copy CSS variables</button>",
+      "css": ".ds-btn-action{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;font:14px var(--font-gothic),sans-serif;color:var(--sumi);background:transparent;border:1px solid color-mix(in oklch,currentColor 30%,transparent);border-radius:0;cursor:pointer;transition:border-color .2s,background-color .2s;}.ds-btn-action:hover{border-color:currentColor;background:color-mix(in oklch,currentColor 4%,transparent);}.ds-btn-action:focus-visible{outline:2px solid currentColor;outline-offset:3px;}"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "chip",
+      "refersTo": "segmented-option",
+      "description": "Archive filters; the selected option inverts to sumi.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\"><button role=\"radio\" aria-checked=\"true\">All</button><button role=\"radio\" aria-checked=\"false\">2</button><button role=\"radio\" aria-checked=\"false\">3</button><button role=\"radio\" aria-checked=\"false\">4</button></div>",
+      "css": ".ds-seg{display:inline-flex;border:1px solid var(--rule);}.ds-seg button{min-height:40px;padding:0 12px;font:14px var(--font-gothic),sans-serif;background:transparent;color:var(--sumi);border:0;border-radius:0;cursor:pointer;transition:background-color .2s;}.ds-seg button:hover{background:var(--washi-deep);}.ds-seg button[aria-checked=true]{background:var(--sumi);color:var(--washi);}.ds-seg button:focus-visible{outline:2px solid currentColor;outline-offset:3px;}"
+    },
+    {
+      "name": "Quick Find",
+      "kind": "input",
+      "refersTo": "search-field",
+      "description": "Number, HEX or colour name; a single sumi underline, Mincho entry, shu caret.",
+      "html": "<form class=\"ds-find\"><label>Number, HEX or colour name</label><div class=\"ds-find-row\"><input placeholder=\"e.g. 7, 295, #d96629\"><button aria-label=\"Find\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button></div></form>",
+      "css": ".ds-find label{display:block;margin-bottom:8px;font:14px var(--font-gothic),sans-serif;color:var(--sumi-soft);}.ds-find-row{display:flex;border-bottom:2px solid var(--sumi);font-size:24px;}.ds-find input{flex:1;min-width:0;padding:10px 0;background:transparent;border:0;outline:none;font:inherit;font-family:var(--font-mincho),serif;color:var(--sumi);caret-color:var(--shu);}.ds-find input::placeholder{color:color-mix(in oklch,currentColor 62%,transparent);}.ds-find button{width:48px;display:grid;place-items:center;background:none;border:0;color:var(--sumi);cursor:pointer;}.ds-find-row:focus-within{outline:2px solid var(--sumi);outline-offset:3px;}"
+    },
+    {
+      "name": "Plate Tile",
+      "kind": "card",
+      "refersTo": "cartouche",
+      "description": "One combination as a proof: cartouche, flat field with kento marks, names over HEX.",
+      "html": "<a class=\"ds-plate\" href=\"#\"><div class=\"ds-plate-row\"><span class=\"ds-cartouche\" style=\"font-size:.8rem\">295</span><div class=\"ds-plate-field ds-kento\"><span style=\"background:#F0BF68\"></span><span style=\"background:#FFF200\"></span><span style=\"background:#1E0E3F\"></span><span style=\"background:#006EB8\"></span></div></div><dl class=\"ds-plate-dl\"><div><dt>Cream Yellow</dt><dd>#F0BF68</dd></div><div><dt>Yellow</dt><dd>#FFF200</dd></div><div><dt>Dull Violet Black</dt><dd>#1E0E3F</dd></div><div><dt>Blue</dt><dd>#006EB8</dd></div></dl></a>",
+      "css": ".ds-cartouche{writing-mode:vertical-rl;text-orientation:upright;background:var(--shu);color:oklch(0.985 0.004 90);font-family:var(--font-mincho),serif;font-weight:700;letter-spacing:-0.08em;line-height:1;padding:.5em .3em .62em;box-shadow:inset 0 0 0 1px color-mix(in oklch,var(--sumi) 25%,transparent);}.ds-kento{position:relative;}.ds-kento::before,.ds-kento::after{content:'';position:absolute;pointer-events:none;border-color:currentColor;opacity:.5;}.ds-kento::after{right:-8px;bottom:-8px;width:13px;height:13px;border-right:1px solid;border-bottom:1px solid;}.ds-kento::before{left:10px;bottom:-8px;width:22px;border-bottom:1px solid;}.ds-plate{display:block;width:280px;color:var(--sumi);text-decoration:none;}.ds-plate-row{display:flex;gap:12px;}.ds-plate-field{display:flex;flex:1;aspect-ratio:4/3;transition:transform .5s cubic-bezier(0.16,1,0.3,1);}.ds-plate-field span{flex:1;}.ds-plate:hover .ds-plate-field{transform:translateY(-4px);}.ds-plate:focus-visible{outline:2px solid currentColor;outline-offset:4px;}.ds-plate-dl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 12px;margin:20px 0 0 2.35rem;}.ds-plate-dl dt{font:12.5px var(--font-gothic),sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.ds-plate-dl dd{margin:0;font:12px var(--font-data),monospace;font-stretch:75%;letter-spacing:-0.02em;text-transform:uppercase;color:var(--sumi-soft);}"
+    },
+    {
+      "name": "Label Slip",
+      "kind": "custom",
+      "refersTo": "label-slip",
+      "description": "A plain washi slip naming a full colour field; never textured.",
+      "html": "<div class=\"ds-field\" style=\"background:#D96629\"><p class=\"ds-slip\"><span class=\"ds-slip-name\">Peach Red</span><span class=\"ds-slip-hex\">#D96629</span></p></div>",
+      "css": ".ds-field{display:flex;align-items:flex-end;height:220px;width:200px;padding:20px;}.ds-slip{margin:0;background:var(--washi);color:var(--sumi);padding:8px 12px;box-shadow:0 1px 2px rgb(0 0 0/.12);}.ds-slip-name{display:block;font:600 18px/1.25 var(--font-mincho),serif;}.ds-slip-hex{display:block;font:12px var(--font-data),monospace;text-transform:uppercase;}"
+    },
+    {
+      "name": "Sidebar Rail Item",
+      "kind": "nav",
+      "refersTo": "nav-rail-item",
+      "description": "Active page is a 3px sumi bar, not a hue.",
+      "html": "<nav class=\"ds-rail\"><a href=\"#\" aria-current=\"page\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\"/><path d=\"M3 9h18M3 15h18M9 3v18M15 3v18\"/></svg>All combinations</a><a href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 16v-4M12 8h.01\"/></svg>About</a></nav>",
+      "css": ".ds-rail{display:flex;flex-direction:column;width:248px;border-right:1px solid var(--rule);}.ds-rail a{position:relative;display:flex;align-items:center;gap:14px;height:44px;padding:0 1.4rem;font:15px var(--font-gothic),sans-serif;color:var(--sumi);text-decoration:none;transition:background-color .2s;}.ds-rail a:hover{background:var(--washi-deep);}.ds-rail a::after{content:'';position:absolute;left:0;top:8px;bottom:8px;width:3px;background:var(--sumi);opacity:0;transition:opacity .2s;}.ds-rail a[aria-current=page]::after{opacity:1;}.ds-rail a:focus-visible{outline:2px solid currentColor;outline-offset:-2px;}"
+    },
+    {
+      "name": "Copy Value",
+      "kind": "button",
+      "refersTo": "button-action",
+      "description": "A value that copies itself; Martian Mono, icon confirms.",
+      "html": "<button class=\"ds-copy\">#D96629<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"9\" y=\"9\" width=\"13\" height=\"13\"/><path d=\"M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\"/></svg></button>",
+      "css": ".ds-copy{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0;background:none;border:0;color:var(--sumi);font:12.8px var(--font-data),monospace;font-variant-numeric:tabular-nums;cursor:pointer;}.ds-copy svg{opacity:.4;transition:opacity .2s;}.ds-copy:hover{text-decoration:underline;text-decoration-color:color-mix(in oklch,currentColor 40%,transparent);}.ds-copy:hover svg,.ds-copy:focus-visible svg{opacity:1;}.ds-copy:focus-visible{outline:2px solid currentColor;outline-offset:3px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Proof Room",
+    "overview": "The archive is a printer's proof room. Every combination is pulled as a woodblock colour proof: flat, unmodulated blocks of exact colour, registered on kozo washi by kentō marks and numbered by a vermilion cartouche. The interface is the paper, the ink and the registration; the colours are the print. Type is sumi on washi, set in a Mincho for headings and a Gothic for everything else, with a mono for every value a designer will copy.\n\nDensity favours the working designer. The archive is a packed wall of plates; the plate count and the cartouche are the only ornament. Atmosphere comes from the ground (cool unbleached washi with a faint fibre), from night interludes in ai indigo and sumi, and from one bokashi grade where the hero print meets the paper. Nothing is rounded, nothing floats, nothing is glossy.\n\nThe voice is split in two. Headings and section intros are short, original aphorisms in the cadence of *The Art of War* (\"Know the number of colours, and you know the shape of the battle.\"). Controls, values, labels and credits are plain and exact (\"Copy CSS variables\", \"#D96629\", \"Combinations by Sanzo Wada (1883–1967)\"). The swatch-card grid on a white SaaS page and the cream-serif editorial page are both refused.",
+    "keyCharacteristics": [
+      "Kozo washi ground with a faint fibre; sumi ink for type and key-lines.",
+      "Colour fields are flat, full-strength and untextured; they own whole regions.",
+      "Shu vermilion is reserved for the plate cartouche (plus the input caret and error line).",
+      "Kentō marks (kagi corner, hikitsuke bar) register every printed field.",
+      "Square everywhere: every radius token resolves to 0.",
+      "State is shown by ink marks (bars, ticks, underlines, ink inversion), never by a hue.",
+      "Aphoristic headings; plain, exact controls and values."
+    ],
+    "rules": [
+      {
+        "name": "The Texture Never Touches a Swatch Rule",
+        "body": "The fibre lives on grounds (`body`, `.ground-deep`) only. Every swatch, strip, plate and hero band is a flat fill of the exact HEX. A label slip laid on a swatch is plain washi, never fibre.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Seal Rule",
+        "body": "Shu is the printer's seal. It marks the plate number; it never fills a button, a selection, a link or a heading.",
+        "section": "colors"
+      },
+      {
+        "name": "The Colours Are the Content Rule",
+        "body": "UI colour is limited to washi, sumi, ai and shu. Any other hue on screen is one of Wada's 159 colours, at full strength and labelled with name and value.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Registers Rule",
+        "body": "Mincho speaks (titles, aphorisms, the search entry); Gothic operates (controls, labels, credits); Mono measures (every value). A value is never set in Mincho or Gothic.",
+        "section": "typography"
+      },
+      {
+        "name": "The Exact Value Rule",
+        "body": "Any colour value on screen is set in Data and is one action from the clipboard.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Stack Rule",
+        "body": "Surfaces never float. A new layer is a new paper or a new ink ground, separated by a hairline.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep every swatch a flat fill of its exact HEX, labelled with its name and value (Data, uppercase).",
+      "**Do** register printed fields with kentō marks and number plates with the shu cartouche.",
+      "**Do** mark state with ink: a 3px sumi bar, a sumi tick, a 2px underline, or a sumi inversion.",
+      "**Do** use the fibre ground on washi and deep washi only; change ground (ai, sumi, deep washi) to separate major sections.",
+      "**Do** write headings as short aphorisms in the cadence of *The Art of War*, and controls, values and credits plainly.",
+      "**Do** keep every radius at 0px and every key-line at 1px `rule`.",
+      "**Do** give every interactive target at least 44px (40px in dense toolbars)."
+    ],
+    "donts": [
+      "**Don't** lay texture, gradients, overlays or tints on a swatch.",
+      "**Don't** use shu for anything but the cartouche, the caret and error text; never as a button, selection or link colour.",
+      "**Don't** signal state, selection or meaning by hue alone.",
+      "**Don't** introduce cream grounds, rounded cards or floating shadowed panels.",
+      "**Don't** set colour values in Mincho or Gothic; values are Martian Mono.",
+      "**Don't** reproduce book scans, layouts or editorial text; render everything from data."
+    ]
+  }
+}

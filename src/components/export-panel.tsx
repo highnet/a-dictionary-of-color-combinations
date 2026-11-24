@@ -1,17 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Braces, Download, FileCode2, ImageDown, Link2, Palette as PaletteIcon } from "lucide-react";
 import { toast } from "sonner";
 import { ActionButton, copyText } from "./copy-button";
 import { getPalette } from "@/lib/dictionary";
 import { downloadBlob, paletteCss, paletteHexList, paletteJson, paletteSvg, svgToPngBlob } from "@/lib/export";
 
+const noop = () => () => {};
+
 export function ExportPanel({ id }: { id: number }) {
   const p = getPalette(id)!;
   const [tab, setTab] = useState<"css" | "json">("css");
-  const [url, setUrl] = useState(`/combinations/${p.code}`);
-  useEffect(() => setUrl(window.location.href.split("#")[0]), []);
+  const url = useSyncExternalStore(
+    noop,
+    () => window.location.href.split("#")[0],
+    () => `/combinations/${p.code}`,
+  );
   const css = paletteCss(p);
   const json = paletteJson(p, url);
   const file = `wada-${p.code}`;

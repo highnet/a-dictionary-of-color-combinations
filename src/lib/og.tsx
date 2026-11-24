@@ -6,7 +6,7 @@ export const OG_SIZE = { width: 1200, height: 630 };
 export function ogCard({ colors, title, kicker }: { colors: string[]; title: string; kicker: string }) {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: "#efece4" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", background: "#eceee8" }}>
         <div style={{ display: "flex", flex: 1, margin: "48px 48px 0" }}>
           {colors.map((c, i) => (
             <div key={i} style={{ flex: 1, background: c }} />

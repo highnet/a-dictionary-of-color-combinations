@@ -37,15 +37,14 @@ export default function Home() {
       />
 
       {/* First viewport: the title, the way in, and a plate being printed. */}
-      <section className="shell grid gap-8 pt-0 pb-14 lg:min-h-dvh lg:grid-cols-12 lg:gap-12 lg:py-14">
-        <div className="@container flex flex-col justify-between gap-10 lg:col-span-5">
+      <section className="shell grid grid-cols-1 gap-6 pt-0 pb-14 lg:min-h-dvh lg:grid-cols-12 lg:gap-12 lg:py-14">
+        <div className="@container flex flex-col justify-between gap-6 lg:col-span-5 lg:gap-10">
           <div>
-            <p className="font-data text-xs text-sumi-soft">1933–34 · 348 combinations · 159 colours</p>
-            <h1 className="mt-6 font-display text-[clamp(2.5rem,14cqi,6rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
+            <h1 className="font-display text-[clamp(2.5rem,14cqi,6rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
               A Dictionary of Color Combinations
             </h1>
-            <p className="mt-6 max-w-md text-lg leading-relaxed">
-              Compiled by Sanzo Wada. Every combination, in his order, ready to take into the field.
+            <p className="mt-4 max-w-md text-base leading-relaxed lg:mt-6 lg:text-lg">
+              Compiled by Sanzo Wada, 1933–34. All 348 combinations, in his order, ready to take into the field.
             </p>
           </div>
           <div className="max-w-md space-y-6">
@@ -59,7 +58,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="order-first -mx-[var(--gutter)] h-[min(46svh,26rem)] lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
+        <div className="order-first -mx-[var(--gutter)] h-[min(38svh,22rem)] lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
           <WaveHero plates={plates} />
         </div>
       </section>
@@ -102,7 +101,12 @@ export default function Home() {
               All 348 <ArrowRight className="size-4" aria-hidden="true" />
             </Link>
           </div>
-          <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-8 sm:hidden">
+            {wall.map((p) => (
+              <PlateTile key={p.id} palette={p} density="compact" />
+            ))}
+          </div>
+          <div className="mt-16 hidden grid-cols-2 gap-x-8 gap-y-14 sm:grid lg:grid-cols-4">
             {wall.slice(0, 8).map((p) => (
               <PlateTile key={p.id} palette={p} />
             ))}
@@ -113,7 +117,7 @@ export default function Home() {
       {/* The key block: all 159 colours in Wada's index order. */}
       <section aria-labelledby="index" className="ground-deep">
         <div className="shell py-24 md:py-32">
-          <div className="grid gap-8 md:grid-cols-12">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
             <h2 id="index" className="font-display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05] font-bold md:col-span-7">
               Know every colour, and no combination will surprise you.
             </h2>
@@ -125,11 +129,11 @@ export default function Home() {
             {GROUPS.map((g, gi) => {
               const cols = COLOURS.filter((c) => c.group === gi);
               return (
-                <div key={g} className="grid gap-2 md:grid-cols-[11rem_1fr] md:items-center md:gap-6">
+                <div key={g} className="grid grid-cols-1 gap-2 md:grid-cols-[11rem_1fr] md:items-center md:gap-6">
                   <p className="text-sm text-sumi-soft">{g}</p>
-                  <ul className="flex h-16 md:h-20">
+                  <ul className="grid grid-cols-[repeat(auto-fill,minmax(1.75rem,1fr))]">
                     {cols.map((c) => (
-                      <li key={c.id} className="min-w-0 flex-1">
+                      <li key={c.id} className="h-9 md:h-12">
                         <Link
                           href={`/colours/${c.id}`}
                           title={`${c.name} ${c.hex}`}
@@ -152,7 +156,7 @@ export default function Home() {
 
       {/* The author. */}
       <section aria-labelledby="wada">
-        <div className="shell grid gap-10 py-24 md:grid-cols-12 md:py-32">
+        <div className="shell grid grid-cols-1 gap-10 py-24 md:grid-cols-12 md:py-32">
           <h2 id="wada" className="font-display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05] font-bold md:col-span-6">
             Sanzo Wada, 1883–1967.
           </h2>

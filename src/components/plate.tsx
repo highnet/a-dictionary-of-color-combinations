@@ -32,7 +32,7 @@ export function PlateTile({
             <span key={c.id} className="flex-1" style={{ backgroundColor: c.hex }} />
           ))}
         </div>
-        <p className="mt-3 font-data text-[0.7rem] text-sumi-soft group-hover:text-sumi">{palette.code}</p>
+        <p className="mt-3 font-data text-xs text-sumi-soft group-hover:text-sumi">{palette.code}</p>
       </Link>
     );
   }
@@ -55,7 +55,7 @@ export function PlateTile({
         {palette.colors.map((c) => (
           <div key={c.id} className="min-w-0">
             <dt className="truncate text-[0.78rem] leading-snug" title={c.name}>{c.name}</dt>
-            <dd className="font-data text-[0.68rem] text-sumi-soft uppercase">{c.hex}</dd>
+            <dd className="font-data-narrow text-xs text-sumi-soft uppercase">{c.hex}</dd>
           </div>
         ))}
       </dl>

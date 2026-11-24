@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Plus, X, CircleAlert } from "lucide-react";
 import { CopyValue } from "@/components/copy-button";
 import { PALETTES } from "@/lib/dictionary";
 
@@ -58,7 +58,7 @@ export function CompareView() {
         <button type="submit" className="inline-flex min-h-11 items-center gap-2 border border-sumi px-4 text-sm" disabled={ids.length >= 4}>
           <Plus className="size-4" aria-hidden="true" /> Add
         </button>
-        <p id="cmp-err" role="alert" className="min-h-5 self-center text-sm text-shu">{error}</p>
+        <p id="cmp-err" role="alert" className="min-h-5 self-center text-sm font-medium">{error ? (<><CircleAlert className="mr-1.5 inline size-4 align-[-3px]" aria-hidden="true" />{error}</>) : null}</p>
       </form>
 
       {palettes.length === 0 ? (
