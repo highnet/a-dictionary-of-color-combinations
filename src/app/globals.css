@@ -1,0 +1,291 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Woodblock colour proof.
+ * Washi ground, sumi ink, shu vermilion for the plate cartouche, ai indigo for
+ * the night interludes. Paper texture lives on grounds only, never on a swatch.
+ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-washi: var(--washi);
+  --color-washi-deep: var(--washi-deep);
+  --color-sumi: var(--sumi);
+  --color-sumi-soft: var(--sumi-soft);
+  --color-shu: var(--shu);
+  --color-ai: var(--ai);
+  --color-ai-soft: var(--ai-soft);
+  --color-rule: var(--rule);
+
+  --font-sans: var(--font-gothic);
+  --font-display: var(--font-mincho);
+  --font-heading: var(--font-mincho);
+  --font-mono: var(--font-data);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-4xl: 0px;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  /* Kozo washi: unbleached, cool-leaning so it never reads as cream. */
+  --washi: oklch(0.948 0.009 95);
+  --washi-deep: oklch(0.912 0.012 92);
+  --sumi: oklch(0.215 0.008 60);
+  --sumi-soft: oklch(0.43 0.012 65);
+  --shu: oklch(0.535 0.185 33);
+  --ai: oklch(0.255 0.055 258);
+  --ai-soft: oklch(0.82 0.03 250);
+  --rule: color-mix(in oklch, var(--sumi) 22%, transparent);
+
+  --background: var(--washi);
+  --foreground: var(--sumi);
+  --card: var(--washi);
+  --card-foreground: var(--sumi);
+  --popover: var(--washi);
+  --popover-foreground: var(--sumi);
+  --primary: var(--sumi);
+  --primary-foreground: var(--washi);
+  --secondary: var(--washi-deep);
+  --secondary-foreground: var(--sumi);
+  --muted: var(--washi-deep);
+  --muted-foreground: var(--sumi-soft);
+  --accent: var(--washi-deep);
+  --accent-foreground: var(--sumi);
+  --destructive: var(--shu);
+  --border: var(--rule);
+  --input: color-mix(in oklch, var(--sumi) 45%, transparent);
+  --ring: var(--sumi);
+  --radius: 0px;
+
+  --gutter: clamp(1rem, 3.2vw, 2.75rem);
+  --topbar-h: 3.5rem;
+  --sb-open: 15.5rem;
+  --sb-rail: 4rem;
+  --sb-w: var(--sb-open);
+
+  /* Faint fibre for the paper ground. */
+  --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .18 0 0 0 0 .15 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+}
+
+:root[data-sidebar="collapsed"] {
+  --sb-w: var(--sb-rail);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/60;
+  }
+  html {
+    scroll-padding-top: 1.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (max-width: 1023.98px) {
+    html {
+      scroll-padding-top: calc(var(--topbar-h) + 4rem);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    background-color: var(--washi);
+    background-image: var(--fibre);
+    color: var(--sumi);
+    font-family: var(--font-gothic), system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--sumi);
+    color: var(--washi);
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
+  }
+  input {
+    caret-color: var(--shu);
+  }
+  input::placeholder {
+    color: color-mix(in oklch, currentColor 62%, transparent);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  * {
+    scrollbar-color: color-mix(in oklch, var(--sumi) 40%, transparent) transparent;
+    scrollbar-width: thin;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: var(--font-mincho), "Hiragino Mincho ProN", serif;
+  }
+  .font-data {
+    font-family: var(--font-data), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .shell {
+    width: 100%;
+    max-width: 92rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Night interlude grounds. */
+  .ground-ai {
+    background-color: var(--ai);
+    color: var(--washi);
+    --rule: color-mix(in oklch, var(--washi) 24%, transparent);
+    --sumi-soft: var(--ai-soft);
+  }
+  .ground-sumi {
+    background-color: var(--sumi);
+    color: var(--washi);
+    --rule: color-mix(in oklch, var(--washi) 24%, transparent);
+    --sumi-soft: oklch(0.8 0.01 80);
+  }
+  .ground-deep {
+    background-color: var(--washi-deep);
+    background-image: var(--fibre);
+  }
+
+  /* Kentō registration marks: kagi (corner) at right, hikitsuke (bar) at left. */
+  .kento {
+    position: relative;
+  }
+  .kento::before,
+  .kento::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-color: currentColor;
+    opacity: 0.5;
+  }
+  .kento::after {
+    right: -8px;
+    bottom: -8px;
+    width: 13px;
+    height: 13px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+  }
+  .kento::before {
+    left: 10px;
+    bottom: -8px;
+    width: 22px;
+    border-bottom: 1px solid;
+  }
+
+  /* The vertical plate cartouche. */
+  .cartouche {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    background: var(--shu);
+    color: oklch(0.985 0.004 90);
+    font-family: var(--font-mincho), serif;
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 1;
+    padding: 0.5em 0.3em 0.62em;
+    box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--sumi) 25%, transparent);
+  }
+
+  .hairline {
+    border-top: 1px solid var(--rule);
+  }
+
+  .link-quiet {
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklch, currentColor 35%, transparent);
+    transition: text-decoration-color 0.2s;
+  }
+  .link-quiet:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .plate-tile {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 240px;
+  }
+
+  /* App frame: sidebar (desktop) + content. */
+  .app-frame {
+    min-height: 100dvh;
+  }
+  @media (min-width: 1024px) {
+    .app-frame {
+      display: grid;
+      grid-template-columns: var(--sb-w) minmax(0, 1fr);
+      transition: grid-template-columns 0.35s var(--ease-out-expo);
+    }
+  }
+  .sb-label {
+    transition: opacity 0.2s;
+  }
+  :root[data-sidebar="collapsed"] .sb-label {
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  :root[data-sidebar="collapsed"] .sb-hide {
+    display: none;
+  }
+  :root:not([data-sidebar="collapsed"]) .sb-rail-only {
+    display: none;
+  }
+  :root[data-sidebar="collapsed"] .sb-collapse-icon {
+    transform: rotate(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

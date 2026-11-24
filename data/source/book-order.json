@@ -1,0 +1,1730 @@
+{
+ "1": [
+  "English Red",
+  "Cerulian Blue"
+ ],
+ "2": [
+  "Dark Tyrian Blue",
+  "Yellow Orange"
+ ],
+ "3": [
+  "Pale Lemon Yellow",
+  "Raw Sienna"
+ ],
+ "4": [
+  "Red Violet",
+  "Isabella Color"
+ ],
+ "5": [
+  "Cossack Green",
+  "Vandar Poel's Blue"
+ ],
+ "6": [
+  "Deep Indigo",
+  "Grenadine Pink"
+ ],
+ "7": [
+  "Glaucous Green",
+  "Orange"
+ ],
+ "8": [
+  "Cinnamon Rufous",
+  "Grayish Lavender - A"
+ ],
+ "9": [
+  "Dull Blue Violet",
+  "Violet Red"
+ ],
+ "10": [
+  "Dark Citrine",
+  "Cinnamon Rufous"
+ ],
+ "11": [
+  "Mineral Gray",
+  "Ivory Buff"
+ ],
+ "12": [
+  "Green Blue",
+  "Isabella Color"
+ ],
+ "13": [
+  "Raw Sienna",
+  "Veronia Purple"
+ ],
+ "14": [
+  "Naples Yellow",
+  "Spinel Red"
+ ],
+ "15": [
+  "Grayish Lavender - A",
+  "Benzol Green"
+ ],
+ "16": [
+  "Pale King's Blue",
+  "Vandyke Red"
+ ],
+ "17": [
+  "Eugenia Red | B",
+  "Sea Green"
+ ],
+ "18": [
+  "Dusky Madder Violet",
+  "Fawn"
+ ],
+ "19": [
+  "Night Green",
+  "Mars Brown Tobacco"
+ ],
+ "20": [
+  "Laelia Pink",
+  "Calamine BLue"
+ ],
+ "21": [
+  "Grenadine Pink",
+  "Sea Green"
+ ],
+ "22": [
+  "Deep Lyons Blue",
+  "Yellow"
+ ],
+ "23": [
+  "Light Mauve",
+  "Cinnamon Buff"
+ ],
+ "24": [
+  "Veronia Purple",
+  "Sepia"
+ ],
+ "25": [
+  "Etruscan Red",
+  "Nile Blue"
+ ],
+ "26": [
+  "Pale Raw Umber",
+  "Golden Yellow"
+ ],
+ "27": [
+  "Corinthian Pink",
+  "Slate Color"
+ ],
+ "28": [
+  "Deep Indigo",
+  "Madder Brown"
+ ],
+ "29": [
+  "Salvia Blue",
+  "Krongbergs Green"
+ ],
+ "30": [
+  "Mineral Gray",
+  "Pompeian Red"
+ ],
+ "31": [
+  "Pale Lemon Yellow",
+  "Red Orange"
+ ],
+ "32": [
+  "Night Green",
+  "Ochraceous Salmon"
+ ],
+ "33": [
+  "Raw Sienna",
+  "Slate Color"
+ ],
+ "34": [
+  "Eosine Pink",
+  "Neutral Gray"
+ ],
+ "35": [
+  "Carmine Red",
+  "Light Brown Drab"
+ ],
+ "36": [
+  "Sulphine Yellow",
+  "Turquoise Green"
+ ],
+ "37": [
+  "Red Violet",
+  "Brick Red"
+ ],
+ "38": [
+  "Diamine Green",
+  "Deep Lyons Blue"
+ ],
+ "39": [
+  "Carmine",
+  "Helvetia Blue"
+ ],
+ "40": [
+  "Vinaceous Tawny",
+  "Citron Yellow"
+ ],
+ "41": [
+  "Dark Citrine",
+  "Calamine BLue"
+ ],
+ "42": [
+  "Violet",
+  "Yellow Ocher"
+ ],
+ "43": [
+  "Aconite Violet",
+  "Corinthian Pink"
+ ],
+ "44": [
+  "Olympic Blue",
+  "Light Porcelain Green"
+ ],
+ "45": [
+  "Seashell Pink",
+  "Lemon Yellow"
+ ],
+ "46": [
+  "Orange",
+  "Black"
+ ],
+ "47": [
+  "Grayish Lavender - B",
+  "Etruscan Red"
+ ],
+ "48": [
+  "Rosolanc Purple",
+  "Helvetia Blue"
+ ],
+ "49": [
+  "Pale King's Blue",
+  "Blue"
+ ],
+ "50": [
+  "Dusky Madder Violet",
+  "Ivory Buff"
+ ],
+ "51": [
+  "Blue",
+  "Carmine Red"
+ ],
+ "52": [
+  "Black",
+  "Sulpher Yellow"
+ ],
+ "53": [
+  "Yellow Orange",
+  "Dusky Madder Violet"
+ ],
+ "54": [
+  "Benzol Green",
+  "Light Glaucous Blue"
+ ],
+ "55": [
+  "Old Rose",
+  "White"
+ ],
+ "56": [
+  "Grayish Lavender - B",
+  "Violet"
+ ],
+ "57": [
+  "Taupe Brown",
+  "Slate Color"
+ ],
+ "58": [
+  "Sea Green",
+  "Hay's Russet"
+ ],
+ "59": [
+  "Citrine",
+  "Eosine Pink"
+ ],
+ "60": [
+  "Dark Tyrian Blue",
+  "Pale Lemon Yellow"
+ ],
+ "61": [
+  "Cotinga Purple",
+  "Light Green Yellow"
+ ],
+ "62": [
+  "Black",
+  "Yellow"
+ ],
+ "63": [
+  "Vistoris Lake",
+  "Cerulian Blue"
+ ],
+ "64": [
+  "Aconite Violet",
+  "Dark Soft Violet"
+ ],
+ "65": [
+  "Sulphine Yellow",
+  "Calamine BLue"
+ ],
+ "66": [
+  "Olive Green",
+  "Olive Ocher"
+ ],
+ "67": [
+  "Dark Tyrian Blue",
+  "Olympic Blue"
+ ],
+ "68": [
+  "Yellow",
+  "Light Brown Drab"
+ ],
+ "69": [
+  "Black",
+  "Warm Gray"
+ ],
+ "70": [
+  "Lincoln Green",
+  "Raw Sienna"
+ ],
+ "71": [
+  "Ochraceous Salmon",
+  "Pompeian Red"
+ ],
+ "72": [
+  "Pale King's Blue",
+  "Sulpher Yellow"
+ ],
+ "73": [
+  "Rainette Green",
+  "Pale Raw Umber"
+ ],
+ "74": [
+  "Green Blue",
+  "Turquoise Green"
+ ],
+ "75": [
+  "Pale King's Blue",
+  "Violet Blue"
+ ],
+ "76": [
+  "Pale Lemon Yellow",
+  "Warm Gray"
+ ],
+ "77": [
+  "Eugenia Red | B",
+  "Vandar Poel's Blue"
+ ],
+ "78": [
+  "Venice Green",
+  "Pinkish Cinnamon"
+ ],
+ "79": [
+  "Green Blue",
+  "Madder Brown"
+ ],
+ "80": [
+  "Sulpher Yellow",
+  "Light Mauve"
+ ],
+ "81": [
+  "Golden Yellow",
+  "Warm Gray"
+ ],
+ "82": [
+  "Hay's Russet",
+  "Dusky Madder Violet"
+ ],
+ "83": [
+  "Violet Blue",
+  "Olive Buff"
+ ],
+ "84": [
+  "Seashell Pink",
+  "Deep Slate Green"
+ ],
+ "85": [
+  "Antwarp Blue",
+  "Vinaceous Tawny"
+ ],
+ "86": [
+  "Raw Sienna",
+  "Sea Green"
+ ],
+ "87": [
+  "Citron Yellow",
+  "Corinthian Pink"
+ ],
+ "88": [
+  "Blue",
+  "Seashell Pink"
+ ],
+ "89": [
+  "Yellow Orange",
+  "Violet Blue"
+ ],
+ "90": [
+  "Aconite Violet",
+  "Eosine Pink"
+ ],
+ "91": [
+  "Vistoris Lake",
+  "Orange Rufous"
+ ],
+ "92": [
+  "Coral Red",
+  "Benzol Green"
+ ],
+ "93": [
+  "Light Glaucous Blue",
+  "Citrine"
+ ],
+ "94": [
+  "Dusky Green",
+  "Ivory Buff"
+ ],
+ "95": [
+  "Hay's Russet",
+  "Dull Violet Black"
+ ],
+ "96": [
+  "Olive",
+  "Yellow Ocher"
+ ],
+ "97": [
+  "Corinthian Pink",
+  "Etruscan Red"
+ ],
+ "98": [
+  "Madder Brown",
+  "Violet Blue"
+ ],
+ "99": [
+  "Pale Lemon Yellow",
+  "Cerulian Blue"
+ ],
+ "100": [
+  "Buffy Citrine",
+  "Dull Blue Violet"
+ ],
+ "101": [
+  "Deep Lyons Blue",
+  "Cameo Pink"
+ ],
+ "102": [
+  "Ivory Buff",
+  "Orange Rufous"
+ ],
+ "103": [
+  "Dusky Madder Violet",
+  "Cinnamon Rufous"
+ ],
+ "104": [
+  "Sulpher Yellow",
+  "Carmine Red"
+ ],
+ "105": [
+  "Cameo Pink",
+  "Chromium Green"
+ ],
+ "106": [
+  "Dull Violet Black",
+  "Antwarp Blue"
+ ],
+ "107": [
+  "Light Grayish Olive",
+  "Apricot Yellow"
+ ],
+ "108": [
+  "Eosine Pink",
+  "Brick Red"
+ ],
+ "109": [
+  "Pale Lemon Yellow",
+  "Blackish Olive"
+ ],
+ "110": [
+  "Brown",
+  "Vandyke Brown"
+ ],
+ "111": [
+  "Pale Lemon Yellow",
+  "Yellow Green"
+ ],
+ "112": [
+  "Black",
+  "Grenadine Pink"
+ ],
+ "113": [
+  "Seashell Pink",
+  "Vandyke Brown"
+ ],
+ "114": [
+  "Antwarp Blue",
+  "Orange Yellow"
+ ],
+ "115": [
+  "Naples Yellow",
+  "Peach Red"
+ ],
+ "116": [
+  "Blue Violet",
+  "Cameo Pink"
+ ],
+ "117": [
+  "Carmine",
+  "Black"
+ ],
+ "118": [
+  "Vandyke Brown",
+  "Yellow Ocher"
+ ],
+ "119": [
+  "Dark Tyrian Blue",
+  "Light Glaucous Blue"
+ ],
+ "120": [
+  "Cameo Pink",
+  "Pompeian Red"
+ ],
+ "121": [
+  "Lincoln Green",
+  "Ochraceous Salmon",
+  "Brown"
+ ],
+ "122": [
+  "Benzol Green",
+  "Cream Yellow",
+  "Carmine"
+ ],
+ "123": [
+  "Coral Red",
+  "Taupe Brown",
+  "Lemon Yellow"
+ ],
+ "124": [
+  "Olive Yellow",
+  "Yellow Ocher",
+  "Pale Burnt Lake"
+ ],
+ "125": [
+  "Cerulian Blue",
+  "Fawn",
+  "Violet Blue"
+ ],
+ "126": [
+  "Yellow Ocher",
+  "Deep Lyons Blue",
+  "Ivory Buff"
+ ],
+ "127": [
+  "Cinnamon Buff",
+  "Pistachio Green",
+  "Dark Soft Violet"
+ ],
+ "128": [
+  "Venice Green",
+  "Light Mauve",
+  "Corinthian Pink"
+ ],
+ "129": [
+  "Khaki",
+  "Salvia Blue",
+  "Apricot Yellow"
+ ],
+ "130": [
+  "Carmine Red",
+  "Violet",
+  "Raw Sienna"
+ ],
+ "131": [
+  "English Red",
+  "Peacock Blue",
+  "Raw Sienna"
+ ],
+ "132": [
+  "Citrine",
+  "Golden Yellow",
+  "Sulpher Yellow"
+ ],
+ "133": [
+  "Sea Green",
+  "Vandyke Red",
+  "Citrine"
+ ],
+ "134": [
+  "Eosine Pink",
+  "Light Mauve",
+  "Red Violet"
+ ],
+ "135": [
+  "Salvia Blue",
+  "Sulpher Yellow",
+  "Cossack Green"
+ ],
+ "136": [
+  "Red Violet",
+  "Scarlet",
+  "Dull Viridian Green"
+ ],
+ "137": [
+  "Etruscan Red",
+  "Pistachio Green",
+  "Cinnamon Buff"
+ ],
+ "138": [
+  "Golden Yellow",
+  "Venice Green",
+  "Lemon Yellow"
+ ],
+ "139": [
+  "Neutral Gray",
+  "Deep Indigo",
+  "Salvia Blue"
+ ],
+ "140": [
+  "Golden Yellow",
+  "Slate Color",
+  "Antwarp Blue"
+ ],
+ "141": [
+  "Orange",
+  "Dark Tyrian Blue",
+  "Yellow Green"
+ ],
+ "142": [
+  "Hydrangea Red",
+  "Salvia Blue",
+  "Sulphine Yellow"
+ ],
+ "143": [
+  "Warm Gray",
+  "Blue",
+  "Lilac"
+ ],
+ "144": [
+  "Orange",
+  "Black",
+  "Rosolanc Purple"
+ ],
+ "145": [
+  "Dull Violet Black",
+  "Brown",
+  "Citron Yellow"
+ ],
+ "146": [
+  "Khaki",
+  "Diamine Green",
+  "Deep Grayish Olive"
+ ],
+ "147": [
+  "Turquoise Green",
+  "Vandyke Red",
+  "Spinel Red"
+ ],
+ "148": [
+  "Orange Yellow",
+  "Cerulian Blue",
+  "Olive Ocher"
+ ],
+ "149": [
+  "Deep Slate Green",
+  "Orange",
+  "Olive Ocher"
+ ],
+ "150": [
+  "Seashell Pink",
+  "Citron Yellow",
+  "Glaucous Green"
+ ],
+ "151": [
+  "Yellow Orange",
+  "Vandar Poel's Blue",
+  "Sulpher Yellow"
+ ],
+ "152": [
+  "Etruscan Red",
+  "Light Glaucous Blue",
+  "Hay's Russet"
+ ],
+ "153": [
+  "Eosine Pink",
+  "Orange Yellow",
+  "Citron Yellow"
+ ],
+ "154": [
+  "Carmine",
+  "Yellow",
+  "Blue"
+ ],
+ "155": [
+  "Benzol Green",
+  "Jasper Red",
+  "Deep Indigo"
+ ],
+ "156": [
+  "Violet",
+  "Olive Ocher",
+  "Cobalt Green"
+ ],
+ "157": [
+  "Pansy Purple",
+  "Olive Ocher",
+  "Olympic Blue"
+ ],
+ "158": [
+  "Cinnamon Rufous",
+  "Night Green",
+  "Lemon Yellow"
+ ],
+ "159": [
+  "Calamine BLue",
+  "Khaki",
+  "Grayish Lavender - A"
+ ],
+ "160": [
+  "Dark Medici Blue",
+  "Pale Raw Umber",
+  "Sulphine Yellow"
+ ],
+ "161": [
+  "Pinkish Cinnamon",
+  "Helvetia Blue",
+  "Brown"
+ ],
+ "162": [
+  "Rainette Green",
+  "Old Rose",
+  "Lilac"
+ ],
+ "163": [
+  "Turquoise Green",
+  "Antwarp Blue",
+  "Apricot Yellow"
+ ],
+ "164": [
+  "Orange Yellow",
+  "Violet",
+  "Red Orange"
+ ],
+ "165": [
+  "Vistoris Lake",
+  "Spinel Red",
+  "Cameo Pink"
+ ],
+ "166": [
+  "Grenadine Pink",
+  "Naples Yellow",
+  "Deep Slate Green"
+ ],
+ "167": [
+  "Pale King's Blue",
+  "Ecru",
+  "Vandar Poel's Blue"
+ ],
+ "168": [
+  "Vandar Poel's Blue",
+  "Lemon Yellow",
+  "Veronia Purple"
+ ],
+ "169": [
+  "Corinthian Pink",
+  "Warm Gray",
+  "Pale Lemon Yellow"
+ ],
+ "170": [
+  "Rosolanc Purple",
+  "Orange Yellow",
+  "Red Violet"
+ ],
+ "171": [
+  "Yellow Orange",
+  "Glaucous Green",
+  "Pale Burnt Lake"
+ ],
+ "172": [
+  "Antwarp Blue",
+  "Red Violet",
+  "Cinnamon Rufous"
+ ],
+ "173": [
+  "Lemon Yellow",
+  "Madder Brown",
+  "Turquoise Green"
+ ],
+ "174": [
+  "Taupe Brown",
+  "Grayish Lavender - B",
+  "Corinthian Pink"
+ ],
+ "175": [
+  "Olive Buff",
+  "Pinkish Cinnamon",
+  "Blue Violet"
+ ],
+ "176": [
+  "Calamine BLue",
+  "Hermosa Pink",
+  "Seashell Pink"
+ ],
+ "177": [
+  "Buffy Citrine",
+  "Pale Burnt Lake",
+  "Grayish Lavender - A"
+ ],
+ "178": [
+  "Light Glaucous Blue",
+  "Ivory Buff",
+  "Green Blue"
+ ],
+ "179": [
+  "Red Orange",
+  "Deep Lyons Blue",
+  "Golden Yellow"
+ ],
+ "180": [
+  "Light Mauve",
+  "Neutral Gray",
+  "Cinnamon Buff"
+ ],
+ "181": [
+  "Cotinga Purple",
+  "Violet",
+  "Carmine Red"
+ ],
+ "182": [
+  "Vandyke Brown",
+  "Raw Sienna",
+  "Deep Indigo"
+ ],
+ "183": [
+  "Veronia Purple",
+  "Red Violet",
+  "Deep Violet / Plumbeous"
+ ],
+ "184": [
+  "Light Grayish Olive",
+  "Ivory Buff",
+  "Spinel Red"
+ ],
+ "185": [
+  "Pale Lemon Yellow",
+  "Light Brown Drab",
+  "Etruscan Red"
+ ],
+ "186": [
+  "Hay's Russet",
+  "Blue",
+  "Ochraceous Salmon"
+ ],
+ "187": [
+  "Grayish Lavender - B",
+  "Helvetia Blue",
+  "Aconite Violet"
+ ],
+ "188": [
+  "Cobalt Green",
+  "Rainette Green",
+  "Salvia Blue"
+ ],
+ "189": [
+  "Venice Green",
+  "Lemon Yellow",
+  "Deep Slate Olive"
+ ],
+ "190": [
+  "Black",
+  "English Red",
+  "Ivory Buff"
+ ],
+ "191": [
+  "Blue",
+  "Light Brown Drab",
+  "Yellow Ocher"
+ ],
+ "192": [
+  "Cream Yellow",
+  "Deep Violet / Plumbeous",
+  "Vandyke Brown"
+ ],
+ "193": [
+  "Light Porcelain Green",
+  "Naples Yellow",
+  "Grenadine Pink"
+ ],
+ "194": [
+  "Jasper Red",
+  "Olympic Blue",
+  "Seashell Pink"
+ ],
+ "195": [
+  "Spinel Red",
+  "Pale Lemon Yellow",
+  "Neutral Gray"
+ ],
+ "196": [
+  "Citron Yellow",
+  "Blue Violet",
+  "Pale King's Blue"
+ ],
+ "197": [
+  "Dark Soft Violet",
+  "Eosine Pink",
+  "Neutral Gray"
+ ],
+ "198": [
+  "Green",
+  "Apricot Yellow",
+  "Burnt Sienna"
+ ],
+ "199": [
+  "Deep Lyons Blue",
+  "Ochre Red",
+  "Light Brownish Olive"
+ ],
+ "200": [
+  "Olive Buff",
+  "Carmine Red",
+  "Chromium Green"
+ ],
+ "201": [
+  "Olive",
+  "Grenadine Pink",
+  "Cobalt Green"
+ ],
+ "202": [
+  "Cobalt Green",
+  "Slate Color",
+  "Turquoise Green"
+ ],
+ "203": [
+  "Vinaceous Cinnamon",
+  "Lincoln Green",
+  "Pale Lemon Yellow"
+ ],
+ "204": [
+  "Rosolanc Purple",
+  "Light Glaucous Blue",
+  "Cinnamon Rufous"
+ ],
+ "205": [
+  "Vinaceous Cinnamon",
+  "Pale Burnt Lake",
+  "Violet"
+ ],
+ "206": [
+  "Corinthian Pink",
+  "Cinnamon Rufous",
+  "Golden Yellow"
+ ],
+ "207": [
+  "Black",
+  "Glaucous Green",
+  "Sudan Brown"
+ ],
+ "208": [
+  "Green Blue",
+  "Sulpher Yellow",
+  "Antwarp Blue"
+ ],
+ "209": [
+  "Yellow Orange",
+  "Salvia Blue",
+  "Ivory Buff"
+ ],
+ "210": [
+  "Lemon Yellow",
+  "Lincoln Green",
+  "Cinnamon Buff"
+ ],
+ "211": [
+  "Deep Indigo",
+  "Apricot Orange",
+  "Olive Yellow"
+ ],
+ "212": [
+  "Orange Citrine",
+  "Salvia Blue",
+  "Pompeian Red"
+ ],
+ "213": [
+  "Apricot Yellow",
+  "Pale King's Blue",
+  "Vinaceous Cinnamon"
+ ],
+ "214": [
+  "Sudan Brown",
+  "Ivory Buff",
+  "Violet"
+ ],
+ "215": [
+  "Eupatorium Purple",
+  "Cream Yellow",
+  "Blue"
+ ],
+ "216": [
+  "Jasper Red",
+  "Black",
+  "Green"
+ ],
+ "217": [
+  "Pale Burnt Lake",
+  "Ochraceous Salmon",
+  "Diamine Green"
+ ],
+ "218": [
+  "Deep Violet / Plumbeous",
+  "Grayish Lavender - A",
+  "Helvetia Blue"
+ ],
+ "219": [
+  "Jasper Red",
+  "Dusky Green",
+  "Chromium Green"
+ ],
+ "220": [
+  "Aconite Violet",
+  "Pomegranite Purple",
+  "Ochraceous Salmon"
+ ],
+ "221": [
+  "Black",
+  "Carmine Red",
+  "Neutral Gray"
+ ],
+ "222": [
+  "Yellow Orange",
+  "Yellow Ocher",
+  "Orange Rufous"
+ ],
+ "223": [
+  "Light Brown Drab",
+  "Ochraceous Salmon",
+  "Turquoise Green"
+ ],
+ "224": [
+  "Dark Medici Blue",
+  "Spinel Red",
+  "Taupe Brown"
+ ],
+ "225": [
+  "Dark Slate Purple",
+  "Dusky Green",
+  "Carmine"
+ ],
+ "226": [
+  "Violet",
+  "Cream Yellow",
+  "Vistoris Lake"
+ ],
+ "227": [
+  "Cerulian Blue",
+  "Light Glaucous Blue",
+  "Hermosa Pink"
+ ],
+ "228": [
+  "Carmine Red",
+  "Neutral Gray",
+  "Pale Lemon Yellow"
+ ],
+ "229": [
+  "Neutral Gray",
+  "Deep Slate Olive",
+  "Golden Yellow"
+ ],
+ "230": [
+  "Grenadine Pink",
+  "Turquoise Green",
+  "Cobalt Green"
+ ],
+ "231": [
+  "Hay's Russet",
+  "Cameo Pink",
+  "Olympic Blue"
+ ],
+ "232": [
+  "Deep Indigo",
+  "Carmine",
+  "Pinkish Cinnamon"
+ ],
+ "233": [
+  "Violet Blue",
+  "Carmine Red",
+  "Buffy Citrine"
+ ],
+ "234": [
+  "Pale King's Blue",
+  "Pale Raw Umber",
+  "Cinnamon Buff"
+ ],
+ "235": [
+  "Yellow Orange",
+  "Ivory Buff",
+  "Grayish Lavender - B"
+ ],
+ "236": [
+  "Purple Drab",
+  "Deep Lyons Blue",
+  "Khaki"
+ ],
+ "237": [
+  "Carmine Red",
+  "Salvia Blue",
+  "Madder Brown"
+ ],
+ "238": [
+  "Warm Gray",
+  "Cotinga Purple",
+  "Ochraceous Salmon"
+ ],
+ "239": [
+  "Light Brown Drab",
+  "Glaucous Green",
+  "Pyrite Yellow"
+ ],
+ "240": [
+  "Fresh Color",
+  "Cerulian Blue",
+  "Yellow"
+ ],
+ "241": [
+  "Red Orange",
+  "Dark Medici Blue",
+  "Pale Lemon Yellow",
+  "Isabella Color"
+ ],
+ "242": [
+  "Eosine Pink",
+  "Diamine Green",
+  "Burnt Sienna",
+  "Black"
+ ],
+ "243": [
+  "Raw Sienna",
+  "Olive Green",
+  "Ivory Buff",
+  "Slate Color"
+ ],
+ "244": [
+  "Light Brown Drab",
+  "Antwarp Blue",
+  "Vinaceous Tawny",
+  "Andover Green"
+ ],
+ "245": [
+  "Oil Green",
+  "Slate Color",
+  "Dark Tyrian Blue",
+  "Carmine Red"
+ ],
+ "246": [
+  "Brick Red",
+  "Corinthian Pink",
+  "Sulpher Yellow",
+  "Cinnamon Buff"
+ ],
+ "247": [
+  "Raw Sienna",
+  "Benzol Green",
+  "Deep Lyons Blue",
+  "Apricot Yellow"
+ ],
+ "248": [
+  "Grayish Lavender - A",
+  "Khaki",
+  "Eosine Pink",
+  "Dark Slate Purple"
+ ],
+ "249": [
+  "Olive Ocher",
+  "Dark Medici Blue",
+  "Hay's Russet",
+  "Ecru"
+ ],
+ "250": [
+  "Pyrite Yellow",
+  "Peach Red",
+  "Sea Green",
+  "Nile Blue"
+ ],
+ "251": [
+  "Red",
+  "Diamine Green",
+  "Slate Color",
+  "Yellow"
+ ],
+ "252": [
+  "Eugenia Red | B",
+  "Sulphine Yellow",
+  "Green Blue",
+  "Raw Sienna"
+ ],
+ "253": [
+  "Apricot Orange",
+  "Lemon Yellow",
+  "Cotinga Purple",
+  "Slate Color"
+ ],
+ "254": [
+  "Laelia Pink",
+  "Olive",
+  "Sulpher Yellow",
+  "Corinthian Pink"
+ ],
+ "255": [
+  "Calamine BLue",
+  "Black",
+  "Pyrite Yellow",
+  "Raw Sienna"
+ ],
+ "256": [
+  "Black",
+  "Orange",
+  "Vinaceous Cinnamon",
+  "Dull Viridian Green"
+ ],
+ "257": [
+  "Blue",
+  "Spectrum Red",
+  "Aconite Violet",
+  "Orange Yellow"
+ ],
+ "258": [
+  "Pinkish Cinnamon",
+  "Olive",
+  "Pale Burnt Lake",
+  "Antwarp Blue"
+ ],
+ "259": [
+  "Green Blue",
+  "Warm Gray",
+  "Lemon Yellow",
+  "Helvetia Blue"
+ ],
+ "260": [
+  "Old Rose",
+  "Sea Green",
+  "Glaucous Green",
+  "Vinaceous Cinnamon"
+ ],
+ "261": [
+  "Warm Gray",
+  "Red",
+  "Pale Lemon Yellow",
+  "Calamine BLue"
+ ],
+ "262": [
+  "Ivory Buff",
+  "Eugenia Red | B",
+  "Cossack Green",
+  "Citrine"
+ ],
+ "263": [
+  "Pinkish Cinnamon",
+  "Slate Color",
+  "Burnt Sienna",
+  "Turquoise Green"
+ ],
+ "264": [
+  "Corinthian Pink",
+  "Cerulian Blue",
+  "Red Orange",
+  "Dark Greenish Glaucous"
+ ],
+ "265": [
+  "Olive Yellow",
+  "Old Rose",
+  "Dull Violet Black",
+  "Apricot Yellow"
+ ],
+ "266": [
+  "Spectrum Red",
+  "Ivory Buff",
+  "Rainette Green",
+  "Benzol Green"
+ ],
+ "267": [
+  "Blue",
+  "Yellow Orange",
+  "Benzol Green",
+  "Cream Yellow"
+ ],
+ "268": [
+  "Deep Slate Olive",
+  "Light Brown Drab",
+  "Nile Blue",
+  "Raw Sienna"
+ ],
+ "269": [
+  "Aconite Violet",
+  "Pale Burnt Lake",
+  "Raw Sienna",
+  "Black"
+ ],
+ "270": [
+  "Sulpher Yellow",
+  "Eugenia Red | B",
+  "Olive Green",
+  "Cossack Green"
+ ],
+ "271": [
+  "Cobalt Green",
+  "Deep Slate Green",
+  "Pomegranite Purple",
+  "Green Blue"
+ ],
+ "272": [
+  "Salvia Blue",
+  "Turquoise Green",
+  "Orange",
+  "Pale Lemon Yellow"
+ ],
+ "273": [
+  "Pansy Purple",
+  "Neutral Gray",
+  "Hermosa Pink",
+  "Sudan Brown"
+ ],
+ "274": [
+  "Dark Citrine",
+  "Light Mauve",
+  "Peach Red",
+  "Olympic Blue"
+ ],
+ "275": [
+  "Etruscan Red",
+  "Ecru",
+  "Madder Brown",
+  "Taupe Brown"
+ ],
+ "276": [
+  "Seashell Pink",
+  "Black",
+  "Eosine Pink",
+  "Yellow Green"
+ ],
+ "277": [
+  "Spinel Red",
+  "Dull Violet Black",
+  "Olive",
+  "Rosolanc Purple"
+ ],
+ "278": [
+  "Olive Ocher",
+  "Dusky Green",
+  "Cossack Green",
+  "Cream Yellow"
+ ],
+ "279": [
+  "Raw Sienna",
+  "Dark Tyrian Blue",
+  "Vinaceous Cinnamon",
+  "Ecru"
+ ],
+ "280": [
+  "Lincoln Green",
+  "Taupe Brown",
+  "Eugenia Red | B",
+  "Laelia Pink"
+ ],
+ "281": [
+  "Antwarp Blue",
+  "Benzol Green",
+  "Pale Lemon Yellow",
+  "Cobalt Green"
+ ],
+ "282": [
+  "Lilac",
+  "Maple",
+  "Cobalt Green",
+  "Eugenia Red | B"
+ ],
+ "283": [
+  "Pale Burnt Lake",
+  "Chromium Green",
+  "Venice Green",
+  "Ochre Red"
+ ],
+ "284": [
+  "Eugenia Red | A",
+  "Sea Green",
+  "Apricot Yellow",
+  "Dusky Green"
+ ],
+ "285": [
+  "Light Brown Drab",
+  "Peach Red",
+  "Burnt Sienna",
+  "Turquoise Green"
+ ],
+ "286": [
+  "Orange Yellow",
+  "Peacock Blue",
+  "Burnt Sienna",
+  "Violet Blue"
+ ],
+ "287": [
+  "Pale King's Blue",
+  "Eosine Pink",
+  "Pyrite Yellow",
+  "Calamine BLue"
+ ],
+ "288": [
+  "Yellow Orange",
+  "Taupe Brown",
+  "Sepia",
+  "Black"
+ ],
+ "289": [
+  "Dull Violet Black",
+  "Lemon Yellow",
+  "Violet Blue",
+  "Light Green Yellow"
+ ],
+ "290": [
+  "Lincoln Green",
+  "Vistoris Lake",
+  "Pale Lemon Yellow",
+  "Cobalt Green"
+ ],
+ "291": [
+  "Calamine BLue",
+  "Cobalt Green",
+  "Sea Green",
+  "Light Green Yellow"
+ ],
+ "292": [
+  "Pale Lemon Yellow",
+  "Ecru",
+  "Pinkish Cinnamon",
+  "Isabella Color"
+ ],
+ "293": [
+  "Raw Sienna",
+  "Turquoise Green",
+  "Artemesia Green",
+  "Green"
+ ],
+ "294": [
+  "Cossack Green",
+  "Cream Yellow",
+  "Salvia Blue",
+  "Sulpher Yellow"
+ ],
+ "295": [
+  "Cream Yellow",
+  "Yellow",
+  "Dull Violet Black",
+  "Blue"
+ ],
+ "296": [
+  "Pale Raw Umber",
+  "Ochraceous Salmon",
+  "Sulpher Yellow",
+  "Slate Color"
+ ],
+ "297": [
+  "Burnt Sienna",
+  "Yellow Orange",
+  "Violet Blue",
+  "Olive Green"
+ ],
+ "298": [
+  "Lemon Yellow",
+  "Peach Red",
+  "Raw Sienna",
+  "Black"
+ ],
+ "299": [
+  "Oil Green",
+  "Vinaceous Cinnamon",
+  "Antwarp Blue",
+  "Indian Lake"
+ ],
+ "300": [
+  "Calamine BLue",
+  "Cream Yellow",
+  "Grenadine Pink",
+  "Turquoise Green"
+ ],
+ "301": [
+  "Spectrum Red",
+  "Ivory Buff",
+  "Aconite Violet",
+  "Rainette Green"
+ ],
+ "302": [
+  "Cream Yellow",
+  "Ecru",
+  "Antwarp Blue",
+  "Nile Blue"
+ ],
+ "303": [
+  "Naples Yellow",
+  "Peach Red",
+  "Neutral Gray",
+  "Deep Slate Olive"
+ ],
+ "304": [
+  "Benzol Green",
+  "Cream Yellow",
+  "Dark Citrine",
+  "Hay's Russet"
+ ],
+ "305": [
+  "Pinkish Cinnamon",
+  "Apricot Yellow",
+  "Turquoise Green",
+  "Citron Yellow"
+ ],
+ "306": [
+  "Dull Viridian Green",
+  "Nile Blue",
+  "Benzol Green",
+  "Lemon Yellow"
+ ],
+ "307": [
+  "Cotinga Purple",
+  "Grayish Lavender - A",
+  "Carmine",
+  "Aconite Violet"
+ ],
+ "308": [
+  "English Red",
+  "Fawn",
+  "Cobalt Green",
+  "Scarlet"
+ ],
+ "309": [
+  "Golden Yellow",
+  "Apricot Orange",
+  "Vandar Poel's Blue",
+  "Violet Blue"
+ ],
+ "310": [
+  "Olive",
+  "Pinkish Cinnamon",
+  "Deep Slate Olive",
+  "Sulpher Yellow"
+ ],
+ "311": [
+  "Pompeian Red",
+  "Dark Greenish Glaucous",
+  "Cream Yellow",
+  "Light Green Yellow"
+ ],
+ "312": [
+  "Burnt Sienna",
+  "Artemesia Green",
+  "Helvetia Blue",
+  "Yellow Orange"
+ ],
+ "313": [
+  "Carmine",
+  "Black",
+  "Diamine Green",
+  "Yellow"
+ ],
+ "314": [
+  "Dusky Madder Violet",
+  "Deep Lyons Blue",
+  "Eosine Pink",
+  "Hay's Russet"
+ ],
+ "315": [
+  "Golden Yellow",
+  "Eupatorium Purple",
+  "Sulpher Yellow",
+  "Grenadine Pink"
+ ],
+ "316": [
+  "Red Violet",
+  "Vandyke Red",
+  "Dull Viridian Green",
+  "Violet"
+ ],
+ "317": [
+  "Turquoise Green",
+  "Light Pinkish Cinnamon",
+  "Lemon Yellow",
+  "Ecru"
+ ],
+ "318": [
+  "Light Brownish Olive",
+  "Deep Slate Green",
+  "Dusky Green",
+  "Blackish Olive"
+ ],
+ "319": [
+  "Apricot Yellow",
+  "Yellow Orange",
+  "Raw Sienna",
+  "Cossack Green"
+ ],
+ "320": [
+  "Oil Green",
+  "Coral Red",
+  "Light Glaucous Blue",
+  "Sulpher Yellow"
+ ],
+ "321": [
+  "Sulpher Yellow",
+  "Salvia Blue",
+  "Light Brown Drab",
+  "Deep Slate Olive"
+ ],
+ "322": [
+  "Blue Violet",
+  "Eupatorium Purple",
+  "Brick Red",
+  "Spectrum Red"
+ ],
+ "323": [
+  "Cinnamon Buff",
+  "Citron Yellow",
+  "Black",
+  "Madder Brown"
+ ],
+ "324": [
+  "Pompeian Red",
+  "Aconite Violet",
+  "Olympic Blue",
+  "Neutral Gray"
+ ],
+ "325": [
+  "Deep Slate Green",
+  "Naples Yellow",
+  "Eugenia Red | B",
+  "Yellow Ocher"
+ ],
+ "326": [
+  "Night Green",
+  "Sulpher Yellow",
+  "Peach Red",
+  "Yellow Green"
+ ],
+ "327": [
+  "Ecru",
+  "Eosine Pink",
+  "Grayish Lavender - B",
+  "Raw Sienna"
+ ],
+ "328": [
+  "Brick Red",
+  "Light Porcelain Green",
+  "Apricot Orange",
+  "Vandyke Brown"
+ ],
+ "329": [
+  "Slate Color",
+  "Cream Yellow",
+  "Grayish Lavender - B",
+  "Cotinga Purple"
+ ],
+ "330": [
+  "Nile Blue",
+  "Salvia Blue",
+  "Olive Buff",
+  "Green Blue"
+ ],
+ "331": [
+  "Light Mauve",
+  "Violet",
+  "Indian Lake",
+  "Dull Violet Black"
+ ],
+ "332": [
+  "Deep Slate Olive",
+  "Dusky Green",
+  "Coral Red",
+  "Scarlet"
+ ],
+ "333": [
+  "Cobalt Green",
+  "Lemon Yellow",
+  "Burnt Sienna",
+  "Blue"
+ ],
+ "334": [
+  "Olive",
+  "Antwarp Blue",
+  "Yellow Green",
+  "Seashell Pink"
+ ],
+ "335": [
+  "Vandyke Red",
+  "Slate Color",
+  "Yellow Orange",
+  "Violet"
+ ],
+ "336": [
+  "Hay's Russet",
+  "Eosine Pink",
+  "Pale Lemon Yellow",
+  "Blackish Olive"
+ ],
+ "337": [
+  "Vistoris Lake",
+  "Violet Carmine",
+  "Black",
+  "Laelia Pink"
+ ],
+ "338": [
+  "Orange Yellow",
+  "Grayish Lavender - B",
+  "Dusky Green",
+  "Carmine Red"
+ ],
+ "339": [
+  "English Red",
+  "Ochraceous Salmon",
+  "Violet Blue",
+  "Light Glaucous Blue"
+ ],
+ "340": [
+  "Peach Red",
+  "Sea Green",
+  "Black",
+  "Neutral Gray"
+ ],
+ "341": [
+  "Cossack Green",
+  "Light Glaucous Blue",
+  "Deep Slate Olive",
+  "Grenadine Pink"
+ ],
+ "342": [
+  "Deep Slate Olive",
+  "Cream Yellow",
+  "Corinthian Pink",
+  "Orange Citrine"
+ ],
+ "343": [
+  "Ivory Buff",
+  "Deep Grayish Olive",
+  "Vandar Poel's Blue",
+  "Burnt Sienna"
+ ],
+ "344": [
+  "Aconite Violet",
+  "Cinnamon Buff",
+  "Black",
+  "Deep Lyons Blue"
+ ],
+ "345": [
+  "Blue Violet",
+  "Hay's Russet",
+  "Nile Blue",
+  "Venice Green"
+ ],
+ "346": [
+  "Light Green Yellow",
+  "Rosolanc Purple",
+  "Andover Green",
+  "Turquoise Green"
+ ],
+ "347": [
+  "Sea Green",
+  "Helvetia Blue",
+  "Lilac",
+  "Olive Yellow"
+ ],
+ "348": [
+  "Cotinga Purple",
+  "Cossack Green",
+  "Deep Slate Olive",
+  "Olive Buff"
+ ]
+}
