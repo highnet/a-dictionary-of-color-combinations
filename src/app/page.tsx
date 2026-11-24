@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { WaveScene } from "@/components/wave-scene/WaveScene";
+import { HeroPrint, type PrintPlate } from "@/components/hero-print/HeroPrint";
 import { QuickFind } from "@/components/quick-find";
 import { PlateTile, Strip } from "@/components/plate";
 import { JsonLd } from "@/components/json-ld";
@@ -13,6 +13,13 @@ const CHAPTERS = [
   { n: 3, title: "Three colours", line: "Three: a position held.", range: "121–240", sample: [154, 151, 240] },
   { n: 4, title: "Four colours", line: "Four: an order of battle.", range: "241–348", sample: [295, 313, 289] },
 ] as const;
+
+// Four-colour combinations with the widest value range, so every plate reads.
+const PRINT_PLATES: PrintPlate[] = PALETTES.filter((p) => p.size === 4)
+  .sort((a, b) => b.metrics.lightnessRange - a.metrics.lightnessRange)
+  .slice(0, 16)
+  .sort((a, b) => a.id - b.id)
+  .map((p) => ({ code: p.code, colors: p.colors.map(({ id, name, hex }) => ({ id, name, hex })) }));
 
 export default function Home() {
   const wall = FEATURED.map((id) => getPalette(id)!);
@@ -56,7 +63,7 @@ export default function Home() {
           </div>
         </div>
         <div className="order-first -mx-[var(--gutter)] h-[min(31svh,22rem)] overflow-x-clip lg:overflow-visible lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
-          <WaveScene />
+          <HeroPrint plates={PRINT_PLATES} />
         </div>
       </section>
 
@@ -204,9 +211,14 @@ export default function Home() {
           <div className="space-y-5 text-lg leading-relaxed md:col-span-5 md:col-start-8">
             <p>Painter. Costume designer. Teacher. Founder of the Japan Standard Color Association, 1927.</p>
             <p>He set down these {PALETTES.length} combinations in six volumes, 1933–34. They are still in service.</p>
-            <Link href="/about" className="link-quiet inline-flex min-h-11 items-center gap-2 text-base">
-              Sources &amp; method <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
+            <div className="flex flex-wrap gap-x-6">
+              <Link href="/wada" className="link-quiet inline-flex min-h-11 items-center gap-2 text-base">
+                His life <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+              <Link href="/about" className="link-quiet inline-flex min-h-11 items-center gap-2 text-base">
+                Sources &amp; method <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import { COLOURS, PALETTES } from "@/lib/dictionary";
 import { SITE } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["", "/combinations", "/colours", "/explore", "/compare", "/about"].map((p) => ({
+  const pages = ["", "/combinations", "/colours", "/explore", "/compare", "/wada", "/about"].map((p) => ({
     url: `${SITE.url}${p}`,
     changeFrequency: "monthly" as const,
     priority: p === "" ? 1 : 0.8,

@@ -32,6 +32,7 @@ export function SiteFooter() {
             <li><Link className="link-quiet" href="/combinations">All combinations</Link></li>
             <li><Link className="link-quiet" href="/colours">Colour search</Link></li>
             <li><Link className="link-quiet" href="/explore">Explore</Link></li>
+            <li><Link className="link-quiet" href="/wada">Sanzo Wada</Link></li>
             <li><Link className="link-quiet" href="/about">About &amp; sources</Link></li>
             <li><a className="link-quiet" href="/sitemap.xml">Sitemap</a></li>
           </ul>

@@ -16,6 +16,7 @@ export const NAV = [
   { href: "/explore", label: "Explore", icon: "compass" },
   { href: "/combinations", label: "All combinations", icon: "grid" },
   { href: "/colours", label: "Colour search", icon: "pipette" },
+  { href: "/wada", label: "Sanzo Wada", icon: "brush" },
   { href: "/about", label: "About", icon: "info" },
   { href: "/#agents", label: "For agents", icon: "bot" },
 ] as const;
