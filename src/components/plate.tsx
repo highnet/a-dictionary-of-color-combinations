@@ -3,6 +3,13 @@ import type { Palette } from "@/lib/dictionary";
 
 type Density = "compact" | "expanded";
 
+// One HEX code is ~4.5rem wide in the data face. Below these tile widths the
+// codes can't sit one per block, so they wrap into two columns with chips.
+const COLS = { 2: "grid-cols-2", 3: "grid-cols-3 @max-[16rem]:grid-cols-2", 4: "grid-cols-4 @max-[21rem]:grid-cols-2" } as const;
+const CHIP = { 2: "hidden", 3: "hidden @max-[16rem]:block", 4: "hidden @max-[21rem]:block" } as const;
+// Names need more room than codes; narrower tiles keep them for screen readers only.
+const NAME = { 2: "", 3: "@max-[17rem]:sr-only", 4: "@max-[24rem]:sr-only" } as const;
+
 /**
  * One combination pulled as a proof: flat blocks in book order, registered by
  * kentō marks, numbered with the vermilion cartouche.
@@ -51,18 +58,21 @@ export function PlateTile({
         </div>
       </Link>
       <H className="sr-only">Combination {palette.code}</H>
-      <dl className="mt-5 ml-[2.35rem] grid gap-x-3 gap-y-1.5" style={{ gridTemplateColumns: `repeat(${palette.size}, minmax(0,1fr))` }}>
+      {/* Values sit under their blocks. When the tile is too narrow for one code per
+          block, they re-flow into two columns and each code carries its own chip. */}
+      <dl className={`mt-5 ml-[2.35rem] grid gap-x-3 gap-y-1.5 ${COLS[palette.size]}`}>
         {palette.colors.map((c) => (
           <div key={c.id} className="min-w-0">
             <dt
               title={c.name}
-              className={`line-clamp-3 text-[0.78rem] leading-snug text-balance ${
-                palette.size === 4 ? "@max-[24rem]:sr-only" : palette.size === 3 ? "@max-[17rem]:sr-only" : ""
-              }`}
+              className={`line-clamp-3 text-[0.78rem] leading-snug text-balance ${NAME[palette.size]}`}
             >
               {c.name}
             </dt>
-            <dd className="font-data-narrow text-xs text-sumi-soft uppercase">{c.hex}</dd>
+            <dd className="flex items-center gap-1.5 font-data text-xs whitespace-nowrap text-sumi-soft uppercase">
+              <span aria-hidden="true" className={`size-2.5 shrink-0 ${CHIP[palette.size]}`} style={{ backgroundColor: c.hex }} />
+              {c.hex}
+            </dd>
           </div>
         ))}
       </dl>

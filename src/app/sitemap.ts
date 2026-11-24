@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
   return [
     ...pages,
+    { url: `${SITE.url}/skills.md`, changeFrequency: "monthly" as const, priority: 0.7 },
     ...PALETTES.map((p) => ({ url: `${SITE.url}/combinations/${p.code}`, changeFrequency: "yearly" as const, priority: 0.6 })),
     ...COLOURS.map((c) => ({ url: `${SITE.url}/colours/${c.id}`, changeFrequency: "yearly" as const, priority: 0.5 })),
   ];

@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Compass, Grid3x3, Info, PanelLeftClose, Pipette } from "lucide-react";
+import { Bot, Compass, Grid3x3, Info, PanelLeftClose, Pipette } from "lucide-react";
 import { LogoMark } from "./logo";
 import { NavLink } from "./nav-link";
 import { SidebarToggle } from "./sidebar-toggle";
 import { SavedCount } from "./saved-count";
 import { NAV } from "@/lib/site";
 
-const ICONS = { compass: Compass, grid: Grid3x3, pipette: Pipette, info: Info } as const;
+const ICONS = { compass: Compass, grid: Grid3x3, pipette: Pipette, info: Info, bot: Bot } as const;
 
 const CHAPTERS = [
   { n: 2, label: "Two colours", range: "001–120" },

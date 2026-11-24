@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play, StepForward } from "lucide-react";
 import { WavePrint } from "./wave-print";
+import { FIELD_N, MAX_JET, MAX_SPRAY, WaveSim, surfaceGlsl } from "./wave-sim";
 
 export interface WavePlate {
   code: string;
@@ -11,47 +12,26 @@ export interface WavePlate {
 }
 
 const HOLD_MS = 6500;
-const WIPE_MS = 1600;
+const WIPE_MS = 900;
 
 function hexToVec(hex: string): [number, number, number] {
   const v = hex.replace("#", "");
   return [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16) / 255) as [number, number, number];
 }
 
+// A full-sheet quad: the print is drawn in 2D, as a woodblock is.
 const VERT = /* glsl */ `
-uniform float uTime;
-varying float vH;
-varying vec3 vWorld;
-
-// Rolling swells: trochoid-like crests (sharp tops, broad troughs) travelling
-// toward the viewer, with a slow cross-swell so the bands never sit still.
-float swell(float x, float k) {
-  float s = sin(x) * 0.5 + 0.5;
-  return pow(s, k);
-}
-
-float wave(vec2 p) {
-  float t = uTime;
-  float h = 0.0;
-  h += swell(p.y * 0.62 + t * 0.7 + sin(p.x * 0.23 + t * 0.15) * 1.4, 2.2) * 0.95;
-  h += swell(p.y * 1.15 - p.x * 0.38 + t * 1.05, 3.0) * 0.38;
-  h += sin(p.x * 0.5 - t * 0.35 + p.y * 0.2) * 0.12;
-  h += sin((p.x * 1.6 + p.y * 2.3) + t * 1.6) * 0.03;
-  return h - 0.68;
-}
-
+varying vec2 vUv;
 void main() {
-  vec3 pos = position;
-  pos.y = wave(pos.xz);
-  vH = clamp((pos.y + 0.66) / 1.32, 0.0, 0.9999);
-  vec4 world = modelMatrix * vec4(pos, 1.0);
-  vWorld = world.xyz;
-  gl_Position = projectionMatrix * viewMatrix * world;
+  vUv = uv;
+  gl_Position = vec4(position.xy, 0.0, 1.0);
 }
 `;
 
-// Colours are written as raw sRGB: no lighting, no tone mapping, no colour-space
-// conversion, so every flat band is exactly the plate's HEX value.
+// Draws the simulated sea (see wave-sim.ts) as a carved print: flat bands of
+// the plate's exact sRGB colours, tapered sumi key-lines, washi foam on steep
+// crests, the breaking jet as a keyed ribbon with claws, and spray. No
+// lighting, tone mapping or colour blending ever touches a band colour.
 const FRAG = /* glsl */ `
 uniform vec3 uA[4];
 uniform vec3 uB[4];
@@ -60,36 +40,126 @@ uniform float uCountB;
 uniform float uMix;
 uniform vec3 uInk;
 uniform vec3 uPaper;
-varying float vH;
-varying vec3 vWorld;
+uniform float uTime;
+uniform float uAspect;
+uniform float uPx;
+uniform float uWipe;
+uniform vec4 uPacket;
+uniform sampler2D uField;
+uniform vec4 uJet[${MAX_JET}];
+uniform float uJetN;
+uniform vec4 uSpray[${MAX_SPRAY}];
+uniform float uSprayN;
+varying vec2 vUv;
 
 vec3 pickA(float i) { return i < 0.5 ? uA[0] : i < 1.5 ? uA[1] : i < 2.5 ? uA[2] : uA[3]; }
 vec3 pickB(float i) { return i < 0.5 ? uB[0] : i < 1.5 ? uB[1] : i < 2.5 ? uB[2] : uB[3]; }
+${surfaceGlsl()}
+
+// Distance to a segment whose radius tapers from ra to rb.
+float taper(vec2 p, vec2 a, vec2 b, float ra, float rb) {
+  vec2 pa = p - a;
+  vec2 ba = b - a;
+  float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-8), 0.0, 1.0);
+  return length(pa - ba * h) - mix(ra, rb, h);
+}
 
 void main() {
+  vec2 p = vec2(vUv.x * uAspect, vUv.y);
   // The next plate is printed across the sheet from left to right.
-  float s = (vWorld.x + 9.0) / 18.0 + sin(vWorld.z * 1.7) * 0.03;
-  float useB = step(s, uMix * 1.12 - 0.06);
-  float n = mix(uCountA, uCountB, useB);
-  float f = vH * n;
-  float idx = floor(f);
-  vec3 col = mix(pickA(floor(vH * uCountA)), pickB(floor(vH * uCountB)), useB);
+  float s = vUv.x + sin(vUv.y * 13.0) * 0.015;
+  float edgeX = uMix * 1.06 - 0.03;
+  bool useB = s < edgeX;
+  float n = useB ? uCountB : uCountA;
+  float aa = uPx * 1.2;
+  vec4 col = vec4(0.0);
 
-  // Key-block: a sumi line at every band edge, finer hatching inside the crests.
-  float w = fwidth(f);
-  float d = abs(fract(f + 0.5) - 0.5);
-  // Lines thin out with distance and vanish where they would alias.
-  float key = (1.0 - smoothstep(w * 0.55, w * 1.55, d)) * (1.0 - smoothstep(0.12, 0.3, w));
-  float f2 = f * 4.0;
-  float w2 = fwidth(f2);
-  float d2 = abs(fract(f2 + 0.5) - 0.5);
-  float hatch = (1.0 - smoothstep(w2 * 0.35, w2 * 1.1, d2)) * step(n - 1.0, idx) * 0.5
-    * (1.0 - smoothstep(0.08, 0.2, w2));
-  // Key-lines flip to washi where the band is too dark to hold sumi.
-  float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
-  vec3 line = lum < 0.2 ? uPaper : uInk;
-  col = mix(col, line, max(key, hatch));
-  gl_FragColor = vec4(col, 1.0);
+  // Back to front: each nearer band paints over the ones behind it.
+  for (int ji = 0; ji < 4; ji++) {
+    float j = float(ji);
+    if (j > n - 0.5) break;
+    vec2 e = bandEdge(j, n, p.x);
+    float d = e.x - p.y;                                  // > 0 inside the band
+    if (d > -aa) {
+      vec3 c = useB ? pickB(j) : pickA(j);
+      float cover = smoothstep(-aa, aa, d);
+      col = mix(col, vec4(c, 1.0), cover);
+      float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
+      vec3 lc = lum < 0.2 ? uPaper : uInk;
+      // Washi foam on steep crests, its lower edge broken into scallops.
+      float foamOn = smoothstep(0.62, 0.95, e.y);
+      float cap = (0.003 + 0.02 * foamOn) * (0.7 + 0.3 * abs(sin(p.x * 95.0 + j * 2.3)));
+      float foam = foamOn * (1.0 - smoothstep(cap - aa, cap + aa, d)) * cover;
+      col.rgb = mix(col.rgb, uPaper, foam);
+      float foamLine = foamOn * (1.0 - smoothstep(uPx * 0.7 - aa, uPx * 0.7 + aa, abs(d - cap))) * step(0.15, foamOn);
+      // Key-line along the top edge, swelling at the crests.
+      float w = uPx * (1.3 + 3.2 * e.y);
+      float key = (1.0 - smoothstep(w - aa, w + aa, d)) * cover;
+      // Carved inner lines under the crests of the nearer bands.
+      float carve = 0.0;
+      for (int k = 1; k <= 2; k++) {
+        float off = float(k) * 0.026 * (0.6 + e.y) + cap;
+        float wk = uPx * (0.8 + 1.2 * e.y) * (1.0 - float(k) * 0.25);
+        carve = max(carve, (1.0 - smoothstep(wk - aa, wk + aa, abs(d - off))) * smoothstep(0.72, 0.95, e.y) * step(n - 1.5, j));
+      }
+      col.rgb = mix(col.rgb, lc, max(max(key, carve), foamLine));
+    }
+  }
+
+  // The breaking jet: a ribbon through the simulated particles, rooted in the crest.
+  float j = n - 1.0;
+  vec3 front = useB ? pickB(j) : pickA(j);
+  float lumF = dot(front, vec3(0.2126, 0.7152, 0.0722));
+  vec3 lcF = lumF < 0.2 ? uPaper : uInk;
+  float frontY = bandEdge(j, n, p.x).x;
+  if (uJetN > 1.5) {
+    float sd = 1e5;
+    for (int i = 0; i < ${MAX_JET - 1}; i++) {
+      if (float(i) > uJetN - 2.0) break;
+      vec4 a = uJet[i];
+      vec4 b = uJet[i + 1];
+      sd = min(sd, taper(p, a.xy, b.xy, a.z, b.z));
+    }
+    float fill = 1.0 - smoothstep(-aa, aa, sd);
+    col = mix(col, vec4(front, 1.0), fill);
+    // Keyed outside the water only, so the root runs seamlessly into the swell.
+    float w = uPx * 2.4;
+    float key = (1.0 - smoothstep(w - aa, w + aa, abs(sd))) * step(frontY - aa, p.y);
+    col.rgb = mix(col.rgb, lcF, key * col.a);
+    // Claws: washi fingers on the leading particles, raking along their flight.
+    for (int i = 0; i < ${MAX_JET - 1}; i++) {
+      if (float(i) > uJetN - 2.0) break;
+      if (float(i) < uJetN - 7.0) continue;
+      vec4 a = uJet[i];
+      vec4 b = uJet[i + 1];
+      vec2 dir = normalize(b.xy - a.xy + vec2(1e-5));
+      vec2 up = vec2(-dir.y, dir.x);
+      vec2 base = b.xy + up * b.z * 0.8;
+      float len = 0.022 + 0.01 * fract(float(i) * 0.618);
+      float dc = taper(p, base, base + normalize(dir + up * 0.9) * len, 0.0055, 0.0012);
+      col = mix(col, vec4(uPaper, 1.0), 1.0 - smoothstep(-aa, aa, dc));
+      col.rgb = mix(col.rgb, uInk, 1.0 - smoothstep(uPx * 0.8 - aa, uPx * 0.8 + aa, abs(dc)));
+    }
+  }
+
+  // Spray: short streaks along each droplet's velocity.
+  for (int i = 0; i < ${MAX_SPRAY}; i++) {
+    if (float(i) > uSprayN - 0.5) break;
+    vec4 q = uSpray[i];
+    vec2 tail = q.xy - q.zw * 0.05;
+    float dc = taper(p, q.xy, tail, 0.0045, 0.001);
+    col = mix(col, vec4(uPaper, 1.0), 1.0 - smoothstep(-aa, aa, dc));
+    col.rgb = mix(col.rgb, uInk, (1.0 - smoothstep(uPx * 0.7 - aa, uPx * 0.7 + aa, abs(dc))) * 0.9);
+  }
+
+  // While a new plate is being printed, its leading edge is keyed like a block.
+  if (uWipe > 0.5) {
+    float wl = uPx / uAspect * 1.6;
+    float edge = (1.0 - smoothstep(wl, wl * 2.0, abs(s - edgeX))) * col.a;
+    col.rgb = mix(col.rgb, uInk, edge);
+  }
+
+  gl_FragColor = col;
 }
 `;
 
@@ -114,15 +184,22 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
     [plates.length],
   );
 
-  // Auto-advance while playing and on screen.
+  // Auto-advance between sets (the sea is calm then), while playing and on screen.
   const visible = useRef(true);
+  const onSet = useRef<(() => void) | null>(null);
   useEffect(() => {
-    if (!playing) return;
+    onSet.current = () => {
+      if (playing && visible.current && !document.hidden) go(indexRef.current + 1);
+    };
+  }, [playing, go]);
+  // Fallback cadence when WebGL is off (static print): change plate on a timer.
+  useEffect(() => {
+    if (!playing || webgl === "on") return;
     const t = setInterval(() => {
       if (visible.current && !document.hidden) go(indexRef.current + 1);
     }, HOLD_MS);
     return () => clearInterval(t);
-  }, [playing, go]);
+  }, [playing, go, webgl]);
 
   useEffect(() => {
     reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -149,7 +226,8 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
       const dbg = gl.getExtension("WEBGL_debug_renderer_info");
       const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
       gl.getExtension("WEBGL_lose_context")?.loseContext();
-      if (/swiftshader|llvmpipe|software|basic render/i.test(gpu)) {
+      const force = new URLSearchParams(window.location.search).has("gl");
+      if (!force && /swiftshader|llvmpipe|software|basic render/i.test(gpu)) {
         setWebgl("off");
         return;
       }
@@ -163,7 +241,7 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         setWebgl("off");
         return;
       }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setClearColor(0x000000, 0);
       renderer.outputColorSpace = THREE.LinearSRGBColorSpace; // pass raw sRGB through untouched
       const el = renderer.domElement;
@@ -172,10 +250,8 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
       host.appendChild(el);
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-      const small = host.clientWidth < 700;
-      const geo = new THREE.PlaneGeometry(26, 18, small ? 150 : 260, small ? 104 : 180);
-      geo.rotateX(-Math.PI / 2);
+      const camera = new THREE.Camera();
+      const geo = new THREE.PlaneGeometry(2, 2);
 
       const toVecs = (p: WavePlate) => {
         const v = p.colors.map((c) => new THREE.Vector3(...hexToVec(c.hex)));
@@ -183,8 +259,11 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         return v;
       };
 
+      const sim = new WaveSim();
+      const fieldTex = new THREE.DataTexture(sim.field, FIELD_N, 1, THREE.RedFormat, THREE.FloatType);
+      fieldTex.needsUpdate = true;
       const uniforms = {
-        uTime: { value: 2.0 },
+        uTime: { value: 0 },
         uA: { value: toVecs(plates[0]) },
         uB: { value: toVecs(plates[0]) },
         uCountA: { value: plates[0].colors.length },
@@ -192,28 +271,69 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         uMix: { value: 0 },
         uInk: { value: new THREE.Vector3(31 / 255, 28 / 255, 25 / 255) },
         uPaper: { value: new THREE.Vector3(236 / 255, 238 / 255, 232 / 255) },
+        uAspect: { value: 1 },
+        uWipe: { value: 0 },
+        uPx: { value: 0.002 },
+        uPacket: { value: new THREE.Vector4() },
+        uField: { value: fieldTex },
+        uJet: { value: Array.from({ length: MAX_JET }, () => new THREE.Vector4()) },
+        uJetN: { value: 0 },
+        uSpray: { value: Array.from({ length: MAX_SPRAY }, () => new THREE.Vector4()) },
+        uSprayN: { value: 0 },
       };
-      const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms });
+      const count = () => uniforms.uCountA.value;
+      const sync = () => {
+        uniforms.uTime.value = sim.t;
+        uniforms.uPacket.value.set(sim.packet.x, sim.packet.amp, sim.packet.phase, 0);
+        fieldTex.needsUpdate = true;
+        const rib = sim.ribbon(count());
+        rib.forEach(([x, y, r], i) => uniforms.uJet.value[i].set(x, y, r, 0));
+        uniforms.uJetN.value = rib.length;
+        sim.spray.slice(0, MAX_SPRAY).forEach((q, i) => uniforms.uSpray.value[i].set(q.x, q.y, q.vx, q.vy));
+        uniforms.uSprayN.value = Math.min(sim.spray.length, MAX_SPRAY);
+      };
+      const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms, transparent: true });
       const mesh = new THREE.Mesh(geo, mat);
-      mesh.position.z = -4;
+      mesh.frustumCulled = false;
       scene.add(mesh);
 
-      const pointer = { x: 0, y: 0, cx: 0, cy: 0 };
-      const onPointer = (e: PointerEvent) => {
+      // The pointer disturbs the water: moving across it drags ripples, a tap splashes.
+      let last: { x: number; y: number } | null = null;
+      const toSheet = (e: PointerEvent) => {
         const r = host.getBoundingClientRect();
-        pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1;
-        pointer.y = ((e.clientY - r.top) / r.height) * 2 - 1;
+        return { x: (e.clientX - r.left) / r.height, y: 1 - (e.clientY - r.top) / r.height, inside: e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom };
+      };
+      const onPointer = (e: PointerEvent) => {
+        const q = toSheet(e);
+        if (q.inside && last && q.y < sim.surfaceY(count() - 1, count(), q.x) + 0.08) {
+          sim.disturb(q.x, Math.hypot(q.x - last.x, q.y - last.y) * 0.25);
+          kick();
+        }
+        last = q.inside ? q : null;
+      };
+      const onDown = (e: PointerEvent) => {
+        const q = toSheet(e);
+        if (q.inside) {
+          sim.disturb(q.x, 0.02);
+          kick();
+        }
       };
       window.addEventListener("pointermove", onPointer, { passive: true });
+      host.addEventListener("pointerdown", onDown, { passive: true });
 
+      let sized = false;
       const resize = () => {
         const { clientWidth: w, clientHeight: h } = host;
         if (!w || !h) return;
         renderer.setSize(w, h, false);
-        camera.aspect = w / h;
-        // Keep the horizon roughly a third from the top at every aspect.
-        camera.fov = w / h < 1 ? 46 : 34;
-        camera.updateProjectionMatrix();
+        uniforms.uAspect.value = w / h;
+        if (!sized) {
+          sim.aspect = w / h;
+          sim.launch(true);
+          sized = true;
+        }
+        sim.aspect = w / h;
+        uniforms.uPx.value = 1 / h; // one CSS pixel in sheet units
       };
       const ro = new ResizeObserver(resize);
       ro.observe(host);
@@ -222,27 +342,39 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
       let wipeStart = -1;
       let running = !reduced.current;
       let raf = 0;
-      let last = performance.now();
+      let lastFrame = performance.now();
       let onScreen = true;
+      // Reduced motion: advance the physics to a breaking moment, then hold it.
+      // `?wave=<seconds>` does the same at a chosen moment (used for captures).
+      const hold = Number(new URLSearchParams(window.location.search).get("wave"));
+      if (hold > 0) {
+        running = false;
+        for (let i = 0; i < Math.round(hold * 60); i++) sim.step(1 / 60, count());
+      } else if (!running) {
+        for (let i = 0; i < 60 * 9 && sim.jet.length < 14; i++) sim.step(1 / 60, count());
+      }
 
       const render = (now: number) => {
-        const dt = Math.min((now - last) / 1000, 0.05);
-        last = now;
-        if (running) uniforms.uTime.value += dt;
+        const dt = Math.min((now - lastFrame) / 1000, 0.05);
+        lastFrame = now;
+        if (running) {
+          const sets = sim.sets;
+          sim.step(dt, count());
+          if (sim.sets !== sets) onSet.current?.();
+        }
         if (wipeStart >= 0) {
           const p = Math.min((now - wipeStart) / WIPE_MS, 1);
           uniforms.uMix.value = 1 - Math.pow(1 - p, 3);
+          uniforms.uWipe.value = 1;
           if (p >= 1) {
+            uniforms.uWipe.value = 0;
             uniforms.uA.value = uniforms.uB.value.map((v) => v.clone());
             uniforms.uCountA.value = uniforms.uCountB.value;
             uniforms.uMix.value = 0;
             wipeStart = -1;
           }
         }
-        pointer.cx += (pointer.x - pointer.cx) * 0.04;
-        pointer.cy += (pointer.y - pointer.cy) * 0.04;
-        camera.position.set(pointer.cx * 0.7, 1.75 - pointer.cy * 0.2, 6.5);
-        camera.lookAt(0, 0.35, -3);
+        sync();
         renderer.render(scene, camera);
       };
 
@@ -253,7 +385,7 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
       };
       const kick = () => {
         if (!raf) {
-          last = performance.now();
+          lastFrame = performance.now();
           raf = requestAnimationFrame(loop);
         }
       };
@@ -298,6 +430,8 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         io.disconnect();
         ro.disconnect();
         window.removeEventListener("pointermove", onPointer);
+        host.removeEventListener("pointerdown", onDown);
+        fieldTex.dispose();
         document.removeEventListener("visibilitychange", onVis);
         geo.dispose();
         mat.dispose();

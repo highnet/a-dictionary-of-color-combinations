@@ -4,9 +4,11 @@ export const SITE = {
   description:
     "All 348 colour combinations compiled by Sanzo Wada (1933–34), in their original order, with HEX, RGB and CMYK values to copy and export.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL
-      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : "http://localhost:3000")
+    (process.env.VERCEL_ENV === "production"
+      ? "https://a-dictionary-of-color-combinations-three.vercel.app"
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : "http://localhost:3000")
   ).replace(/\/$/, ""),
 } as const;
 
@@ -15,4 +17,5 @@ export const NAV = [
   { href: "/combinations", label: "All combinations", icon: "grid" },
   { href: "/colours", label: "Colour search", icon: "pipette" },
   { href: "/about", label: "About", icon: "info" },
+  { href: "/#agents", label: "For agents", icon: "bot" },
 ] as const;

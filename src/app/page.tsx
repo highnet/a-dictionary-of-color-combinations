@@ -4,6 +4,7 @@ import { WaveHero, type WavePlate } from "@/components/wave/wave-hero";
 import { QuickFind } from "@/components/quick-find";
 import { PlateTile, Strip } from "@/components/plate";
 import { JsonLd } from "@/components/json-ld";
+import { CopyValue } from "@/components/copy-button";
 import { COLOURS, FEATURED, GROUPS, PALETTES, getPalette } from "@/lib/dictionary";
 import { SITE } from "@/lib/site";
 
@@ -60,6 +61,45 @@ export default function Home() {
         </div>
         <div className="order-first -mx-[var(--gutter)] h-[min(31svh,22rem)] overflow-x-clip lg:overflow-visible lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
           <WaveHero plates={plates} />
+        </div>
+      </section>
+
+      {/* The fork: people browse; agents read the skill and call the API. */}
+      <section id="agents" aria-labelledby="fork" className="hairline">
+        <h2 id="fork" className="sr-only">Two ways in</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="shell flex flex-col justify-between gap-8 py-14 md:py-20 md:pr-12">
+            <div>
+              <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">For people</p>
+              <p className="mt-3 max-w-sm text-sumi-soft">Choose by eye. Copy by hand.</p>
+            </div>
+            <Link href="/combinations" className="group inline-flex min-h-11 w-fit items-center gap-2 link-quiet">
+              Open the archive <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="ground-sumi">
+            <div className="shell flex h-full flex-col justify-between gap-8 py-14 md:py-20 md:pl-12">
+              <div>
+                <p className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">For agents</p>
+                <p className="mt-3 max-w-sm text-sumi-soft">Read the orders first, then act. One command; no key.</p>
+              </div>
+              <div className="space-y-4">
+                <div className="flex min-w-0 items-center border border-washi/25 px-3">
+                  <span aria-hidden="true" className="mr-2 font-data text-xs text-sumi-soft">$</span>
+                  <CopyValue
+                    value={`curl -s ${SITE.url}/skills.md`}
+                    label="the skill command"
+                    className="min-w-0 flex-1 overflow-x-auto py-2 text-left whitespace-nowrap [scrollbar-width:none]"
+                  />
+                </div>
+                <ul className="grid gap-1.5 font-data text-xs text-sumi-soft">
+                  <li><a className="link-quiet" href="/skills.md">/skills.md</a> · how to design with the archive</li>
+                  <li><a className="link-quiet" href="/api/combinations.json">/api/combinations.json</a> · all 348</li>
+                  <li><a className="link-quiet" href="/api/search?q=1c4286">/api/search?q=1c4286</a> · nearest by ΔE2000</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
