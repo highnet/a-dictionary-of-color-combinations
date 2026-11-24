@@ -30,12 +30,12 @@ Fetch this skill: \`curl -s ${base}/skills.md\`
 
 | Endpoint | Returns |
 | --- | --- |
-| \`/api/combinations.json\` | All 348 combinations with colours and metrics |
+| \`/api/combinations\` | All 348 combinations with colours and metrics |
 | \`/api/combinations/{code}\` | One combination; \`code\` is three digits, \`001\`–\`348\` |
 | \`/api/combinations/{code}/css\` | CSS custom properties (text/css) |
 | \`/api/combinations/{code}/tailwind\` | Tailwind v4 \`@theme\` block (text/css) |
 | \`/api/combinations/{code}/svg\` | SVG swatch print (image/svg+xml) |
-| \`/api/colours.json\` | All 159 colours with the combinations each appears in |
+| \`/api/colours\` | All 159 colours with the combinations each appears in |
 | \`/api/colours/{id}\` | One colour (e.g. \`raw-sienna\`) with its combinations |
 | \`/api/search?q={query}&limit={n}\` | \`q\` = a number, a HEX (\`1c4286\`) or part of a name |
 
@@ -56,7 +56,7 @@ Search with a HEX adds \`nearest\`: Wada's closest colours with \`deltaE2000\`
 
 ## Recipes
 
-1. **Palette for a brief.** Fetch \`/api/combinations.json\` and filter by
+1. **Palette for a brief.** Fetch \`/api/combinations\` and filter by
    \`metrics\`: e.g. calm and soft means \`lightnessRange < 30\` and \`meanChroma < 35\`;
    bold and legible means \`lightnessRange > 55\`. Choose 2–3 candidates. Present
    them with their codes, colour names and HEX values, and link each one.

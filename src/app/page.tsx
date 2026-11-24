@@ -92,11 +92,14 @@ export default function Home() {
                     className="min-w-0 flex-1 overflow-x-auto py-2 text-left whitespace-nowrap [scrollbar-width:none]"
                   />
                 </div>
+                {/* Raw API documents: plain anchors on purpose, so they load as files, not app routes. */}
+                {/* eslint-disable @next/next/no-html-link-for-pages */}
                 <ul className="grid gap-1.5 font-data text-xs text-sumi-soft">
                   <li><a className="link-quiet" href="/skills.md">/skills.md</a> · how to design with the archive</li>
-                  <li><a className="link-quiet" href="/api/combinations.json">/api/combinations.json</a> · all 348</li>
+                  <li><a className="link-quiet" href="/api/combinations">/api/combinations</a> · all 348</li>
                   <li><a className="link-quiet" href="/api/search?q=1c4286">/api/search?q=1c4286</a> · nearest by ΔE2000</li>
                 </ul>
+                {/* eslint-enable @next/next/no-html-link-for-pages */}
               </div>
             </div>
           </div>

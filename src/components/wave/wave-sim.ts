@@ -26,7 +26,7 @@ const TAU = Math.PI * 2;
 export const PACKET = {
   wavelength: 1.5,
   sigma: 0.28, // envelope half-width
-  maxAmp: 0.115,
+  maxAmp: 0.115, // k·A at most ≈ 0.48: steep, but the surface stays single-valued
   startAmp: 0.035,
   breakAt: 0.42, // near the Stokes limit (k·A ≈ 0.44) crests break
   spentBelow: 0.26,
@@ -109,12 +109,15 @@ export class WaveSim {
   /** Surface of band j at the undisplaced coordinate x0: [X, Y]. */
   surfaceAt0(j: number, n: number, x0: number): [number, number] {
     const b = bandParams(j, n);
+    // Inside the great swell the short ripples calm down, so the summed
+    // steepness Σk·A stays below 1 and the surface never folds over itself.
+    const env = j === n - 1 ? Math.exp(-(((x0 - this.packet.x) / PACKET.sigma) ** 2)) : 0;
+    const calm = 1 - 0.85 * env;
     const th1 = b.k1 * x0 - Math.sqrt(G * b.k1) * this.t + b.p1;
     const th2 = b.k2 * x0 - Math.sqrt(G * b.k2) * this.t + b.p2;
-    let X = x0 - b.a1 * Math.sin(th1) - b.a2 * Math.sin(th2);
-    let Y = b.base + b.a1 * Math.cos(th1) + b.a2 * Math.cos(th2);
+    let X = x0 - calm * (b.a1 * Math.sin(th1) + b.a2 * Math.sin(th2));
+    let Y = b.base + calm * (b.a1 * Math.cos(th1) + b.a2 * Math.cos(th2));
     if (j === n - 1) {
-      const env = Math.exp(-(((x0 - this.packet.x) / PACKET.sigma) ** 2));
       const a = this.packet.amp * env;
       const th = KP * x0 - WP * this.t + this.packet.phase;
       X -= a * Math.sin(th);
@@ -275,12 +278,13 @@ vec2 surfaceAt0(float j, float n, float x0) {
   float k1 = 6.2831853 / l1;
   float k2 = 6.2831853 / (l1 * 0.53);
   float a2 = a1 * 0.42;
+  float env = j > n - 1.5 ? exp(-pow((x0 - uPacket.x) / SIGMA, 2.0)) : 0.0;
+  float calm = 1.0 - 0.85 * env;
   float th1 = k1 * x0 - sqrt(G * k1) * uTime + j * 1.37;
   float th2 = k2 * x0 - sqrt(G * k2) * uTime + j * 2.9 + 0.7;
-  float X = x0 - a1 * sin(th1) - a2 * sin(th2);
-  float Y = base + a1 * cos(th1) + a2 * cos(th2);
+  float X = x0 - calm * (a1 * sin(th1) + a2 * sin(th2));
+  float Y = base + calm * (a1 * cos(th1) + a2 * cos(th2));
   if (j > n - 1.5) {
-    float env = exp(-pow((x0 - uPacket.x) / SIGMA, 2.0));
     float a = uPacket.y * env;
     float th = KP * x0 - WP * uTime + uPacket.z;
     X -= a * sin(th);

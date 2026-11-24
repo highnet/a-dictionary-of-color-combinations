@@ -86,23 +86,16 @@ void main() {
       col = mix(col, vec4(c, 1.0), cover);
       float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
       vec3 lc = lum < 0.2 ? uPaper : uInk;
-      // Washi foam on steep crests, its lower edge broken into scallops.
-      float foamOn = smoothstep(0.62, 0.95, e.y);
-      float cap = (0.003 + 0.02 * foamOn) * (0.7 + 0.3 * abs(sin(p.x * 95.0 + j * 2.3)));
+      // A smooth washi cap on the steepest crests, keyed beneath.
+      float foamOn = smoothstep(0.7, 0.97, e.y) * step(n - 1.5, j);
+      float cap = 0.018 * foamOn;
       float foam = foamOn * (1.0 - smoothstep(cap - aa, cap + aa, d)) * cover;
       col.rgb = mix(col.rgb, uPaper, foam);
-      float foamLine = foamOn * (1.0 - smoothstep(uPx * 0.7 - aa, uPx * 0.7 + aa, abs(d - cap))) * step(0.15, foamOn);
+      float foamLine = foamOn * step(0.3, foamOn) * (1.0 - smoothstep(uPx * 0.6, uPx * 1.4, abs(d - cap)));
       // Key-line along the top edge, swelling at the crests.
-      float w = uPx * (1.3 + 3.2 * e.y);
+      float w = uPx * (1.3 + 2.4 * e.y);
       float key = (1.0 - smoothstep(w - aa, w + aa, d)) * cover;
-      // Carved inner lines under the crests of the nearer bands.
-      float carve = 0.0;
-      for (int k = 1; k <= 2; k++) {
-        float off = float(k) * 0.026 * (0.6 + e.y) + cap;
-        float wk = uPx * (0.8 + 1.2 * e.y) * (1.0 - float(k) * 0.25);
-        carve = max(carve, (1.0 - smoothstep(wk - aa, wk + aa, abs(d - off))) * smoothstep(0.72, 0.95, e.y) * step(n - 1.5, j));
-      }
-      col.rgb = mix(col.rgb, lc, max(max(key, carve), foamLine));
+      col.rgb = mix(col.rgb, lc, max(key, foamLine));
     }
   }
 
@@ -112,6 +105,8 @@ void main() {
   float lumF = dot(front, vec3(0.2126, 0.7152, 0.0722));
   vec3 lcF = lumF < 0.2 ? uPaper : uInk;
   float frontY = bandEdge(j, n, p.x).x;
+  // Fine marks (claws, spray) need room: drop them on small canvases.
+  bool detail = uPx < 1.0 / 300.0;
   if (uJetN > 1.5) {
     float sd = 1e5;
     for (int i = 0; i < ${MAX_JET - 1}; i++) {
@@ -128,7 +123,7 @@ void main() {
     col.rgb = mix(col.rgb, lcF, key * col.a);
     // Claws: washi fingers on the leading particles, raking along their flight.
     for (int i = 0; i < ${MAX_JET - 1}; i++) {
-      if (float(i) > uJetN - 2.0) break;
+      if (!detail || float(i) > uJetN - 2.0) break;
       if (float(i) < uJetN - 7.0) continue;
       vec4 a = uJet[i];
       vec4 b = uJet[i + 1];
@@ -144,12 +139,12 @@ void main() {
 
   // Spray: short streaks along each droplet's velocity.
   for (int i = 0; i < ${MAX_SPRAY}; i++) {
-    if (float(i) > uSprayN - 0.5) break;
+    if (!detail || float(i) > uSprayN - 0.5) break;
     vec4 q = uSpray[i];
     vec2 tail = q.xy - q.zw * 0.05;
-    float dc = taper(p, q.xy, tail, 0.0045, 0.001);
-    col = mix(col, vec4(uPaper, 1.0), 1.0 - smoothstep(-aa, aa, dc));
-    col.rgb = mix(col.rgb, uInk, (1.0 - smoothstep(uPx * 0.7 - aa, uPx * 0.7 + aa, abs(dc))) * 0.9);
+    float dc = taper(p, q.xy, tail, 0.005, 0.0015);
+    col = mix(col, vec4(front, 1.0), 1.0 - smoothstep(-aa, aa, dc));
+    col.rgb = mix(col.rgb, lcF, 1.0 - smoothstep(uPx * 0.8 - aa, uPx * 0.8 + aa, abs(dc)));
   }
 
   // While a new plate is being printed, its leading edge is keyed like a block.

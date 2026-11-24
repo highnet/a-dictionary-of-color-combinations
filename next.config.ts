@@ -10,6 +10,13 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async rewrites() {
+    // Collections also answer at their .json names.
+    return [
+      { source: "/api/combinations.json", destination: "/api/combinations" },
+      { source: "/api/colours.json", destination: "/api/colours" },
+    ];
+  },
   async redirects() {
     // Accept unpadded plate numbers (/combinations/7 → /combinations/007).
     return [

@@ -11,8 +11,8 @@ export function GET() {
 
 ## For agents
 - [Skill: how to design with this archive](${SITE.url}/skills.md): read this first (curl -s ${SITE.url}/skills.md)
-- [All combinations (JSON)](${SITE.url}/api/combinations.json)
-- [All colours (JSON)](${SITE.url}/api/colours.json)
+- [All combinations (JSON)](${SITE.url}/api/combinations)
+- [All colours (JSON)](${SITE.url}/api/colours)
 - [Search](${SITE.url}/api/search?q=1c4286): number, HEX or colour name
 
 ## For people
