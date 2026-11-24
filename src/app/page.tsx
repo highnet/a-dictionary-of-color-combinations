@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { WaveHero, type WavePlate } from "@/components/wave/wave-hero";
+import { WaveScene } from "@/components/wave-scene/WaveScene";
 import { QuickFind } from "@/components/quick-find";
 import { PlateTile, Strip } from "@/components/plate";
 import { JsonLd } from "@/components/json-ld";
@@ -15,10 +15,6 @@ const CHAPTERS = [
 ] as const;
 
 export default function Home() {
-  const plates: WavePlate[] = FEATURED.map((id) => {
-    const p = getPalette(id)!;
-    return { code: p.code, colors: p.colors.map((c) => ({ name: c.name, hex: c.hex })) };
-  });
   const wall = FEATURED.map((id) => getPalette(id)!);
 
   return (
@@ -60,7 +56,7 @@ export default function Home() {
           </div>
         </div>
         <div className="order-first -mx-[var(--gutter)] h-[min(31svh,22rem)] overflow-x-clip lg:overflow-visible lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
-          <WaveHero plates={plates} />
+          <WaveScene />
         </div>
       </section>
 

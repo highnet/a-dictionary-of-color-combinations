@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Next.js (App Router, latest stable), TypeScript, Tailwind CSS, customised shadcn/ui primitives, Lucide icons where they earn a place, a Canvas 2D hero wave driven by a small physics simulation (no 3D library). Deployed on Vercel from `main`. No database, no authentication.
+Next.js (App Router, latest stable), TypeScript, Tailwind CSS, customised shadcn/ui primitives, Lucide icons where they earn a place, three.js (orthographic, 2D) for one animated hero print. Deployed on Vercel from `main`. No database, no authentication.
 
 ## Users
 
