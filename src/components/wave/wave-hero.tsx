@@ -4,168 +4,144 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play, StepForward } from "lucide-react";
 import { WavePrint } from "./wave-print";
-import { FIELD_N, MAX_JET, MAX_SPRAY, WaveSim, surfaceGlsl } from "./wave-sim";
+import { Sea, type Pt } from "./wave-sim";
 
 export interface WavePlate {
   code: string;
   colors: { name: string; hex: string }[];
 }
 
-const HOLD_MS = 6500;
 const WIPE_MS = 900;
+const INK = "#1f1c19";
+const PAPER = "#eceee8";
 
-function hexToVec(hex: string): [number, number, number] {
+function luminance(hex: string) {
   const v = hex.replace("#", "");
-  return [0, 2, 4].map((i) => parseInt(v.slice(i, i + 2), 16) / 255) as [number, number, number];
+  const [r, g, b] = [0, 2, 4].map((i) => {
+    const c = parseInt(v.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-// A full-sheet quad: the print is drawn in 2D, as a woodblock is.
-const VERT = /* glsl */ `
-varying vec2 vUv;
-void main() {
-  vUv = uv;
-  gl_Position = vec4(position.xy, 0.0, 1.0);
-}
-`;
-
-// Draws the simulated sea (see wave-sim.ts) as a carved print: flat bands of
-// the plate's exact sRGB colours, tapered sumi key-lines, washi foam on steep
-// crests, the breaking jet as a keyed ribbon with claws, and spray. No
-// lighting, tone mapping or colour blending ever touches a band colour.
-const FRAG = /* glsl */ `
-uniform vec3 uA[4];
-uniform vec3 uB[4];
-uniform float uCountA;
-uniform float uCountB;
-uniform float uMix;
-uniform vec3 uInk;
-uniform vec3 uPaper;
-uniform float uTime;
-uniform float uAspect;
-uniform float uPx;
-uniform float uWipe;
-uniform vec4 uPacket;
-uniform sampler2D uField;
-uniform vec4 uJet[${MAX_JET}];
-uniform float uJetN;
-uniform vec4 uSpray[${MAX_SPRAY}];
-uniform float uSprayN;
-varying vec2 vUv;
-
-vec3 pickA(float i) { return i < 0.5 ? uA[0] : i < 1.5 ? uA[1] : i < 2.5 ? uA[2] : uA[3]; }
-vec3 pickB(float i) { return i < 0.5 ? uB[0] : i < 1.5 ? uB[1] : i < 2.5 ? uB[2] : uB[3]; }
-${surfaceGlsl()}
-
-// Distance to a segment whose radius tapers from ra to rb.
-float taper(vec2 p, vec2 a, vec2 b, float ra, float rb) {
-  vec2 pa = p - a;
-  vec2 ba = b - a;
-  float h = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-8), 0.0, 1.0);
-  return length(pa - ba * h) - mix(ra, rb, h);
-}
-
-void main() {
-  vec2 p = vec2(vUv.x * uAspect, vUv.y);
-  // The next plate is printed across the sheet from left to right.
-  float s = vUv.x + sin(vUv.y * 13.0) * 0.015;
-  float edgeX = uMix * 1.06 - 0.03;
-  bool useB = s < edgeX;
-  float n = useB ? uCountB : uCountA;
-  float aa = uPx * 1.2;
-  vec4 col = vec4(0.0);
-
-  // Back to front: each nearer band paints over the ones behind it.
-  for (int ji = 0; ji < 4; ji++) {
-    float j = float(ji);
-    if (j > n - 0.5) break;
-    vec2 e = bandEdge(j, n, p.x);
-    float d = e.x - p.y;                                  // > 0 inside the band
-    if (d > -aa) {
-      vec3 c = useB ? pickB(j) : pickA(j);
-      float cover = smoothstep(-aa, aa, d);
-      col = mix(col, vec4(c, 1.0), cover);
-      float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
-      vec3 lc = lum < 0.2 ? uPaper : uInk;
-      // A smooth washi cap on the steepest crests, keyed beneath.
-      float foamOn = smoothstep(0.7, 0.97, e.y) * step(n - 1.5, j);
-      float cap = 0.018 * foamOn;
-      float foam = foamOn * (1.0 - smoothstep(cap - aa, cap + aa, d)) * cover;
-      col.rgb = mix(col.rgb, uPaper, foam);
-      float foamLine = foamOn * step(0.3, foamOn) * (1.0 - smoothstep(uPx * 0.6, uPx * 1.4, abs(d - cap)));
-      // Key-line along the top edge, swelling at the crests.
-      float w = uPx * (1.3 + 2.4 * e.y);
-      float key = (1.0 - smoothstep(w - aa, w + aa, d)) * cover;
-      col.rgb = mix(col.rgb, lc, max(key, foamLine));
+/** Stroke a polyline with per-vertex width (round caps join the pieces). */
+function strokeTapered(
+  ctx: CanvasRenderingContext2D,
+  pts: Pt[],
+  X: (x: number) => number,
+  Y: (y: number) => number,
+  width: (p: Pt) => number,
+) {
+  const q = (p: Pt) => Math.round(width(p) * 4) / 4;
+  let i = 0;
+  while (i < pts.length - 1) {
+    const w0 = q(pts[i]);
+    ctx.beginPath();
+    ctx.moveTo(X(pts[i].x), Y(pts[i].y));
+    let k = i + 1;
+    // Batch consecutive segments of the same quantised width into one path.
+    while (k < pts.length && q(pts[k]) === w0) {
+      ctx.lineTo(X(pts[k].x), Y(pts[k].y));
+      k++;
     }
+    if (k < pts.length) ctx.lineTo(X(pts[k].x), Y(pts[k].y));
+    ctx.lineWidth = w0;
+    ctx.stroke();
+    i = k;
   }
-
-  // The breaking jet: a ribbon through the simulated particles, rooted in the crest.
-  float j = n - 1.0;
-  vec3 front = useB ? pickB(j) : pickA(j);
-  float lumF = dot(front, vec3(0.2126, 0.7152, 0.0722));
-  vec3 lcF = lumF < 0.2 ? uPaper : uInk;
-  float frontY = bandEdge(j, n, p.x).x;
-  // Fine marks (claws, spray) need room: drop them on small canvases.
-  bool detail = uPx < 1.0 / 300.0;
-  if (uJetN > 1.5) {
-    float sd = 1e5;
-    for (int i = 0; i < ${MAX_JET - 1}; i++) {
-      if (float(i) > uJetN - 2.0) break;
-      vec4 a = uJet[i];
-      vec4 b = uJet[i + 1];
-      sd = min(sd, taper(p, a.xy, b.xy, a.z, b.z));
-    }
-    float fill = 1.0 - smoothstep(-aa, aa, sd);
-    col = mix(col, vec4(front, 1.0), fill);
-    // Keyed outside the water only, so the root runs seamlessly into the swell.
-    float w = uPx * 2.4;
-    float key = (1.0 - smoothstep(w - aa, w + aa, abs(sd))) * step(frontY - aa, p.y);
-    col.rgb = mix(col.rgb, lcF, key * col.a);
-    // Claws: washi fingers on the leading particles, raking along their flight.
-    for (int i = 0; i < ${MAX_JET - 1}; i++) {
-      if (!detail || float(i) > uJetN - 2.0) break;
-      if (float(i) < uJetN - 7.0) continue;
-      vec4 a = uJet[i];
-      vec4 b = uJet[i + 1];
-      vec2 dir = normalize(b.xy - a.xy + vec2(1e-5));
-      vec2 up = vec2(-dir.y, dir.x);
-      vec2 base = b.xy + up * b.z * 0.8;
-      float len = 0.022 + 0.01 * fract(float(i) * 0.618);
-      float dc = taper(p, base, base + normalize(dir + up * 0.9) * len, 0.0055, 0.0012);
-      col = mix(col, vec4(uPaper, 1.0), 1.0 - smoothstep(-aa, aa, dc));
-      col.rgb = mix(col.rgb, uInk, 1.0 - smoothstep(uPx * 0.8 - aa, uPx * 0.8 + aa, abs(dc)));
-    }
-  }
-
-  // Spray: short streaks along each droplet's velocity.
-  for (int i = 0; i < ${MAX_SPRAY}; i++) {
-    if (!detail || float(i) > uSprayN - 0.5) break;
-    vec4 q = uSpray[i];
-    vec2 tail = q.xy - q.zw * 0.05;
-    float dc = taper(p, q.xy, tail, 0.005, 0.0015);
-    col = mix(col, vec4(front, 1.0), 1.0 - smoothstep(-aa, aa, dc));
-    col.rgb = mix(col.rgb, lcF, 1.0 - smoothstep(uPx * 0.8 - aa, uPx * 0.8 + aa, abs(dc)));
-  }
-
-  // While a new plate is being printed, its leading edge is keyed like a block.
-  if (uWipe > 0.5) {
-    float wl = uPx / uAspect * 1.6;
-    float edge = (1.0 - smoothstep(wl, wl * 2.0, abs(s - edgeX))) * col.a;
-    col.rgb = mix(col.rgb, uInk, edge);
-  }
-
-  gl_FragColor = col;
 }
-`;
+
+/**
+ * Draws one plate's print of the simulated sea: flat bands in the plate's
+ * exact colours, key-lines that swell at the crest and taper away, washi
+ * claw-fingers on the lip, and spray. Vector, at device resolution.
+ */
+function drawPrint(ctx: CanvasRenderingContext2D, sea: Sea, colors: string[], w: number, h: number) {
+  const n = colors.length;
+  const X = (x: number) => x * h;
+  const Y = (y: number) => (1 - y) * h;
+
+  for (let j = 0; j < n; j++) {
+    const edge = sea.edge(j, n);
+    const front = j === n - 1;
+    ctx.beginPath();
+    ctx.moveTo(X(edge[0].x), Y(edge[0].y));
+    for (let i = 1; i < edge.length; i++) ctx.lineTo(X(edge[i].x), Y(edge[i].y));
+    ctx.lineTo(w + 40, h + 40);
+    ctx.lineTo(-40, h + 40);
+    ctx.closePath();
+    ctx.fillStyle = colors[j];
+    ctx.fill("nonzero");
+
+    // Key-line: a carved line whose weight follows the crest.
+    ctx.strokeStyle = luminance(colors[j]) < 0.05 ? PAPER : INK;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    const base = front ? 1.15 : 0.9;
+    const gain = front ? 1.9 : 0.9;
+    strokeTapered(ctx, edge, X, Y, (p) => base + gain * p.w * p.w);
+  }
+
+  // Claws: washi fingers raking forward off the lip, curling down at the tips.
+  for (const c of sea.claws) {
+    const dm = Math.hypot(c.dx, c.dy) || 1;
+    const dx = c.dx / dm;
+    const dy = c.dy / dm;
+    const pts: [number, number][] = [];
+    for (let i = 0; i <= 10; i++) {
+      const t = i / 10;
+      const x = c.x + dx * c.len * t + 0.15 * c.len * t * t;
+      const y = c.y + dy * c.len * t - 0.55 * c.len * t * t;
+      pts.push([X(x), Y(y)]);
+    }
+    const width = Math.max(c.len * h * 0.32, 1.2);
+    const left: [number, number][] = [];
+    const right: [number, number][] = [];
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[Math.max(i - 1, 0)];
+      const b = pts[Math.min(i + 1, pts.length - 1)];
+      const tx = b[0] - a[0];
+      const ty = b[1] - a[1];
+      const m = Math.hypot(tx, ty) || 1;
+      const half = (width / 2) * (1 - i / pts.length) ** 0.8;
+      left.push([pts[i][0] - (ty / m) * half, pts[i][1] + (tx / m) * half]);
+      right.push([pts[i][0] + (ty / m) * half, pts[i][1] - (tx / m) * half]);
+    }
+    ctx.beginPath();
+    ctx.moveTo(left[0][0], left[0][1]);
+    for (const p of left.slice(1)) ctx.lineTo(p[0], p[1]);
+    for (const p of right.reverse()) ctx.lineTo(p[0], p[1]);
+    ctx.closePath();
+    ctx.fillStyle = PAPER;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = INK;
+    ctx.stroke();
+  }
+
+  // Spray: washi droplets, keyed.
+  for (const d of sea.drops) {
+    const r = d.r * h * (0.6 + 0.4 * d.life);
+    ctx.beginPath();
+    ctx.arc(X(d.x), Y(d.y), Math.max(r, 1), 0, Math.PI * 2);
+    ctx.fillStyle = PAPER;
+    ctx.fill();
+    ctx.lineWidth = 0.9;
+    ctx.strokeStyle = INK;
+    ctx.stroke();
+  }
+}
 
 export function WaveHero({ plates }: { plates: WavePlate[] }) {
-  const canvasHost = useRef<HTMLDivElement>(null);
+  const host = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [webgl, setWebgl] = useState<"pending" | "on" | "off">("pending");
+  const [ready, setReady] = useState(false);
   const api = useRef<{ show: (i: number, animate: boolean) => void; setPlaying: (p: boolean) => void } | null>(null);
   const indexRef = useRef(0);
   const reduced = useRef(false);
+  const visible = useRef(true);
+  const onSet = useRef<(() => void) | null>(null);
 
   const current = plates[index];
 
@@ -179,266 +155,166 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
     [plates.length],
   );
 
-  // Auto-advance between sets (the sea is calm then), while playing and on screen.
-  const visible = useRef(true);
-  const onSet = useRef<(() => void) | null>(null);
+  // A new plate is printed between sets, while the sea is calm.
   useEffect(() => {
     onSet.current = () => {
       if (playing && visible.current && !document.hidden) go(indexRef.current + 1);
     };
   }, [playing, go]);
-  // Fallback cadence when WebGL is off (static print): change plate on a timer.
-  useEffect(() => {
-    if (!playing || webgl === "on") return;
-    const t = setInterval(() => {
-      if (visible.current && !document.hidden) go(indexRef.current + 1);
-    }, HOLD_MS);
-    return () => clearInterval(t);
-  }, [playing, go, webgl]);
 
   useEffect(() => {
     reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced.current) setPlaying(false);
-    const host = canvasHost.current;
-    if (!host) return;
-    let disposed = false;
-    let cleanup = () => {};
+    const el = host.current;
+    if (!el) return;
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    canvas.setAttribute("aria-hidden", "true");
+    canvas.className = "absolute inset-0 size-full";
+    el.appendChild(canvas);
 
-    (async () => {
-      // Wait for an idle moment so the wave never competes with first paint.
-      await new Promise<void>((r) =>
-        "requestIdleCallback" in window ? requestIdleCallback(() => r(), { timeout: 1500 }) : setTimeout(r, 300),
-      );
-      if (disposed) return;
-      const probe = document.createElement("canvas");
-      const gl = (probe.getContext("webgl2") ?? probe.getContext("webgl")) as WebGLRenderingContext | null;
-      if (!gl) {
-        setWebgl("off");
-        return;
+    const sea = new Sea();
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+    let plate = 0;
+    let nextPlate = 0;
+    let wipeStart = -1;
+    let running = !reduced.current;
+    let raf = 0;
+    let last = performance.now();
+    let onScreen = true;
+    let started = false;
+    const colorsOf = (i: number) => plates[i].colors.map((c) => c.hex);
+
+    const draw = (now: number) => {
+      if (!w || !h) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      drawPrint(ctx, sea, colorsOf(plate), w, h);
+      if (wipeStart >= 0) {
+        // The next plate is printed across the sheet behind a keyed edge.
+        const p = Math.min((now - wipeStart) / WIPE_MS, 1);
+        const edge = w * (1 - Math.pow(1 - p, 3));
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, 0, edge, h);
+        ctx.clip();
+        ctx.clearRect(0, 0, edge, h);
+        drawPrint(ctx, sea, colorsOf(nextPlate), w, h);
+        ctx.restore();
+        const top = (1 - sea.edge(0, colorsOf(nextPlate).length).reduce((m, q) => Math.max(m, q.y), 0)) * h;
+        ctx.fillStyle = INK;
+        ctx.fillRect(edge - 0.75, top, 1.5, h - top);
+        if (p >= 1) {
+          plate = nextPlate;
+          wipeStart = -1;
+        }
       }
-      // Software rasterisers (SwiftShader, llvmpipe) would run the wave on the
-      // CPU and drain the device: keep the static print instead.
-      const dbg = gl.getExtension("WEBGL_debug_renderer_info");
-      const gpu = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
-      const force = new URLSearchParams(window.location.search).has("gl");
-      if (!force && /swiftshader|llvmpipe|software|basic render/i.test(gpu)) {
-        setWebgl("off");
-        return;
+    };
+
+    const resize = () => {
+      w = el.clientWidth;
+      h = el.clientHeight;
+      if (!w || !h) return;
+      dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      sea.aspect = w / h;
+      if (!started) {
+        started = true;
+        sea.launch();
+        // `?wave=<s>` holds a chosen moment (captures); reduced motion holds the plunge.
+        const hold = Number(new URLSearchParams(window.location.search).get("wave"));
+        const t = hold > 0 ? hold : reduced.current ? 4.55 : 0;
+        if (hold > 0) running = false;
+        for (let i = 0; i < Math.round(t * 60); i++) sea.step(1 / 60, colorsOf(plate).length);
       }
-      const THREE = await import("three");
-      if (disposed) return;
+      draw(performance.now());
+    };
 
-      let renderer: import("three").WebGLRenderer;
-      try {
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
-      } catch {
-        setWebgl("off");
-        return;
+    const loop = (now: number) => {
+      raf = 0;
+      const dt = Math.min((now - last) / 1000, 1 / 20);
+      last = now;
+      if (running) {
+        const sets = sea.sets;
+        sea.step(dt, colorsOf(plate).length);
+        if (sea.sets !== sets) onSet.current?.();
       }
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-      renderer.setClearColor(0x000000, 0);
-      renderer.outputColorSpace = THREE.LinearSRGBColorSpace; // pass raw sRGB through untouched
-      const el = renderer.domElement;
-      el.setAttribute("aria-hidden", "true");
-      el.className = "absolute inset-0 size-full opacity-0 transition-opacity duration-700";
-      host.appendChild(el);
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.Camera();
-      const geo = new THREE.PlaneGeometry(2, 2);
-
-      const toVecs = (p: WavePlate) => {
-        const v = p.colors.map((c) => new THREE.Vector3(...hexToVec(c.hex)));
-        while (v.length < 4) v.push(v[v.length - 1].clone());
-        return v;
-      };
-
-      const sim = new WaveSim();
-      const fieldTex = new THREE.DataTexture(sim.field, FIELD_N, 1, THREE.RedFormat, THREE.FloatType);
-      fieldTex.needsUpdate = true;
-      const uniforms = {
-        uTime: { value: 0 },
-        uA: { value: toVecs(plates[0]) },
-        uB: { value: toVecs(plates[0]) },
-        uCountA: { value: plates[0].colors.length },
-        uCountB: { value: plates[0].colors.length },
-        uMix: { value: 0 },
-        uInk: { value: new THREE.Vector3(31 / 255, 28 / 255, 25 / 255) },
-        uPaper: { value: new THREE.Vector3(236 / 255, 238 / 255, 232 / 255) },
-        uAspect: { value: 1 },
-        uWipe: { value: 0 },
-        uPx: { value: 0.002 },
-        uPacket: { value: new THREE.Vector4() },
-        uField: { value: fieldTex },
-        uJet: { value: Array.from({ length: MAX_JET }, () => new THREE.Vector4()) },
-        uJetN: { value: 0 },
-        uSpray: { value: Array.from({ length: MAX_SPRAY }, () => new THREE.Vector4()) },
-        uSprayN: { value: 0 },
-      };
-      const count = () => uniforms.uCountA.value;
-      const sync = () => {
-        uniforms.uTime.value = sim.t;
-        uniforms.uPacket.value.set(sim.packet.x, sim.packet.amp, sim.packet.phase, 0);
-        fieldTex.needsUpdate = true;
-        const rib = sim.ribbon(count());
-        rib.forEach(([x, y, r], i) => uniforms.uJet.value[i].set(x, y, r, 0));
-        uniforms.uJetN.value = rib.length;
-        sim.spray.slice(0, MAX_SPRAY).forEach((q, i) => uniforms.uSpray.value[i].set(q.x, q.y, q.vx, q.vy));
-        uniforms.uSprayN.value = Math.min(sim.spray.length, MAX_SPRAY);
-      };
-      const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms, transparent: true });
-      const mesh = new THREE.Mesh(geo, mat);
-      mesh.frustumCulled = false;
-      scene.add(mesh);
-
-      // The pointer disturbs the water: moving across it drags ripples, a tap splashes.
-      let last: { x: number; y: number } | null = null;
-      const toSheet = (e: PointerEvent) => {
-        const r = host.getBoundingClientRect();
-        return { x: (e.clientX - r.left) / r.height, y: 1 - (e.clientY - r.top) / r.height, inside: e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom };
-      };
-      const onPointer = (e: PointerEvent) => {
-        const q = toSheet(e);
-        if (q.inside && last && q.y < sim.surfaceY(count() - 1, count(), q.x) + 0.08) {
-          sim.disturb(q.x, Math.hypot(q.x - last.x, q.y - last.y) * 0.25);
-          kick();
-        }
-        last = q.inside ? q : null;
-      };
-      const onDown = (e: PointerEvent) => {
-        const q = toSheet(e);
-        if (q.inside) {
-          sim.disturb(q.x, 0.02);
-          kick();
-        }
-      };
-      window.addEventListener("pointermove", onPointer, { passive: true });
-      host.addEventListener("pointerdown", onDown, { passive: true });
-
-      let sized = false;
-      const resize = () => {
-        const { clientWidth: w, clientHeight: h } = host;
-        if (!w || !h) return;
-        renderer.setSize(w, h, false);
-        uniforms.uAspect.value = w / h;
-        if (!sized) {
-          sim.aspect = w / h;
-          sim.launch(true);
-          sized = true;
-        }
-        sim.aspect = w / h;
-        uniforms.uPx.value = 1 / h; // one CSS pixel in sheet units
-      };
-      const ro = new ResizeObserver(resize);
-      ro.observe(host);
-      resize();
-
-      let wipeStart = -1;
-      let running = !reduced.current;
-      let raf = 0;
-      let lastFrame = performance.now();
-      let onScreen = true;
-      // Reduced motion: advance the physics to a breaking moment, then hold it.
-      // `?wave=<seconds>` does the same at a chosen moment (used for captures).
-      const hold = Number(new URLSearchParams(window.location.search).get("wave"));
-      if (hold > 0) {
-        running = false;
-        for (let i = 0; i < Math.round(hold * 60); i++) sim.step(1 / 60, count());
-      } else if (!running) {
-        for (let i = 0; i < 60 * 9 && sim.jet.length < 14; i++) sim.step(1 / 60, count());
+      draw(now);
+      if (onScreen && !document.hidden && (running || wipeStart >= 0)) raf = requestAnimationFrame(loop);
+    };
+    const kick = () => {
+      if (!raf) {
+        last = performance.now();
+        raf = requestAnimationFrame(loop);
       }
+    };
 
-      const render = (now: number) => {
-        const dt = Math.min((now - lastFrame) / 1000, 0.05);
-        lastFrame = now;
-        if (running) {
-          const sets = sim.sets;
-          sim.step(dt, count());
-          if (sim.sets !== sets) onSet.current?.();
-        }
-        if (wipeStart >= 0) {
-          const p = Math.min((now - wipeStart) / WIPE_MS, 1);
-          uniforms.uMix.value = 1 - Math.pow(1 - p, 3);
-          uniforms.uWipe.value = 1;
-          if (p >= 1) {
-            uniforms.uWipe.value = 0;
-            uniforms.uA.value = uniforms.uB.value.map((v) => v.clone());
-            uniforms.uCountA.value = uniforms.uCountB.value;
-            uniforms.uMix.value = 0;
-            wipeStart = -1;
-          }
-        }
-        sync();
-        renderer.render(scene, camera);
-      };
+    // The pointer disturbs the water; a tap splashes.
+    let prev: { x: number; y: number } | null = null;
+    const toSheet = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      return { x: (e.clientX - r.left) / r.height, y: 1 - (e.clientY - r.top) / r.height, inside };
+    };
+    const onMove = (e: PointerEvent) => {
+      const q = toSheet(e);
+      if (q.inside && prev && running) sea.disturb(q.x, Math.hypot(q.x - prev.x, q.y - prev.y) * 0.2);
+      prev = q.inside ? q : null;
+    };
+    const onDown = (e: PointerEvent) => {
+      const q = toSheet(e);
+      if (q.inside && running) sea.splash(q.x, colorsOf(plate).length);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    el.addEventListener("pointerdown", onDown, { passive: true });
 
-      const loop = (now: number) => {
-        raf = 0;
-        render(now);
-        if (onScreen && !document.hidden && (running || wipeStart >= 0)) raf = requestAnimationFrame(loop);
-      };
-      const kick = () => {
-        if (!raf) {
-          lastFrame = performance.now();
-          raf = requestAnimationFrame(loop);
-        }
-      };
+    const ro = new ResizeObserver(resize);
+    ro.observe(el);
+    resize();
+    const io = new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      visible.current = onScreen;
+      if (onScreen) kick();
+    });
+    io.observe(el);
+    const onVis = () => !document.hidden && kick();
+    document.addEventListener("visibilitychange", onVis);
 
-      const io = new IntersectionObserver(([entry]) => {
-        onScreen = entry.isIntersecting;
-        visible.current = onScreen;
-        if (onScreen) kick();
-      });
-      io.observe(host);
-      const onVis = () => !document.hidden && kick();
-      document.addEventListener("visibilitychange", onVis);
-
-      api.current = {
-        show(i, animate) {
-          uniforms.uB.value = toVecs(plates[i]);
-          uniforms.uCountB.value = plates[i].colors.length;
-          if (animate) {
-            wipeStart = performance.now();
-          } else {
-            uniforms.uA.value = toVecs(plates[i]);
-            uniforms.uCountA.value = plates[i].colors.length;
-            uniforms.uMix.value = 0;
-            wipeStart = -1;
-            render(performance.now());
-          }
+    api.current = {
+      show(i, animate) {
+        if (animate) {
+          nextPlate = i;
+          wipeStart = performance.now();
           kick();
-        },
-        setPlaying(p) {
-          running = p;
-          kick();
-        },
-      };
-
-      render(performance.now());
-      requestAnimationFrame(() => (el.style.opacity = "1"));
-      setWebgl("on");
-      kick();
-
-      cleanup = () => {
-        cancelAnimationFrame(raf);
-        io.disconnect();
-        ro.disconnect();
-        window.removeEventListener("pointermove", onPointer);
-        host.removeEventListener("pointerdown", onDown);
-        fieldTex.dispose();
-        document.removeEventListener("visibilitychange", onVis);
-        geo.dispose();
-        mat.dispose();
-        renderer.dispose();
-        el.remove();
-        api.current = null;
-      };
-    })().catch(() => setWebgl("off"));
+        } else {
+          plate = i;
+          nextPlate = i;
+          wipeStart = -1;
+          draw(performance.now());
+        }
+      },
+      setPlaying(p) {
+        running = p && !reduced.current;
+        kick();
+      },
+    };
+    kick();
+    const readyFrame = requestAnimationFrame(() => setReady(true));
 
     return () => {
-      disposed = true;
-      cleanup();
+      cancelAnimationFrame(raf);
+      cancelAnimationFrame(readyFrame);
+      io.disconnect();
+      ro.disconnect();
+      window.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("visibilitychange", onVis);
+      canvas.remove();
+      api.current = null;
     };
   }, [plates]);
 
@@ -451,30 +327,36 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
   return (
     <div className="relative flex h-full flex-col">
       <div className="kento relative min-h-0 flex-1">
-      <div className="absolute inset-0 overflow-hidden" ref={canvasHost}>
-        {/* Bokashi: the plate's first colour graded into the paper, as in a printed sky. */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[46%] transition-[background-color] duration-[1600ms]"
-          style={{
-            backgroundColor: sky,
-            maskImage: "linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%)",
-          }}
-        />
-        {webgl !== "on" ? <WavePrint colors={current.colors.map((c) => c.hex)} className="absolute inset-x-0 bottom-0 h-[74%] w-full" /> : null}
-        <Link
-          href={`/combinations/${current.code}`}
-          className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
-          aria-label={`Open combination ${current.code}`}
-        >
-          {current.code}
-        </Link>
-      </div>
+        <div className="absolute inset-0 overflow-hidden" ref={host}>
+          {/* Bokashi: the plate's first colour graded into the paper, as in a printed sky. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-[46%] transition-[background-color] duration-[1600ms]"
+            style={{
+              backgroundColor: sky,
+              maskImage: "linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%)",
+            }}
+          />
+          {!ready ? (
+            <WavePrint colors={current.colors.map((c) => c.hex)} className="absolute inset-x-0 bottom-0 h-[74%] w-full" />
+          ) : null}
+          <Link
+            href={`/combinations/${current.code}`}
+            className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
+            aria-label={`Open combination ${current.code}`}
+          >
+            {current.code}
+          </Link>
+        </div>
       </div>
 
       <div className="mt-3 flex items-start justify-between gap-x-4 px-[var(--gutter)] lg:px-0">
-        <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={`Colours of combination ${current.code}`}>
+        <ul
+          className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2"
+          aria-live="polite"
+          aria-label={`Colours of combination ${current.code}`}
+        >
           {current.colors.map((c) => (
             <li key={c.hex + c.name} className="flex items-center gap-2.5">
               <span className="size-4 shrink-0 ring-1 ring-sumi/15" style={{ backgroundColor: c.hex }} aria-hidden="true" />

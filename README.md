@@ -2,7 +2,7 @@
 
 An independent digital archive of the 348 colour combinations compiled by **Sanzo Wada** (1883–1967), first published as *Haishoku Sōkan* (1933–34).
 
-Every combination is rendered from data in HTML/CSS/WebGL. No scans, layouts or editorial text from any printed edition are reproduced.
+Every combination is rendered from data in HTML, CSS and Canvas. No scans, layouts or editorial text from any printed edition are reproduced.
 
 ## Data & credit
 
@@ -21,4 +21,4 @@ npm run dev     # http://localhost:3000
 npm run build   # static generation of all 348 combination + 159 colour pages
 ```
 
-Next.js (App Router) · TypeScript · Tailwind CSS · customised shadcn/ui · three.js (hero only). Deployed on Vercel from `main`; preview deployments for other branches are disabled in `vercel.json`.
+Next.js (App Router) · TypeScript · Tailwind CSS · customised shadcn/ui · Canvas 2D for the hero wave (no WebGL dependency). Agents: `curl -s <site>/skills.md`. Deployed on Vercel from `main`; preview deployments for other branches are disabled in `vercel.json`.
