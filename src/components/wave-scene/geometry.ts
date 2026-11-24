@@ -110,7 +110,8 @@ export function spine(spec: TongueSpec, s: WaveState, n: number): V2[] {
  */
 export function tongueWidth(spec: TongueSpec, t: number) {
   if (t < 0.5) return spec.lip + (spec.width - spec.lip) * Math.pow(1 - t / 0.5, 2.3);
-  return Math.max(spec.lip * Math.pow(1 - (t - 0.5) / 0.5, 0.85), 0.012);
+  // Zero slope at the crest on both sides (no kink), tapering to the tip.
+  return Math.max(spec.lip * Math.pow(1 - Math.pow((t - 0.5) / 0.5, 1.6), 0.9), 0.012);
 }
 
 /** Unit tangents and right-hand normals (into the body) of a polyline. */
@@ -159,39 +160,12 @@ export function seaY(l: Layout, s: WaveState, x: number, t: number) {
   );
 }
 
-/** Mount Fuji: concave flanks rising to a flat-topped summit, with its snow cap. */
-export function fuji(l: Layout): { body: V2[]; snow: V2[] } {
-  const cx = l.O + Math.min(0.76 * l.C, l.W - 1.8);
-  const base = l.sea - 0.25;
-  const H = 1.25;
-  const hw = 1.55;
-  const body: V2[] = [];
-  const snow: V2[] = [];
-  const top = 0.13;
-  for (let i = 0; i <= 24; i++) {
-    const t = i / 24;
-    const x = -hw + 2 * hw * t;
-    const ax = Math.abs(x);
-    const y = ax < top ? H : H * Math.pow(1 - (ax - top) / (hw - top), 1.6);
-    body.push([cx + x, base + y]);
-  }
-  const sl = 0.42; // snow line as a fraction of height from the top
-  for (let i = 0; i <= 24; i++) {
-    const t = i / 24;
-    const x = -hw + 2 * hw * t;
-    const ax = Math.abs(x);
-    const y = ax < top ? H : H * Math.pow(1 - (ax - top) / (hw - top), 1.6);
-    if (y >= H * (1 - sl)) snow.push([cx + x, base + y]);
-  }
-  // Snow's lower edge: jagged streaks running down the flanks.
-  const lower: V2[] = [];
-  const last = snow[snow.length - 1];
-  const first = snow[0];
-  for (let i = 0; i <= 10; i++) {
-    const t = i / 10;
-    const x = last[0] + (first[0] - last[0]) * t;
-    const y = base + H * (1 - sl) - (i % 2 === 0 ? 0 : 0.12) - 0.05 * Math.sin(t * Math.PI);
-    lower.push([x, y]);
-  }
-  return { body, snow: [...snow, ...lower] };
+/** Three flat sea bands (far, middle, near): each rolls at its own pace. */
+export const BANDS = 3;
+export function bandY(l: Layout, s: WaveState, k: number, x: number, t: number) {
+  const off = [0.25, -0.45, -1.35][k];
+  const amp = [0.09, 0.15, 0.2][k];
+  const sp = [0.5, 0.8, 1.1][k];
+  const trough = k === 0 ? 0 : 0.35 * s.swell * Math.exp(-(((x - (l.crestX + 0.16 * l.C)) / 1.8) ** 2));
+  return l.sea + off + amp * Math.sin((1.1 + 0.3 * k) * x - sp * t + k * 1.9) + amp * 0.4 * Math.sin((2.3 + 0.5 * k) * x + sp * 1.3 * t + k) - trough;
 }

@@ -39,7 +39,7 @@ export function WaveScene() {
       canvas.setAttribute("aria-hidden", "true");
       canvas.className = "absolute inset-0 size-full";
       el.appendChild(canvas);
-      const stage = createStage(canvas, hold > 0 ? hold : reduced ? 7.6 : 0);
+      const stage = createStage(canvas, hold > 0 ? hold : reduced ? 4.6 : 0);
       let running = !reduced && !(hold > 0);
       let raf = 0;
       let last = performance.now();
@@ -114,7 +114,7 @@ export function WaveScene() {
     control.current?.setPlaying(playing);
   }, [playing]);
 
-  const inks = [INKS.body, INKS.mid, INKS.pale, INKS.foam, INKS.sky, INKS.ink];
+  const inks = [INKS.body, INKS.mid, INKS.pale, INKS.foam, INKS.sky];
 
   return (
     <div className="relative flex h-full flex-col">
