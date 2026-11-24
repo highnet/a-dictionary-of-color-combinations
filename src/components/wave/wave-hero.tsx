@@ -59,6 +59,7 @@ uniform float uCountA;
 uniform float uCountB;
 uniform float uMix;
 uniform vec3 uInk;
+uniform vec3 uPaper;
 varying float vH;
 varying vec3 vWorld;
 
@@ -84,7 +85,10 @@ void main() {
   float d2 = abs(fract(f2 + 0.5) - 0.5);
   float hatch = (1.0 - smoothstep(w2 * 0.35, w2 * 1.1, d2)) * step(n - 1.0, idx) * 0.5
     * (1.0 - smoothstep(0.08, 0.2, w2));
-  col = mix(col, uInk, max(key, hatch));
+  // Key-lines flip to washi where the band is too dark to hold sumi.
+  float lum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+  vec3 line = lum < 0.2 ? uPaper : uInk;
+  col = mix(col, line, max(key, hatch));
   gl_FragColor = vec4(col, 1.0);
 }
 `;
@@ -187,6 +191,7 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
         uCountB: { value: plates[0].colors.length },
         uMix: { value: 0 },
         uInk: { value: new THREE.Vector3(31 / 255, 28 / 255, 25 / 255) },
+        uPaper: { value: new THREE.Vector3(236 / 255, 238 / 255, 232 / 255) },
       };
       const mat = new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms });
       const mesh = new THREE.Mesh(geo, mat);
@@ -316,7 +321,8 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
 
   return (
     <div className="relative flex h-full flex-col">
-      <div className="kento relative min-h-0 flex-1 overflow-hidden" ref={canvasHost}>
+      <div className="kento relative min-h-0 flex-1">
+      <div className="absolute inset-0 overflow-hidden" ref={canvasHost}>
         {/* Bokashi: the plate's first colour graded into the paper, as in a printed sky. */}
         <div
           aria-hidden="true"
@@ -327,7 +333,7 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
             WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 18%, transparent 100%)",
           }}
         />
-        {webgl !== "on" ? <WavePrint colors={current.colors.map((c) => c.hex)} className="absolute inset-x-0 bottom-0 h-[72%] w-full" /> : null}
+        {webgl !== "on" ? <WavePrint colors={current.colors.map((c) => c.hex)} className="absolute inset-x-0 bottom-0 h-[74%] w-full" /> : null}
         <Link
           href={`/combinations/${current.code}`}
           className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
@@ -336,13 +342,14 @@ export function WaveHero({ plates }: { plates: WavePlate[] }) {
           {current.code}
         </Link>
       </div>
+      </div>
 
       <div className="mt-3 flex items-start justify-between gap-x-4 px-[var(--gutter)] lg:px-0">
         <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={`Colours of combination ${current.code}`}>
           {current.colors.map((c) => (
             <li key={c.hex + c.name} className="flex items-center gap-2.5">
               <span className="size-4 shrink-0 ring-1 ring-sumi/15" style={{ backgroundColor: c.hex }} aria-hidden="true" />
-              <span className="text-[0.8rem] leading-tight">
+              <span className="sr-only text-[0.8rem] leading-tight sm:not-sr-only">
                 {c.name}
                 <span className="ml-2 hidden font-data text-xs text-sumi-soft uppercase sm:inline">{c.hex}</span>
               </span>

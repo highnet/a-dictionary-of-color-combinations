@@ -43,7 +43,9 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
               <span key={col.id + i} style={{ backgroundColor: col.hex, flexGrow: weights[i] }} />
             ))}
           </div>
-          <figcaption className="mt-3 font-data text-xs text-sumi-soft">{weights.join(" / ")}</figcaption>
+          <figcaption className="mt-3 text-xs text-sumi-soft">
+            Bands <span className="ml-1 font-data">{weights.join(" / ")}</span>
+          </figcaption>
         </figure>
         {/* Nested fields. */}
         <figure>

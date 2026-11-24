@@ -38,9 +38,9 @@ export default function Home() {
 
       {/* First viewport: the title, the way in, and a plate being printed. */}
       <section className="shell grid grid-cols-1 gap-6 pt-0 pb-14 lg:min-h-dvh lg:grid-cols-12 lg:gap-12 lg:py-14">
-        <div className="@container flex flex-col justify-between gap-6 lg:col-span-5 lg:gap-10">
+        <div className="@container flex flex-col justify-center gap-7 lg:col-span-5 lg:gap-14">
           <div>
-            <h1 className="font-display text-[clamp(2.5rem,14cqi,6rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
+            <h1 className="font-display text-[clamp(2.25rem,14cqi,6rem)] leading-[0.98] font-extrabold tracking-[-0.03em]">
               A Dictionary of Color Combinations
             </h1>
             <p className="mt-4 max-w-md text-base leading-relaxed lg:mt-6 lg:text-lg">
@@ -51,14 +51,14 @@ export default function Home() {
             <QuickFind />
             <Link
               href="/combinations"
-              className="group inline-flex min-h-12 items-center gap-3 bg-sumi px-6 text-washi transition-colors hover:bg-ai"
+              className="group inline-flex min-h-12 items-center gap-3 bg-sumi px-6 text-washi transition-colors hover:bg-sumi-soft"
             >
               Open the archive
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </Link>
           </div>
         </div>
-        <div className="order-first -mx-[var(--gutter)] h-[min(38svh,22rem)] lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
+        <div className="order-first -mx-[var(--gutter)] h-[min(31svh,22rem)] overflow-x-clip lg:overflow-visible lg:order-none lg:col-span-7 lg:mx-0 lg:h-auto">
           <WaveHero plates={plates} />
         </div>
       </section>
@@ -91,7 +91,9 @@ export default function Home() {
       </section>
 
       {/* A wall of plates, on the indigo of the night prints. */}
-      <section aria-labelledby="selection" className="ground-ai">
+      <section aria-labelledby="selection" className="ground-sumi">
+        {/* Bokashi: the washi grades into the sumi of the night band. */}
+        <div aria-hidden="true" className="h-24 bg-[linear-gradient(to_bottom,var(--washi),var(--sumi))] md:h-32" />
         <div className="shell py-24 md:py-32">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <h2 id="selection" className="max-w-2xl font-display text-[clamp(2rem,4.2vw,3.6rem)] leading-[1.05] font-bold">

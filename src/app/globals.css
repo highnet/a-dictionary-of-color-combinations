@@ -179,12 +179,6 @@
   }
 
   /* Night interlude grounds. */
-  .ground-ai {
-    background-color: var(--ai);
-    color: var(--washi);
-    --rule: color-mix(in oklch, var(--washi) 24%, transparent);
-    --sumi-soft: var(--ai-soft);
-  }
   .ground-sumi {
     background-color: var(--sumi);
     color: var(--washi);

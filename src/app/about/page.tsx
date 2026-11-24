@@ -113,7 +113,7 @@ export default function AboutPage() {
           Credit the general, Sanzo Wada, whenever his orders are used.
         </p>
         <div className="flex flex-wrap items-end gap-3 md:col-span-4 md:col-start-9">
-          <Link href="/combinations" className="inline-flex min-h-12 items-center bg-sumi px-6 text-washi hover:bg-ai">
+          <Link href="/combinations" className="inline-flex min-h-12 items-center bg-sumi px-6 text-washi hover:bg-sumi-soft">
             Open the archive
           </Link>
         </div>

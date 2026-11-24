@@ -85,9 +85,9 @@ export function ArchiveBrowser() {
 
   return (
     <>
-      <div className="sticky top-[var(--topbar-h)] z-30 -mx-[var(--gutter)] border-y border-rule bg-washi/95 px-[var(--gutter)] py-3 backdrop-blur-[2px] lg:top-0">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-          <label className="flex min-h-10 min-w-0 flex-[1_1_16rem] items-center gap-2 border-b border-sumi">
+      <div className="sticky top-[var(--topbar-h)] z-30 -mx-[var(--gutter)] border-y border-rule bg-washi/95 px-[var(--gutter)] py-2.5 backdrop-blur-[2px] lg:top-0">
+        <div className="flex flex-col gap-2.5 md:flex-row md:flex-wrap md:items-center md:gap-x-4 md:gap-y-3">
+          <label className="flex min-h-10 min-w-0 items-center gap-2 border-b border-sumi md:flex-[1_1_16rem]">
             <Search className="size-4 shrink-0 text-sumi-soft" aria-hidden="true" />
             <span className="sr-only">Search by number, HEX or colour name</span>
             <input
@@ -105,47 +105,49 @@ export function ArchiveBrowser() {
               </button>
             ) : null}
           </label>
+          <div className="-mx-[var(--gutter)] flex shrink-0 items-center gap-3 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:px-0 [&>*]:shrink-0">
           <Segmented<Count>
-            label="Number of colours"
-            value={count}
-            onChange={(v) => setParam("n", v === "all" ? null : v)}
-            options={[
-              { value: "all", label: "All" },
-              { value: "2", label: "2" },
-              { value: "3", label: "3" },
-              { value: "4", label: "4" },
-            ]}
-          />
-          <label className="flex min-h-10 items-center gap-2 text-sm">
-            <span className="text-sumi-soft">Sort</span>
-            <select
-              value={sort}
-              onChange={(e) => setParam("sort", e.target.value === "order" ? null : e.target.value)}
-              className="min-h-10 border border-rule bg-transparent px-2 text-sm"
-              disabled={result.kind === "hex"}
+              label="Number of colours"
+              value={count}
+              onChange={(v) => setParam("n", v === "all" ? null : v)}
+              options={[
+                { value: "all", label: "All" },
+                { value: "2", label: "2" },
+                { value: "3", label: "3" },
+                { value: "4", label: "4" },
+              ]}
+            />
+            <label className="flex min-h-10 items-center gap-2 text-sm">
+              <span className="text-sumi-soft">Sort</span>
+              <select
+                value={sort}
+                onChange={(e) => setParam("sort", e.target.value === "order" ? null : e.target.value)}
+                className="min-h-10 border border-rule bg-transparent px-2 text-sm"
+                disabled={result.kind === "hex"}
+              >
+                <option value="order">Original order</option>
+                <option value="hue">By hue</option>
+                <option value="value">Light to dark</option>
+              </select>
+            </label>
+            <Segmented<View>
+              label="Layout"
+              value={view}
+              onChange={(v) => setParam("view", v === "expanded" ? null : v)}
+              options={[
+                { value: "expanded", label: "Expanded" },
+                { value: "compact", label: "Compact" },
+              ]}
+            />
+            <button
+              type="button"
+              aria-pressed={savedOnly}
+              onClick={() => setParam("saved", savedOnly ? null : "1")}
+              className={`min-h-10 border px-3 text-sm transition-colors ${savedOnly ? "border-sumi bg-sumi text-washi" : "border-rule hover:bg-washi-deep"}`}
             >
-              <option value="order">Original order</option>
-              <option value="hue">By hue</option>
-              <option value="value">Light to dark</option>
-            </select>
-          </label>
-          <Segmented<View>
-            label="Layout"
-            value={view}
-            onChange={(v) => setParam("view", v === "expanded" ? null : v)}
-            options={[
-              { value: "expanded", label: "Expanded" },
-              { value: "compact", label: "Compact" },
-            ]}
-          />
-          <button
-            type="button"
-            aria-pressed={savedOnly}
-            onClick={() => setParam("saved", savedOnly ? null : "1")}
-            className={`min-h-10 border px-3 text-sm transition-colors ${savedOnly ? "border-sumi bg-sumi text-washi" : "border-rule hover:bg-washi-deep"}`}
-          >
-            Saved <span className="font-data text-xs">{saved.length}</span>
-          </button>
+              Saved <span className="font-data text-xs">{saved.length}</span>
+            </button>
+          </div>
         </div>
       </div>
 

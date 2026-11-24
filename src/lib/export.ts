@@ -13,7 +13,7 @@ export function paletteHexList(p: Palette): string {
 
 export function paletteCss(p: Palette): string {
   const lines = p.colors.map(
-    (c, i) => `  --wada-${p.code}-${i + 1}: ${c.hex}; /* ${c.name} · ${formatCmyk(c.cmyk)} */`,
+    (c, i) => `  /* ${c.name} · ${formatCmyk(c.cmyk)} */\n  --wada-${p.code}-${i + 1}: ${c.hex};`,
   );
   const named = p.colors.map((c) => `  --${varName(c)}: ${c.hex};`);
   return `/* Sanzo Wada — combination ${p.code} */\n:root {\n${lines.join("\n")}\n\n${named.join("\n")}\n}\n`;

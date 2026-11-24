@@ -77,7 +77,7 @@ export function ExportPanel({ id }: { id: number }) {
             </button>
           ))}
         </div>
-        <pre className="mt-3 max-h-80 overflow-auto bg-sumi p-5 font-data text-[0.75rem] leading-relaxed text-washi" tabIndex={0}>
+        <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap bg-sumi p-5 font-data text-[0.75rem] leading-relaxed text-washi" tabIndex={0}>
           {tab === "css" ? css : json}
         </pre>
       </div>
