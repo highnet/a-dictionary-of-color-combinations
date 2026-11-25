@@ -3,8 +3,8 @@
     "title": "Explore",
     "description": "See all 348 of Sanzo Wada's combinations at once, placed by hue and lightness. Filter by temperature, value contrast and number of colours; pick several to compare."
   },
-  "title": "Survey the field.",
-  "lede": "Every combination, placed by its average hue and value. Narrow the ground, then engage.",
+  "title": "See them all at once.",
+  "lede": "Every combination, placed by its average hue and value. Narrow the range, then look closer.",
   "filters": {
     "colours": "Colours",
     "temperature": "Temperature",

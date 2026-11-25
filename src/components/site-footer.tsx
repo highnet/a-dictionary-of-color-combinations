@@ -3,11 +3,12 @@ import { getT } from "@/i18n/server";
 import { rich } from "@/i18n/rich";
 
 export async function SiteFooter() {
-  const { t } = await getT();
+  const { t, lang } = await getT();
+  const stop = lang === "ja" ? "。" : ". ";
   return (
     <footer className="ground-sumi">
       <div className="shell grid gap-10 py-16 md:grid-cols-12">
-        {/* A haiku: 5-7-5 syllables in English, 5-7-5 morae in Japanese. */}
+        {/* A haiku with its season word (秋の色, autumn colours): 5-7-5 syllables in English, 5-7-5 morae in Japanese. */}
         <p className="font-display text-2xl leading-snug md:col-span-5" aria-label={`${t("footer.haikuLabel")}: ${t("footer.line1")} ${t("footer.line2")} ${t("footer.line3")}`}>
           <span aria-hidden="true">
             {t("footer.line1")}
@@ -27,7 +28,8 @@ export async function SiteFooter() {
             <Link className="link-quiet" href="/about#works-cited">
               {t("footer.worksCited")}
             </Link>
-            . {t("footer.independent")}
+            {stop}
+            {t("footer.independent")}
           </p>
         </div>
         <nav aria-label={t("nav.footer")} className="text-sm md:col-span-3">

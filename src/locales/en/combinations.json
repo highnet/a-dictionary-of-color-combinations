@@ -4,7 +4,7 @@
     "description": "Browse all 348 of Sanzo Wada's colour combinations in original order. Search by number, HEX or colour name; filter by two, three or four colours."
   },
   "title": "All combinations",
-  "lede": "Three hundred and forty-eight orders. Choose by number, by colour, by strength.",
+  "lede": "Three hundred and forty-eight combinations. Choose by number, by colour, by strength.",
   "search": {
     "label": "Search by number, HEX or colour name",
     "placeholder": "Number, #hex or colour name",

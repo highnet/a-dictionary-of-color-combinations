@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 
 /**
- * A dojo floor of tatami, laid in staggered rows so no four corners meet,
+ * A dojo floor of tatami, laid in staggered rows so no four corners meet
+ * (the everyday 祝儀敷き layout; four-corner grids are kept for temples),
  * drifting very slowly under the page. Purely decorative: it sits behind
  * everything at low contrast, never takes pointer events, renders a single
  * still frame for reduced motion and stops while the tab is hidden.
@@ -17,7 +18,10 @@ const ROWS = 52;
 const SPEED = 0.045; // units per second
 const PERIOD = 2 * MAT_H; // the stagger repeats every two rows
 
-/** Rush-weave face with dark cloth borders (heri) on the long edges. */
+/**
+ * A dojo mat: rush-weave face and no cloth binding. Training-hall tatami
+ * have no heri (縁); bound edges belong to living rooms (和室).
+ */
 function matTexture() {
   const W = 512;
   const H = 256;
@@ -37,13 +41,10 @@ function matTexture() {
   // Warp threads along the length.
   g.fillStyle = "rgba(120, 118, 70, 0.06)";
   for (let y = 18; y < H; y += 36) g.fillRect(0, y, W, 1);
-  // Heri: the cloth binding on both long edges.
-  const heri = 14;
-  g.fillStyle = "#8f8d7a";
-  g.fillRect(0, 0, W, heri);
-  g.fillRect(0, H - heri, W, heri);
-  // Hairline at the short ends where mats butt together.
-  g.fillStyle = "rgba(80, 76, 50, 0.35)";
+  // Seams where mats butt together, on all four sides.
+  g.fillStyle = "rgba(80, 76, 50, 0.4)";
+  g.fillRect(0, 0, W, 2);
+  g.fillRect(0, H - 2, W, 2);
   g.fillRect(0, 0, 2, H);
   g.fillRect(W - 2, 0, 2, H);
   return c;
@@ -102,7 +103,7 @@ export function DojoFloor() {
           mats.setMatrixAt(i++, m);
         }
       }
-      // Walk the hall at an angle so the heri run diagonally, not as stripes.
+      // Walk the hall at an angle so the seams run diagonally, not as stripes.
       const floor = new THREE.Group();
       floor.add(mats);
       const hall = new THREE.Group();

@@ -12,7 +12,7 @@
   },
   "name": "Sanzo Wada",
   "nameAlt": "和田三造",
-  "intro": "Painter. Teacher. Costume designer. A general of colour, who mapped its ground before anyone asked him to.",
+  "intro": "Painter. Teacher. Costume designer. A surveyor of colour, who mapped its ground before anyone asked him to.",
   "work": {
     "heading": "His work",
     "painter": {
@@ -66,8 +66,8 @@
     }
   },
   "orders": {
-    "heading": "The orders he left behind.",
-    "text": "<i>Haishoku Sōkan</i> set Japanese colour sense down in combinations, plate by plate. A century later designers still work from them.",
+    "heading": "The combinations he left behind.",
+    "text": "<i>Haishoku Sōkan</i> set his sense of colour down in combinations, plate by plate, Japanese and Western names side by side. A century later designers still work from them.",
     "cta": "Open the archive"
   },
   "sourcesNote": "Facts are summarised in our own words. The 1927 founding of the Japan Standard Color Association is also recorded in the Seigensha edition’s introduction."

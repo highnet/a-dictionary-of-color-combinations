@@ -4,7 +4,7 @@
     "description": "Enter any HEX value to find the nearest of Sanzo Wada's 159 colours and every combination they appear in."
   },
   "title": "Colour search",
-  "lede": "Name the colour you hold. The archive will show its nearest kin and every order it serves.",
+  "lede": "Name the colour you hold. The archive will show its nearest kin and every combination it appears in.",
   "allColours": "All 159 colours",
   "search": {
     "label": "Your colour (HEX)",

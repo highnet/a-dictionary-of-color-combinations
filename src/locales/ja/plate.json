@@ -16,7 +16,7 @@
     "values": "色の値",
     "proportion": "色量",
     "export": "持ち出す",
-    "allies": "友軍"
+    "allies": "縁"
   },
   "values": {
     "title": "一色ずつ、正確に知る。",
@@ -57,7 +57,7 @@
     "copyLabel": "MLA形式の引用"
   },
   "allies": {
-    "title": "友軍——同じ色を分かち合う配色。"
+    "title": "縁——同じ色を分かち合う配色。"
   },
   "tile": {
     "aria": "配色 No. {{code}}：{{names}}",

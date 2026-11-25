@@ -6,14 +6,26 @@
   "title": "Know the source.",
   "tagline": "Then the colours will not deceive you.",
   "facts": {
-    "author": { "label": "Author", "value": "Sanzo Wada (1883–1967)" },
-    "original": { "label": "Original", "value": "Haishoku Sōkan 配色總鑑, six volumes, 1933–34" },
+    "author": {
+      "label": "Author",
+      "value": "Sanzo Wada (1883–1967)"
+    },
+    "original": {
+      "label": "Original",
+      "value": "Haishoku Sōkan 配色總鑑, six volumes, 1933–34"
+    },
     "edition": {
       "label": "Reference edition",
       "value": "A Dictionary of Color Combinations, Vol. 1, Seigensha (ISBN 978-4-86152-247-5)"
     },
-    "combinations": { "label": "Combinations", "value": "348 — 120 of two colours, 120 of three, 108 of four" },
-    "colours": { "label": "Colours", "value": "159, in six families" }
+    "combinations": {
+      "label": "Combinations",
+      "value": "348 — 120 of two colours, 120 of three, 108 of four"
+    },
+    "colours": {
+      "label": "Colours",
+      "value": "159, in six families"
+    }
   },
   "method": {
     "heading": "Method",
@@ -41,6 +53,6 @@
     }
   },
   "citeCombination": "To cite a combination",
-  "credit": "Credit the general, Sanzo Wada, whenever his orders are used.",
+  "credit": "Credit Sanzo Wada whenever his combinations are used.",
   "openArchive": "Open the archive"
 }

@@ -50,8 +50,8 @@
     "5": "Neutrals"
   },
   "footer": {
-    "line1": "Wada’s colours, set",
-    "line2": "in the order he gave them —",
+    "line1": "Autumn colours, set",
+    "line2": "in the order Wada gave —",
     "line3": "the brush is yours now.",
     "credit": "Combinations by Sanzo Wada (1883–1967), first published as <i>Haishoku Sōkan</i> <ja>配色總鑑</ja>, 1933–34.",
     "data": "Colour data from DesLauriers, after Kim, under MIT.",
@@ -79,8 +79,8 @@
     "action": "Copy"
   },
   "notFound": {
-    "title": "This ground is empty.",
-    "body": "Withdraw, and choose a better position.",
+    "title": "This sheet is blank.",
+    "body": "Go back, and choose another plate.",
     "metaTitle": "Not found"
   },
   "cite": {

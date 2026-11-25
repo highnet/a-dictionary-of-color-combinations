@@ -16,7 +16,7 @@
     "values": "Values",
     "proportion": "Proportion",
     "export": "Take it",
-    "allies": "Allies"
+    "allies": "Kin"
   },
   "values": {
     "title": "Know each colour exactly.",
@@ -57,7 +57,7 @@
     "copyLabel": "MLA citation"
   },
   "allies": {
-    "title": "Allies: combinations that share its colours."
+    "title": "Kin: combinations that share its colours."
   },
   "tile": {
     "aria": "Combination {{code}}: {{names}}",

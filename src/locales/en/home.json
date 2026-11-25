@@ -1,6 +1,6 @@
 {
   "hero": {
-    "lede": "Compiled by Sanzo Wada, 1933–34. All 348 combinations, in his order, ready to take into the field.",
+    "lede": "Compiled by Sanzo Wada, 1933–34. All 348 combinations, in his order, ready to put to work.",
     "openArchive": "Open the archive"
   },
   "fork": {
@@ -8,20 +8,20 @@
     "people": "For people",
     "peopleLine": "Choose by eye. Copy by hand.",
     "agents": "For agents",
-    "agentsLine": "Read the orders first, then act. One command; no key.",
+    "agentsLine": "Read the guide first, then act. One command; no key.",
     "skillCommand": "the skill command",
     "apiSkills": "how to design with the archive",
     "apiCombinations": "all 348",
     "apiSearch": "nearest by ΔE2000"
   },
   "chapters": {
-    "heading": "Know the number of colours, and you know the shape of the battle.",
+    "heading": "Know the number of colours, and you know the shape of the composition.",
     "line2": "Two colours: a statement.",
-    "line3": "Three: a position held.",
-    "line4": "Four: an order of battle."
+    "line3": "Three: a balance held.",
+    "line4": "Four: a full composition."
   },
   "selection": {
-    "heading": "Study the strongest orders first.",
+    "heading": "Study the strongest combinations first.",
     "all": "All 348"
   },
   "index": {
