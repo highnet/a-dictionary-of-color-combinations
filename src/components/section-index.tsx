@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslation } from "@/i18n/client";
 
 /** Sticky in-page index. The current section is marked by a sumi tick. */
 export function SectionIndex({ sections }: { sections: { id: string; label: string }[] }) {
   const [active, setActive] = useState(sections[0]?.id);
+  const { t } = useTranslation("plate");
   useEffect(() => {
     const els = sections.map((s) => document.getElementById(s.id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
@@ -18,7 +20,7 @@ export function SectionIndex({ sections }: { sections: { id: string; label: stri
     return () => io.disconnect();
   }, [sections]);
   return (
-    <nav aria-label="On this page" className="overflow-x-auto">
+    <nav aria-label={t("sections.label")} className="overflow-x-auto">
       <ol className="flex gap-6 whitespace-nowrap lg:flex-col lg:gap-1">
         {sections.map((s) => (
           <li key={s.id}>

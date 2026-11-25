@@ -7,6 +7,8 @@ import { Search, X } from "lucide-react";
 import { PlateTile } from "@/components/plate";
 import { searchPalettes, sortPalettes, type SortKey } from "@/lib/search";
 import { useFavourites } from "@/lib/favourites";
+import { useTranslation } from "@/i18n/client";
+import { rich } from "@/i18n/rich";
 
 type Count = "all" | "2" | "3" | "4";
 type View = "expanded" | "compact";
@@ -48,6 +50,7 @@ export function ArchiveBrowser() {
   const pathname = usePathname();
   const params = useSearchParams();
   const { ids: saved } = useFavourites();
+  const { t } = useTranslation("combinations");
 
   const [query, setQuery] = useState(params.get("q") ?? "");
   const count = (["2", "3", "4"].includes(params.get("n") ?? "") ? params.get("n") : "all") as Count;
@@ -66,10 +69,10 @@ export function ArchiveBrowser() {
   // Keep the query in the URL without a history entry per keystroke.
   const deferred = useDeferredValue(query);
   useEffect(() => {
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       if ((params.get("q") ?? "") !== deferred.trim()) setParam("q", deferred.trim() || null);
     }, 250);
-    return () => clearTimeout(t);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deferred]);
 
@@ -89,54 +92,54 @@ export function ArchiveBrowser() {
         <div className="flex flex-col gap-2.5 md:flex-row md:flex-wrap md:items-center md:gap-x-4 md:gap-y-3">
           <label className="flex min-h-10 min-w-0 items-center gap-2 border-b border-sumi md:flex-[1_1_16rem]">
             <Search className="size-4 shrink-0 text-sumi-soft" aria-hidden="true" />
-            <span className="sr-only">Search by number, HEX or colour name</span>
+            <span className="sr-only">{t("search.label")}</span>
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Number, #hex or colour name"
+              placeholder={t("search.placeholder")}
               spellCheck={false}
               autoComplete="off"
               className="min-w-0 flex-1 bg-transparent py-2 text-[0.95rem] outline-none [&::-webkit-search-cancel-button]:hidden"
             />
             {query ? (
-              <button type="button" onClick={() => setQuery("")} className="grid size-8 place-items-center" aria-label="Clear search">
+              <button type="button" onClick={() => setQuery("")} className="grid size-8 place-items-center" aria-label={t("search.clear")}>
                 <X className="size-4" />
               </button>
             ) : null}
           </label>
           <div className="-mx-[var(--gutter)] flex shrink-0 items-center gap-3 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:px-0 [&>*]:shrink-0">
           <Segmented<Count>
-              label="Number of colours"
+              label={t("count.label")}
               value={count}
               onChange={(v) => setParam("n", v === "all" ? null : v)}
               options={[
-                { value: "all", label: "All" },
+                { value: "all", label: t("count.all") },
                 { value: "2", label: "2" },
                 { value: "3", label: "3" },
                 { value: "4", label: "4" },
               ]}
             />
             <label className="flex min-h-10 items-center gap-2 text-sm">
-              <span className="text-sumi-soft">Sort</span>
+              <span className="text-sumi-soft">{t("sort.label")}</span>
               <select
                 value={sort}
                 onChange={(e) => setParam("sort", e.target.value === "order" ? null : e.target.value)}
                 className="min-h-10 border border-rule bg-transparent px-2 text-sm"
                 disabled={result.kind === "hex"}
               >
-                <option value="order">Original order</option>
-                <option value="hue">By hue</option>
-                <option value="value">Light to dark</option>
+                <option value="order">{t("sort.order")}</option>
+                <option value="hue">{t("sort.hue")}</option>
+                <option value="value">{t("sort.value")}</option>
               </select>
             </label>
             <Segmented<View>
-              label="Layout"
+              label={t("view.label")}
               value={view}
               onChange={(v) => setParam("view", v === "expanded" ? null : v)}
               options={[
-                { value: "expanded", label: "Expanded" },
-                { value: "compact", label: "Compact" },
+                { value: "expanded", label: t("view.expanded") },
+                { value: "compact", label: t("view.compact") },
               ]}
             />
             <button
@@ -145,7 +148,7 @@ export function ArchiveBrowser() {
               onClick={() => setParam("saved", savedOnly ? null : "1")}
               className={`min-h-10 border px-3 text-sm transition-colors ${savedOnly ? "border-sumi bg-sumi text-washi" : "border-rule hover:bg-washi-deep"}`}
             >
-              Saved <span className="font-data text-xs">{saved.length}</span>
+              {t("saved")} <span className="font-data text-xs">{saved.length}</span>
             </button>
           </div>
         </div>
@@ -153,9 +156,11 @@ export function ArchiveBrowser() {
 
       <div className="flex flex-wrap items-baseline justify-between gap-3 pt-8 pb-10" aria-live="polite">
         <p className="text-sm">
-          <span className="font-data">{list.length}</span>{" "}
-          <span className="text-sumi-soft">of 348 combinations</span>
-          {result.kind === "hex" ? <span className="text-sumi-soft"> · nearest first</span> : null}
+          {rich(t("results.count", { n: list.length }), {
+            n: (c, k) => <span key={k} className="font-data">{c}</span>,
+            soft: (c, k) => <span key={k} className="text-sumi-soft">{c}</span>,
+          })}
+          {result.kind === "hex" ? <span className="text-sumi-soft">{t("results.nearest")}</span> : null}
         </p>
         {result.matched.length > 0 ? (
           <ul className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-sumi-soft">
@@ -170,14 +175,14 @@ export function ArchiveBrowser() {
         ) : null}
       </div>
 
-      <h2 className="sr-only">Results</h2>
+      <h2 className="sr-only">{t("results.heading")}</h2>
       {list.length === 0 ? (
         <div className="py-24">
-          <p className="font-display text-3xl">No combination answers.</p>
+          <p className="font-display text-3xl">{t("empty.title")}</p>
           <p className="mt-3 text-sumi-soft">
             {savedOnly && saved.length === 0
-              ? "Nothing saved yet. Save a combination from its page."
-              : "Widen the search: a number from 1 to 348, a HEX value, or part of a colour name."}
+              ? t("empty.noneSaved")
+              : t("empty.widen")}
           </p>
           {filtered ? (
             <button
@@ -188,7 +193,7 @@ export function ArchiveBrowser() {
               }}
               className="mt-6 min-h-11 border border-sumi px-4 text-sm"
             >
-              Clear all filters
+              {t("empty.clear")}
             </button>
           ) : null}
         </div>

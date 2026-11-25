@@ -1,1 +1,72 @@
-{}
+{
+  "meta": {
+    "title": "No. {{code}} — {{names}}",
+    "description": "Sanzo Wada's combination {{code}}: {{list}}. HEX, RGB and CMYK values, CSS variables, JSON, SVG and PNG."
+  },
+  "jsonld": {
+    "name": "Colour combination {{code}}",
+    "creator": "Sanzo Wada"
+  },
+  "code": "No. {{code}}",
+  "subtitle": "{{chapter}} · combination {{id}} of 348",
+  "neighbours": "Neighbouring combinations",
+  "sections": {
+    "label": "On this page",
+    "plate": "The plate",
+    "values": "Values",
+    "proportion": "Proportion",
+    "export": "Take it",
+    "allies": "Allies"
+  },
+  "values": {
+    "title": "Know each colour exactly.",
+    "note": "CMYK as printed in the book. HEX and RGB are a perceptual conversion of that CMYK.",
+    "swatch": "Swatch",
+    "colour": "Colour",
+    "usedIn": "Used in",
+    "usedCount": "{{n}} combinations",
+    "copyLabel": "{{name}} {{format}}"
+  },
+  "proportion": {
+    "title": "The same forces, in different measure.",
+    "body": "Wada printed every colour at the same size only for convenience. Using colours “in equal amounts and of equal shape, as in these tables, is extremely rare; indeed, it is usually something to avoid” <cite></cite>."
+  },
+  "proportions": {
+    "ground": "Ground and figure",
+    "bands": "Bands",
+    "nested": "Nested",
+    "accent": "Accent line",
+    "rotate": "Rotate the lead colour"
+  },
+  "export": {
+    "title": "Take it with you.",
+    "copyHex": "Copy all HEX",
+    "hexLabel": "all HEX values",
+    "copyCss": "Copy CSS variables",
+    "cssLabel": "CSS variables",
+    "copyJson": "Copy JSON",
+    "jsonLabel": "JSON",
+    "copyLink": "Copy link",
+    "linkLabel": "link",
+    "format": "Code format",
+    "cssTab": "CSS variables",
+    "jsonTab": "JSON"
+  },
+  "cite": {
+    "title": "Cite it.",
+    "copyLabel": "MLA citation"
+  },
+  "allies": {
+    "title": "Allies: combinations that share its colours."
+  },
+  "tile": {
+    "aria": "Combination {{code}}: {{names}}",
+    "heading": "Combination {{code}}"
+  },
+  "save": {
+    "save": "Save",
+    "saved": "Saved",
+    "ariaSave": "Save {{code}}",
+    "ariaRemove": "Remove {{code}} from saved"
+  }
+}
