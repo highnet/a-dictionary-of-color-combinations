@@ -49,7 +49,7 @@ export function CopyValue({
           setTimeout(() => setDone(false), 1400);
         }
       }}
-      className={`group inline-flex min-h-9 items-center gap-2 font-data text-[0.8rem] tracking-tight hover:underline hover:decoration-current/40 ${className}`}
+      className={`group inline-flex min-h-9 items-center gap-2 text-left font-data text-[0.8rem] tracking-tight hover:underline hover:decoration-current/40 ${className}`}
       aria-label={`Copy ${label ?? value}`}
     >
       <span>{display ?? value}</span>

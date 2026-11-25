@@ -141,28 +141,28 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
               CMYK as printed in the book. HEX and RGB are a perceptual conversion of that CMYK.
             </p>
             <div className="mt-10 overflow-x-auto">
-              <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
+              <table className="w-full min-w-[44rem] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-sumi text-xs text-sumi-soft">
                     <th scope="col" className="w-14 py-3 font-normal"><span className="sr-only">Swatch</span></th>
-                    <th scope="col" className="py-3 font-normal">Colour</th>
-                    <th scope="col" className="py-3 font-normal">HEX</th>
-                    <th scope="col" className="py-3 font-normal">RGB</th>
-                    <th scope="col" className="py-3 font-normal">CMYK</th>
+                    <th scope="col" className="py-3 pr-6 font-normal">Colour</th>
+                    <th scope="col" className="py-3 pr-6 font-normal">HEX</th>
+                    <th scope="col" className="py-3 pr-6 font-normal">RGB</th>
+                    <th scope="col" className="py-3 pr-6 font-normal">CMYK</th>
                     <th scope="col" className="py-3 text-right font-normal">Used in</th>
                   </tr>
                 </thead>
                 <tbody>
                   {p.colors.map((c) => (
                     <tr key={c.id} className="border-b border-rule">
-                      <td className="py-3"><span className="block size-10" style={{ backgroundColor: c.hex }} /></td>
-                      <th scope="row" className="py-3 pr-4 font-normal">
+                      <td className="w-14 py-3"><span className="block size-10 shrink-0" style={{ backgroundColor: c.hex }} /></td>
+                      <th scope="row" className="py-3 pr-6 font-normal">
                         <Link href={`/colours/${c.id}`} className="link-quiet text-[0.95rem]">{c.name}</Link>
                       </th>
-                      <td className="py-1"><CopyValue value={c.hex} display={c.hex.toUpperCase()} label={`${c.name} HEX`} /></td>
-                      <td className="py-1"><CopyValue value={formatRgb(c.rgb)} display={c.rgb.join(" ")} label={`${c.name} RGB`} /></td>
-                      <td className="py-1"><CopyValue value={formatCmyk(c.cmyk)} label={`${c.name} CMYK`} /></td>
-                      <td className="py-3 text-right">
+                      <td className="py-1 pr-6 whitespace-nowrap"><CopyValue value={c.hex} display={c.hex.toUpperCase()} label={`${c.name} HEX`} /></td>
+                      <td className="py-1 pr-6 whitespace-nowrap"><CopyValue value={formatRgb(c.rgb)} display={c.rgb.join(" ")} label={`${c.name} RGB`} /></td>
+                      <td className="py-1 pr-6 whitespace-nowrap"><CopyValue value={formatCmyk(c.cmyk)} label={`${c.name} CMYK`} /></td>
+                      <td className="py-3 text-right whitespace-nowrap">
                         <Link href={`/colours/${c.id}`} className="link-quiet inline-block py-2 font-data text-xs">{c.combinations.length} combinations</Link>
                       </td>
                     </tr>
