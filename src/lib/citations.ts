@@ -28,8 +28,8 @@ export const WORKS = {
   },
   plates1935: {
     id: "plates1935",
-    mla: "Wada, Sanzō, editor. *Haishoku sōkan A. VIII* 配色総鑑 A.VIII. Hakubisha, 1935. *National Diet Library Digital Collections*, https://doi.org/10.11501/1903656.",
-    short: "Wada, *Haishoku sōkan A. VIII*",
+    mla: "Wada, Sanzō, editor. *Haishoku sōkan A* 配色総鑑 A. Hakubisha, 1934–35. 12 vols. *National Diet Library Digital Collections*, https://doi.org/10.11501/1903656.",
+    short: "Wada, *Haishoku sōkan A*",
     href: "https://doi.org/10.11501/1903656",
   },
   seigensha: {

@@ -68,5 +68,8 @@
     "saved": "Saved",
     "ariaSave": "Save {{code}}",
     "ariaRemove": "Remove {{code}} from saved"
+  },
+  "table": {
+    "jaName": "Japanese name"
   }
 }

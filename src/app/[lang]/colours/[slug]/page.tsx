@@ -6,6 +6,8 @@ import { getT } from "@/i18n/server";
 import { Crumbs } from "@/components/crumbs";
 import { CopyValue } from "@/components/copy-button";
 import { PlateTile } from "@/components/plate";
+import { JaName, Koma } from "@/components/koma";
+import { plateNameJa, plateNameSource } from "@/lib/plate-names";
 import { formatCmyk, formatRgb } from "@/lib/color";
 import { COLOURS, getColour, nearestColours, palettesWithColour } from "@/lib/dictionary";
 
@@ -36,6 +38,7 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
   const plates = palettesWithColour(c);
   const kin = nearestColours(c.lab, 7).slice(1);
   const fg = c.ink === "ink" ? "#1f1c19" : "#f6f3ec";
+  const ja = plateNameJa(c.id);
 
   return (
     <div>
@@ -49,13 +52,29 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
         />
       </div>
       <section className="shell pt-8 pb-16">
-        <div className="kento flex min-h-[min(56vh,34rem)] flex-col justify-end p-6 md:p-10" style={{ backgroundColor: c.hex, color: fg }}>
+        <div className="kento relative flex min-h-[min(56vh,34rem)] flex-col justify-end p-6 md:p-10" style={{ backgroundColor: c.hex, color: fg }}>
+          {/* The colour as a shogi piece, its plate name in ink. */}
+          <Koma colour={c} size="lg" showEnglish={false} className="absolute top-6 right-6 hidden sm:inline-block md:top-10 md:right-10" />
           <p className="w-fit bg-washi px-2.5 py-1.5 font-data text-xs text-sumi">{t("detail.number", { no: String(c.index).padStart(3, "0"), group: tc(`groups.${c.group}` as "groups.0") })}</p>
           <h1 className="mt-3 font-display text-[clamp(2.4rem,6vw,5rem)] leading-none font-extrabold">
             {c.name}
             {c.variant ? <span className="ml-3 align-middle font-data text-base font-normal">({c.variant})</span> : null}
           </h1>
         </div>
+        {ja ? (
+          <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-b border-rule pb-6">
+            <p className="text-xs text-sumi-soft">{t("detail.jaName")}</p>
+            <p className="font-display text-3xl leading-[1.6] font-bold">
+              <JaName colourId={c.id} />
+            </p>
+            <p className="text-sm text-sumi-soft">
+              {t("detail.jaSource", { plate: ja.plate, volume: ja.volume })}{" "}
+              <a className="link-quiet text-sumi" href={plateNameSource(ja)}>
+                {t("detail.jaSourceLink")}
+              </a>
+            </p>
+          </div>
+        ) : null}
         <dl className="mt-8 grid grid-cols-2 gap-6 border-b border-rule pb-8 md:grid-cols-4">
           <div>
             <dt className="text-xs text-sumi-soft">HEX</dt>

@@ -38,12 +38,12 @@
     "verification": {
       "summary": "Verification against the book",
       "p1": "All 348 combinations were checked against the Seigensha Volume 1 edition. Every combination’s set of colours matches the dataset. The dataset does not record the order of colours within a combination; that order was transcribed from the book and is the order shown here.",
-      "p2": "The colour names are Wada’s own. The original plates print two names under each colour: a traditional Japanese name and an English one. Plate 211 of the 1935 printing, for instance, reads 紺色 Deep Indigo, 深支子 Apricot Orange, 苔色 Olive Yellow <plates1935></plates1935>, the same colours, order and English names shown here. This site uses the English names.",
+      "p2": "The colour names are Wada’s own. The original plates print two names under each colour: a traditional Japanese name and an English one. Plate 211 of the 1935 printing, for instance, reads 紺色 Deep Indigo, 深支子 Apricot Orange, 苔色 Olive Yellow <plates1935></plates1935>, the same colours, order and English names shown here. This site gives the English names first, with the Japanese names from the same plates beside them.",
       "p3": "Where the dataset misspells a name, the book’s spelling is shown (for example Sulphur Yellow, Calamine Blue, Vernonia Purple, Rosolane Purple, Kronbergs Green, Ocher Red, Pomegranate Purple). Two names, Eugenia Red and Grayish Lavender, are printed in two different inks; they are kept apart as A and B."
     },
     "excludes": {
       "summary": "What this site does not include",
-      "p1": "No scans, page layouts, essays or editorial text from any edition are reproduced. Every combination is drawn independently in HTML and CSS from the data. The Japanese names printed on the original plates are not yet shown.",
+      "p1": "No scans, page layouts, essays or editorial text from any edition are reproduced. Every combination is drawn independently in HTML and CSS from the data. The Japanese colour names were transcribed by hand from the National Diet Library’s scans of the 1934–35 printing, exactly as printed, with pre-war characters and kana spelling; each colour page links to the scan its name was read from.",
       "p2": "Wada’s writing is quoted only in short passages, with our translation and commentary, on the Sanzo Wada page. His 1934 booklet is in the public domain in Japan, where the National Diet Library publishes it openly. In the United States a work first published in 1934 can stay protected until the end of 2029, so we quote rather than reproduce it.",
       "p3": "This is an independent project. It is not affiliated with or endorsed by Seigensha."
     },

@@ -68,5 +68,8 @@
     "saved": "保存済み",
     "ariaSave": "No. {{code}}を保存",
     "ariaRemove": "No. {{code}}を保存から外す"
+  },
+  "table": {
+    "jaName": "和名"
   }
 }

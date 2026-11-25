@@ -1,8 +1,9 @@
 import Link from "@/i18n/link";
 import { getT } from "@/i18n/server";
 import { COLOURS, GROUPS } from "@/lib/dictionary";
+import { Koma } from "./koma";
 
-/** All 159 colours by family, each linking to its page. */
+/** All 159 colours by family, each a shogi piece (駒) linking to its page. */
 export async function ColourIndex() {
   const { t } = await getT();
   return (
@@ -16,7 +17,7 @@ export async function ColourIndex() {
             {COLOURS.filter((c) => c.group === gi).map((c) => (
               <li key={c.id}>
                 <Link href={`/colours/${c.id}`} className="group block">
-                  <span className="block aspect-[4/3] transition-transform duration-300 group-hover:-translate-y-1" style={{ backgroundColor: c.hex }} />
+                  <Koma colour={c} showEnglish={false} className="transition-transform duration-300 group-hover:-translate-y-1" />
                   <span className="mt-2 block text-[0.78rem] leading-snug">{c.name}{c.variant ? ` (${c.variant})` : ""}</span>
                   <span className="block font-data text-xs text-sumi-soft uppercase">{c.hex}</span>
                 </Link>

@@ -25,6 +25,9 @@
     "cssVariable": "CSS変数",
     "variant": "原書ではこの名に2種類のインクが刷られています。こちらは刷り{{variant}}です。",
     "serves_other": "{{count}}の配色に使われています。",
-    "kin": "近しい色"
+    "kin": "近しい色",
+    "jaName": "原典の和名",
+    "jaSource": "1935年刷 {{volume}}・第{{plate}}図に印刷された名。",
+    "jaSourceLink": "原本の画像を見る"
   }
 }

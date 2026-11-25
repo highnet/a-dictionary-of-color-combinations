@@ -26,6 +26,9 @@
     "variant": "The book prints two different inks under this name. This is printing {{variant}}.",
     "serves_one": "Serves in {{count}} combination.",
     "serves_other": "Serves in {{count}} combinations.",
-    "kin": "Nearest kin"
+    "kin": "Nearest kin",
+    "jaName": "Name on Wada’s plates",
+    "jaSource": "As printed on plate {{plate}} (vol. {{volume}}, 1935).",
+    "jaSourceLink": "See the scan"
   }
 }

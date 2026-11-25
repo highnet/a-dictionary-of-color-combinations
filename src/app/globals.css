@@ -351,11 +351,11 @@
     text-orientation: upright;
     font-family: var(--font-mincho), serif;
     font-weight: 800;
-    font-size: calc(var(--koma-w) * 0.2);
+    /* One column, always: shrink long names to fit the face. */
+    font-size: min(calc(var(--koma-w) * 0.22), calc(var(--koma-w) * 0.7 / var(--koma-chars)));
     line-height: 1;
-    letter-spacing: 0.04em;
-    max-height: 62%;
-    overflow: hidden;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
   }
   .koma-en {
     font-family: var(--font-gothic), system-ui, sans-serif;
@@ -368,7 +368,7 @@
     display: none;
   }
   .koma-sm .koma-kanji {
-    font-size: calc(var(--koma-w) * 0.24);
+    font-size: min(calc(var(--koma-w) * 0.26), calc(var(--koma-w) * 0.8 / var(--koma-chars)));
   }
 
   /* Tatami floor behind every page: decorative, barely there. */

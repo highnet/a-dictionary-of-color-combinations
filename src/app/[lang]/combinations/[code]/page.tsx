@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/json-ld";
 import { PlateTile } from "@/components/plate";
 import { Proportions } from "@/components/proportions";
 import { Cite, Kanji, MlaText } from "@/components/mla";
+import { JaName, Koma } from "@/components/koma";
 import { plateCitation } from "@/lib/citations";
 import { SaveButton } from "@/components/save-button";
 import { SectionIndex } from "@/components/section-index";
@@ -160,9 +161,10 @@ export default async function CombinationPage({ params }: PageProps<"/[lang]/com
                 <tbody>
                   {p.colors.map((c) => (
                     <tr key={c.id} className="border-b border-rule">
-                      <td className="w-14 py-3"><span className="block size-10 shrink-0" style={{ backgroundColor: c.hex }} /></td>
+                      <td className="w-16 py-3"><Koma colour={c} size="sm" /></td>
                       <th scope="row" className="py-3 pr-6 font-normal">
                         <Link href={`/colours/${c.id}`} className="link-quiet text-[0.95rem]">{c.name}</Link>
+                        <span className="mt-0.5 block font-display text-sm text-sumi-soft"><JaName colourId={c.id} /></span>
                       </th>
                       <td className="py-1 pr-6 whitespace-nowrap"><CopyValue value={c.hex} display={c.hex.toUpperCase()} label={t("values.copyLabel", { name: c.name, format: "HEX" })} /></td>
                       <td className="py-1 pr-6 whitespace-nowrap"><CopyValue value={formatRgb(c.rgb)} display={c.rgb.join(" ")} label={t("values.copyLabel", { name: c.name, format: "RGB" })} /></td>
