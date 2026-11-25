@@ -1,1 +1,594 @@
-{}
+{
+ "aconite-violet": {
+  "name": "半色",
+  "kana": "はしたいろ",
+  "plate": 257,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 36
+ },
+ "andover-green": {
+  "name": "山鳩色",
+  "kana": "やまばといろ",
+  "plate": 244,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 10
+ },
+ "antwarp-blue": {
+  "name": "納戸色",
+  "kana": "なんどいろ",
+  "plate": 85,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 52
+ },
+ "apricot-yellow": {
+  "name": "鬱金色",
+  "kana": "うこんいろ",
+  "plate": 284,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 30
+ },
+ "artemesia-green": {
+  "name": "千草鼠",
+  "kana": "ちぐさねずみ",
+  "plate": 293,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 48
+ },
+ "black": {
+  "name": "黒色",
+  "kana": "くろいろ",
+  "plate": 337,
+  "volume": "A.XII",
+  "pid": "1903671",
+  "frame": 16
+ },
+ "blue": {
+  "name": "青色",
+  "kana": "あをいろ",
+  "plate": 257,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 36
+ },
+ "brick-red": {
+  "name": "柿色",
+  "kana": "かきいろ",
+  "plate": 37,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 15
+ },
+ "calamine-blue": {
+  "name": "淡淺葱",
+  "kana": "うすあさぎ",
+  "plate": 20,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 41
+ },
+ "cerulian-blue": {
+  "name": "花淺葱",
+  "kana": "はなあさぎ",
+  "plate": 264,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 50
+ },
+ "cinnamon-rufous": {
+  "name": "代赭色",
+  "kana": "たいしやいろ",
+  "plate": 8,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 17
+ },
+ "cobalt-green": {
+  "name": "青磁色",
+  "kana": "せいじいろ",
+  "plate": 282,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 26
+ },
+ "corinthian-pink": {
+  "name": "肉色",
+  "kana": "にくいろ",
+  "plate": 27,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 55
+ },
+ "cossack-green": {
+  "name": "萠木色",
+  "kana": "もえぎいろ",
+  "plate": 5,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 11
+ },
+ "cotinga-purple": {
+  "name": "杜若色",
+  "kana": "かきつばたいろ",
+  "plate": 61,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 4
+ },
+ "dark-citrine": {
+  "name": "路考茶",
+  "kana": "ろかうちや",
+  "plate": 10,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 21
+ },
+ "dark-greenish-glaucous": {
+  "name": "若苗色",
+  "kana": "わかなへいろ",
+  "plate": 264,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 50
+ },
+ "deep-indigo": {
+  "name": "紺色",
+  "kana": "こんいろ",
+  "plate": 28,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 57
+ },
+ "diamine-green": {
+  "name": "常磐色",
+  "kana": "ときはいろ",
+  "plate": 251,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 24
+ },
+ "dull-blue-violet": {
+  "name": "藤納戸",
+  "kana": "ふぢなんど",
+  "plate": 9,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 19
+ },
+ "dusky-green": {
+  "name": "海松藍",
+  "kana": "みるあゐ",
+  "plate": 284,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 30
+ },
+ "dusky-madder-violet": {
+  "name": "黒紫",
+  "kana": "こくし",
+  "plate": 53,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 47
+ },
+ "ecru": {
+  "name": "灰汁色",
+  "kana": "あくいろ",
+  "plate": 317,
+  "volume": "A.XI",
+  "pid": "1903667",
+  "frame": 36
+ },
+ "eosine-pink": {
+  "name": "淺紅",
+  "kana": "うすくれなゐ",
+  "plate": 34,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 9
+ },
+ "etruscan-red": {
+  "name": "雀茶",
+  "kana": "すゞめちや",
+  "plate": 25,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 51
+ },
+ "eugenia-red-a": {
+  "name": "緋褪色",
+  "kana": "ひさめいろ",
+  "plate": 284,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 30
+ },
+ "eugenia-red-b": {
+  "name": "淺緋",
+  "kana": "うすひ",
+  "plate": 17,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 35
+ },
+ "grayish-lavender-a": {
+  "name": "藤色",
+  "kana": "ふぢいろ",
+  "plate": 8,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 17
+ },
+ "green": {
+  "name": "緑色",
+  "kana": "みどりいろ",
+  "plate": 293,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 48
+ },
+ "green-blue": {
+  "name": "納戸鼠",
+  "kana": "なんどねずみ",
+  "plate": 12,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 25
+ },
+ "indian-lake": {
+  "name": "淺蘇芳",
+  "kana": "うすすはう",
+  "plate": 299,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 60
+ },
+ "isabella-color": {
+  "name": "落葉色",
+  "kana": "おちばいろ",
+  "plate": 12,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 25
+ },
+ "kronbergs-green": {
+  "name": "鶯色",
+  "kana": "うぐひすいろ",
+  "plate": 29,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 59
+ },
+ "laelia-pink": {
+  "name": "紅藤",
+  "kana": "べにふぢ",
+  "plate": 20,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 41
+ },
+ "lemon-yellow": {
+  "name": "金絲雀色",
+  "kana": "かなりやいろ",
+  "plate": 317,
+  "volume": "A.XI",
+  "pid": "1903667",
+  "frame": 36
+ },
+ "light-brown-drab": {
+  "name": "梅鼠",
+  "kana": "うめねず",
+  "plate": 68,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 18
+ },
+ "light-green-yellow": {
+  "name": "鶸色",
+  "kana": "ひわいろ",
+  "plate": 61,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 4
+ },
+ "light-pinkish-cinnamon": {
+  "name": "淡香色",
+  "kana": "うすかういろ",
+  "plate": 317,
+  "volume": "A.XI",
+  "pid": "1903667",
+  "frame": 36
+ },
+ "light-porcelain-green": {
+  "name": "老竹色",
+  "kana": "おいたけいろ",
+  "plate": 44,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 29
+ },
+ "lilac": {
+  "name": "鳩羽紫",
+  "kana": "はとばむらさき",
+  "plate": 282,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 26
+ },
+ "madder-brown": {
+  "name": "赤白橡",
+  "kana": "あかのしろつるばみ",
+  "plate": 28,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 57
+ },
+ "maple": {
+  "name": "幹色",
+  "kana": "みきいろ",
+  "plate": 282,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 26
+ },
+ "mars-brown-tobacco": {
+  "name": "煙草色",
+  "kana": "たばこいろ",
+  "plate": 19,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 39
+ },
+ "mineral-gray": {
+  "name": "鼠色",
+  "kana": "ねずみいろ",
+  "plate": 30,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 61
+ },
+ "neutral-gray": {
+  "name": "銀鼠",
+  "kana": "ぎんねず",
+  "plate": 34,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 9
+ },
+ "night-green": {
+  "name": "鶸萠木",
+  "kana": "ひはもえぎ",
+  "plate": 19,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 39
+ },
+ "nile-blue": {
+  "name": "水色",
+  "kana": "みづいろ",
+  "plate": 25,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 51
+ },
+ "oil-green": {
+  "name": "麹塵",
+  "kana": "きくぢん",
+  "plate": 299,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 60
+ },
+ "old-rose": {
+  "name": "長春色",
+  "kana": "ちやうしゆんいろ",
+  "plate": 55,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 51
+ },
+ "olive-green": {
+  "name": "海松茶",
+  "kana": "みるちや",
+  "plate": 66,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 14
+ },
+ "olive-ocher": {
+  "name": "油色",
+  "kana": "あぶらいろ",
+  "plate": 66,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 14
+ },
+ "olympic-blue": {
+  "name": "淺縹",
+  "kana": "うすはなだ",
+  "plate": 44,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 29
+ },
+ "orange-yellow": {
+  "name": "山吹色",
+  "kana": "やまぶきいろ",
+  "plate": 257,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 36
+ },
+ "pale-lemon-yellow": {
+  "name": "淡卵色",
+  "kana": "うすたまごいろ",
+  "plate": 31,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 3
+ },
+ "pompeian-red": {
+  "name": "紅樺色",
+  "kana": "べにかばいろ",
+  "plate": 30,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 61
+ },
+ "raw-sienna": {
+  "name": "檜皮色",
+  "kana": "ひはだいろ",
+  "plate": 293,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 48
+ },
+ "red": {
+  "name": "茜色",
+  "kana": "あかねいろ",
+  "plate": 251,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 24
+ },
+ "red-orange": {
+  "name": "朱色",
+  "kana": "しゆいろ",
+  "plate": 31,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 3
+ },
+ "red-violet": {
+  "name": "菖蒲色",
+  "kana": "あやめいろ",
+  "plate": 37,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 15
+ },
+ "salvia-blue": {
+  "name": "空色",
+  "kana": "そらいろ",
+  "plate": 29,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 59
+ },
+ "sea-green": {
+  "name": "若竹色",
+  "kana": "わかたけいろ",
+  "plate": 17,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 35
+ },
+ "sepia": {
+  "name": "憲法色",
+  "kana": "けんばういろ",
+  "plate": 24,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 49
+ },
+ "slate-color": {
+  "name": "石板色",
+  "kana": "せきばんいろ",
+  "plate": 27,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 55
+ },
+ "spectrum-red": {
+  "name": "赤色",
+  "kana": "あかいろ",
+  "plate": 257,
+  "volume": "A.IX",
+  "pid": "1903659",
+  "frame": 36
+ },
+ "turquoise-green": {
+  "name": "白緑",
+  "kana": "びやくろく",
+  "plate": 293,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 48
+ },
+ "vandar-poel-s-blue": {
+  "name": "縹色",
+  "kana": "はなだいろ",
+  "plate": 5,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 11
+ },
+ "vernonia-purple": {
+  "name": "牡丹鼠",
+  "kana": "ぼたんねずみ",
+  "plate": 24,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 49
+ },
+ "vinaceous-cinnamon": {
+  "name": "香色",
+  "kana": "かういろ",
+  "plate": 299,
+  "volume": "A.X",
+  "pid": "1903664",
+  "frame": 60
+ },
+ "vinaceous-tawny": {
+  "name": "柿澁色",
+  "kana": "かきしぶいろ",
+  "plate": 85,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 52
+ },
+ "violet-carmine": {
+  "name": "桑染色",
+  "kana": "くはぞめいろ",
+  "plate": 337,
+  "volume": "A.XII",
+  "pid": "1903671",
+  "frame": 16
+ },
+ "violet-red": {
+  "name": "京紫",
+  "kana": "きやうむらさき",
+  "plate": 9,
+  "volume": "A.I",
+  "pid": "1903618",
+  "frame": 19
+ },
+ "white": {
+  "name": "白色",
+  "kana": "しろいろ",
+  "plate": 55,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 51
+ },
+ "yellow": {
+  "name": "黄色（純色）",
+  "kana": "きいろ",
+  "plate": 68,
+  "volume": "A.III",
+  "pid": "1903631",
+  "frame": 18
+ },
+ "yellow-orange": {
+  "name": "柑子色",
+  "kana": "かうじいろ",
+  "plate": 53,
+  "volume": "A.II",
+  "pid": "1903622",
+  "frame": 47
+ }
+}
