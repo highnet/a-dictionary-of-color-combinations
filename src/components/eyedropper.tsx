@@ -91,7 +91,7 @@ function fromCanvas(el: HTMLCanvasElement, x: number, y: number): string | null 
 /** The colour visible at a viewport point, or null when nothing opaque. */
 function sampleAt(x: number, y: number, skip: Element | null): string | null {
   for (const el of document.elementsFromPoint(x, y)) {
-    if (skip?.contains(el)) continue;
+    if (skip?.contains(el) || el.closest("[data-eyedropper-skip], .dojo-floor")) continue;
     if (el instanceof HTMLCanvasElement) {
       const hex = fromCanvas(el, x, y);
       if (hex) return hex;

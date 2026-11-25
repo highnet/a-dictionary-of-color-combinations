@@ -8,6 +8,8 @@ import { ExportPanel } from "@/components/export-panel";
 import { JsonLd } from "@/components/json-ld";
 import { PlateTile } from "@/components/plate";
 import { Proportions } from "@/components/proportions";
+import { Cite, Kanji, MlaText } from "@/components/mla";
+import { plateCitation } from "@/lib/citations";
 import { SaveButton } from "@/components/save-button";
 import { SectionIndex } from "@/components/section-index";
 import { formatCmyk, formatRgb } from "@/lib/color";
@@ -176,6 +178,11 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
             <h2 id="proportion-title" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold">
               The same forces, in different measure.
             </h2>
+            <p className="mt-4 max-w-2xl leading-relaxed text-sumi-soft">
+              <Kanji className="mr-2">色量</Kanji>
+              Wada printed every colour at the same size only for convenience. Using colours &ldquo;in equal amounts and of equal shape,
+              as in these tables, is extremely rare; indeed, it is usually something to avoid&rdquo; <Cite work="gaisetsu" page={28} />.
+            </p>
             <div className="mt-10">
               <Proportions colors={p.colors.map(({ id, name, hex }) => ({ id, name, hex }))} />
             </div>
@@ -187,6 +194,19 @@ export default async function CombinationPage({ params }: PageProps<"/combinatio
             </h2>
             <div className="mt-10">
               <ExportPanel id={p.id} />
+            </div>
+          </section>
+
+          <section id="cite" aria-labelledby="cite-title" className="border-t border-rule py-16 md:py-24">
+            <h2 id="cite-title" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold">
+              Cite it. <Kanji className="ml-2 text-[0.5em]">出典</Kanji>
+            </h2>
+            <p className="mt-3 text-sm text-sumi-soft">MLA, 9th edition.</p>
+            <div className="mt-6 flex flex-wrap items-start gap-x-6 gap-y-2">
+              <p className="max-w-2xl pl-8 -indent-8 text-[0.95rem] leading-relaxed">
+                <MlaText text={plateCitation(p.code)} />
+              </p>
+              <CopyValue value={plateCitation(p.code).replace(/\*/g, "")} display="Copy" label="MLA citation" />
             </div>
           </section>
 

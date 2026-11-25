@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { Crumbs } from "@/components/crumbs";
 import { JsonLd } from "@/components/json-ld";
 import { Strip } from "@/components/plate";
+import { Cite, Kanji, WorksCited } from "@/components/mla";
 import { getPalette } from "@/lib/dictionary";
 import { SITE } from "@/lib/site";
 
@@ -32,13 +33,56 @@ const LIFE: { year: string; text: string }[] = [
   { year: "1955", text: "Receives the Academy Award for Best Costume Design (Color) for Gate of Hell, at the 27th Academy Awards." },
   { year: "1958", text: "Named a Person of Cultural Merit." },
   { year: "1967", text: "Dies in Tokyo on 22 August, aged 84." },
-  { year: "2011", text: "Seigensha publishes A Dictionary of Color Combinations, presenting 348 combinations from the work." },
+  { year: "2010", text: "Seigensha publishes A Dictionary of Color Combinations, presenting 348 combinations from the work." },
 ];
 
-const SOURCES = [
-  { href: "https://en.wikipedia.org/wiki/Sanzo_Wada", label: "“Sanzo Wada”, Wikipedia (CC BY-SA 4.0), read November 2026" },
-  { href: "https://www.momat.go.jp/en/", label: "National Museum of Modern Art, Tokyo: South Wind (1907)" },
+/**
+ * Wada in his own words. Short quotations from the 1934 booklet that came with
+ * Haishoku Sōkan, each with our translation and a summary in our own words.
+ * Only passages Wada signed or wrote as the book's sole editor are used; the
+ * preface by Wada Eisaku is not. Quotations are kept brief (see /about).
+ */
+const WORDS: {
+  n: string;
+  kanji: string;
+  title: string;
+  ja: string;
+  en: string;
+  page: string;
+  gloss: string;
+}[] = [
+  {
+    n: "一",
+    kanji: "發刊",
+    title: "Why he made it",
+    ja: "一般日常の手輕な色彩の相談對手ともなり、又は幾分決定的の指導機關たらしむるも可と信じ",
+    en: "believing that it might serve as a handy counsel on colour in everyday life, or even as a somewhat decisive guide",
+    page: "2",
+    gloss:
+      "In his signed statement of publication, Wada says colour names alone, like “blue” or “rose”, cannot carry a combination, and earlier colour studies were too large and slow for anyone but a specialist. So he set down combinations as printed colour, for everyday use. He notes that the world is turning into a world of colour, in clothing, furniture and the street.",
+  },
+  {
+    n: "二",
+    kanji: "構成",
+    title: "Learn from nature",
+    ja: "必ず自然と云ふ大いなる配色構成に準じ、又或はそのハーモニーを學ぶことによつて完成される",
+    en: "is always completed by following the great colour composition that is nature, or by learning its harmony",
+    page: "22",
+    gloss:
+      "On composition, Wada treats a standard as a guide, never a rule to force on anyone, and says human invention cannot simply create colour harmony. He sorts combinations into close tones and contrasting tones, each light, dark, pale, deep or pan (from the Greek for “all”), and finds that close tones come easily while contrasting ones are harder but more interesting.",
+  },
+  {
+    n: "三",
+    kanji: "色量",
+    title: "Never in equal parts",
+    ja: "この配色表の如く同量同形の色を用ふることは極めて稀れで、寧ろ此の如きことは避くべきことが普通である",
+    en: "to use colours in equal amounts and of equal shape, as in these tables, is extremely rare; indeed, it is usually something to avoid",
+    page: "28",
+    gloss:
+      "The plates show every colour at the same size only for convenience. The set came with paper cut-outs to lay over the plates so readers could vary shape and amount, as a kimono has a sliver of collar, a body of robe and a band of obi. He adds that colours look paler and weaker over large areas than on small swatches.",
+  },
 ];
+
 
 export default function WadaPage() {
   return (
@@ -122,6 +166,43 @@ export default function WadaPage() {
         </ol>
       </section>
 
+      {/* In his own words: short quotations, our translations, cited in MLA. */}
+      <section aria-labelledby="words" className="border-t border-rule">
+        <div className="shell py-20 md:py-28">
+          <div className="flex items-baseline gap-4">
+            <h2 id="words" className="max-w-2xl font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold">
+              In his own words.
+            </h2>
+            <Kanji className="text-2xl">原文</Kanji>
+          </div>
+          <p className="mt-4 max-w-2xl leading-relaxed text-sumi-soft">
+            Haishoku Sōkan came with a 29-page booklet, <i>Overview and Its Use</i>. Wada wrote its statement of publication and its
+            overview. Three short passages follow, in the original and in our translation.
+          </p>
+          <ol className="mt-12 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10">
+            {WORDS.map((w) => (
+              <li key={w.n} className="border-t border-sumi pt-6">
+                <div className="flex items-baseline justify-between">
+                  <h3 className="font-display text-2xl font-bold">{w.title}</h3>
+                  <Kanji className="text-lg">{w.kanji}</Kanji>
+                </div>
+                <blockquote className="mt-5">
+                  <p lang="ja" className="font-display text-[1.05rem] leading-loose">「{w.ja}」</p>
+                  <p className="mt-3 leading-relaxed">
+                    &ldquo;{w.en}&rdquo; <Cite work="gaisetsu" page={w.page} />
+                  </p>
+                </blockquote>
+                <p className="mt-4 text-sm leading-relaxed text-sumi-soft">{w.gloss}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-12 max-w-2xl text-sm leading-relaxed text-sumi-soft">
+            Translations are ours. The booklet is open to read in full at the National Diet Library. Its preface is by the painter Wada
+            Eisaku, not Sanzo Wada, so it is not quoted here.
+          </p>
+        </div>
+      </section>
+
       <section aria-labelledby="dictionary" className="ground-deep">
         <div className="shell grid grid-cols-1 gap-8 py-20 md:grid-cols-12 md:py-28">
           <h2 id="dictionary" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold md:col-span-6">
@@ -140,18 +221,12 @@ export default function WadaPage() {
       </section>
 
       <section aria-labelledby="sources" className="shell py-16">
-        <h2 id="sources" className="text-sm text-sumi-soft">Sources</h2>
-        <ul className="mt-4 space-y-2 text-sm">
-          {SOURCES.map((s) => (
-            <li key={s.href}>
-              <a className="link-quiet" href={s.href}>
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-4 text-sm">A Dictionary of Color Combinations, Vol. 1, Seigensha (ISBN 978-4-86152-247-5).</p>
-        <p className="mt-4 max-w-2xl text-sm text-sumi-soft">
+        <div className="flex items-baseline gap-3">
+          <h2 id="sources" className="text-sm text-sumi-soft">Works Cited</h2>
+          <Kanji className="text-sm">出典</Kanji>
+        </div>
+        <WorksCited ids={["gaisetsu", "haishoku", "seigensha", "southWind", "wikipedia"]} className="mt-4 max-w-3xl" />
+        <p className="mt-6 max-w-2xl text-sm text-sumi-soft">
           Facts are summarised in our own words. The 1927 founding of the Japan Standard Color Association is also recorded in the
           Seigensha edition&rsquo;s introduction.
         </p>
