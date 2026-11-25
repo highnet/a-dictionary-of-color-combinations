@@ -3,7 +3,8 @@ import { NextResponse, type NextRequest } from "next/server";
 /**
  * English is served at the original, unprefixed URLs and Japanese under /ja.
  * Unprefixed requests are rewritten to /en internally; /en/... redirects to
- * the unprefixed URL so each page has one English address.
+ * the unprefixed URL so each page has one English address. Search engines
+ * see both versions (no cookie, hreflang links between them).
  */
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -12,6 +13,14 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.slice(3) || "/";
     return NextResponse.redirect(url, 308);
+  }
+  // A reader who chose Japanese (cookie set by the language switch) gets /ja.
+  // Only page navigations: prefetches and data requests are left alone.
+  const isNavigation = request.method === "GET" && request.headers.get("sec-fetch-dest") === "document";
+  if (isNavigation && request.cookies.get("dcc-lang")?.value === "ja") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/ja${pathname === "/" ? "" : pathname}`;
+    return NextResponse.redirect(url, 307);
   }
   const url = request.nextUrl.clone();
   url.pathname = `/en${pathname === "/" ? "" : pathname}`;
