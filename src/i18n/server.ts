@@ -2,7 +2,7 @@ import { lang as rootLang } from "next/root-params";
 import type { i18n } from "i18next";
 import { DEFAULT_LOCALE, isLocale, localize, type Locale } from "./config";
 import { createI18n } from "./instance";
-import { resourcesFor, type Namespace } from "./resources";
+import { allResourcesFor, type Namespace } from "./resources";
 
 const instances = new Map<Locale, i18n>();
 
@@ -20,7 +20,7 @@ export async function getT<N extends Namespace>(ns?: N) {
   const lang = await getLang();
   let instance = instances.get(lang);
   if (!instance) {
-    instance = createI18n(lang, resourcesFor(lang));
+    instance = createI18n(lang, allResourcesFor(lang));
     instances.set(lang, instance);
   }
   const t = instance.getFixedT<N>(lang, ns ?? ("common" as N));

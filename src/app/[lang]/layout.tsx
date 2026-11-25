@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SITE } from "@/lib/site";
 import { I18nProvider } from "@/i18n/client";
-import { alternates, LOCALES, LOCALE_TAG } from "@/i18n/config";
+import { LOCALES, LOCALE_TAG } from "@/i18n/config";
 import { resourcesFor } from "@/i18n/resources";
 import { getT } from "@/i18n/server";
 import "../globals.css";
@@ -69,13 +69,11 @@ export async function generateMetadata(): Promise<Metadata> {
       "CMYK",
       "HEX",
     ],
-    alternates: alternates("/", lang),
     openGraph: {
       type: "website",
       siteName: name,
       title: t("site.titleDefault"),
       description,
-      url: lang === "en" ? "/" : `/${lang}`,
       locale: LOCALE_TAG[lang].replace("-", "_"),
       alternateLocale: LOCALES.filter((l) => l !== lang).map((l) => LOCALE_TAG[l].replace("-", "_")),
     },

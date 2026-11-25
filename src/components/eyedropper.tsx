@@ -69,10 +69,21 @@ function rgbHex(r: number, g: number, b: number) {
   return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
 }
 
+/**
+ * Alpha of a computed CSS colour: the 4th comma value of rgba(), or the value
+ * after "/" in space syntax. Opaque colours (rgb(255, 242, 0)) report 1.
+ */
+function alphaOf(css: string): number {
+  if (!css || css === "transparent" || css === "none") return 0;
+  const m = css.match(/\/\s*([\d.]+)(%?)\s*\)$/) ?? css.match(/^rgba?\((?:[^,]*,){3}\s*([\d.]+)(%?)\s*\)$/);
+  if (!m) return 1;
+  const v = parseFloat(m[1]);
+  return m[2] ? v / 100 : v;
+}
+
+/** Solid enough to be "the colour you see": faint tints (hover washes, overlays) are looked through. */
 function isOpaque(css: string) {
-  if (!css || css === "transparent" || css === "none") return false;
-  // rgba(…, 0) / color(… / 0)
-  return !/[,/]\s*0(\.0+)?\s*\)$/.test(css);
+  return alphaOf(css) >= 0.5;
 }
 
 function fromCanvas(el: HTMLCanvasElement, x: number, y: number): string | null {

@@ -54,7 +54,19 @@ const ja: Record<Namespace, object> = {
 
 export const RESOURCES: Record<Locale, Record<Namespace, object>> = { en, ja };
 
-/** What a page in `lang` needs: its own strings plus English to fall back on. */
+/** Namespaces read by Client Components. about and wada render on the server only. */
+const CLIENT_NAMESPACES: Namespace[] = ["common", "home", "combinations", "plate", "colours", "compare", "explore"];
+
+function pick(all: Record<Namespace, object>) {
+  return Object.fromEntries(CLIENT_NAMESPACES.map((ns) => [ns, all[ns]]));
+}
+
+/** What the browser needs in `lang`: client namespaces, plus English to fall back on. */
 export function resourcesFor(lang: Locale): Resource {
+  return (lang === "en" ? { en: pick(RESOURCES.en) } : { [lang]: pick(RESOURCES[lang]), en: pick(RESOURCES.en) }) as Resource;
+}
+
+/** Everything in `lang` plus English: for the server, where every page renders. */
+export function allResourcesFor(lang: Locale): Resource {
   return (lang === "en" ? { en: RESOURCES.en } : { [lang]: RESOURCES[lang], en: RESOURCES.en }) as Resource;
 }

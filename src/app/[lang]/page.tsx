@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import Link from "@/i18n/link";
+import { alternates, localize } from "@/i18n/config";
 import { ArrowRight } from "lucide-react";
 import { HeroPrint, type PrintPlate } from "@/components/hero-print/HeroPrint";
 import { QuickFind } from "@/components/quick-find";
@@ -21,6 +23,15 @@ const PRINT_PLATES: PrintPlate[] = PALETTES.filter((p) => p.size === 4)
   .slice(0, 16)
   .sort((a, b) => a.id - b.id)
   .map((p) => ({ code: p.code, colors: p.colors.map(({ id, name, hex }) => ({ id, name, hex })) }));
+
+/** Canonical and og:url for the home page only; other pages set their own. */
+export async function generateMetadata(): Promise<Metadata> {
+  const { lang } = await getT();
+  return {
+    alternates: alternates("/", lang),
+    openGraph: { url: localize("/", lang) },
+  };
+}
 
 export default async function Home() {
   const { t } = await getT("home");

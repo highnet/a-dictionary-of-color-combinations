@@ -32,6 +32,7 @@ export function Koma({
   } as CSSProperties;
   return (
     <span className={`koma koma-${size} ${className}`} style={style}>
+      <span className="koma-edge" aria-hidden="true" />
       <span className="koma-face">
         {face ? (
           <span lang="ja" className="koma-kanji" title={ja?.name}>

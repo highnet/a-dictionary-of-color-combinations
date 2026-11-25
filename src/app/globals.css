@@ -326,10 +326,15 @@
     display: inline-block;
     width: var(--koma-w);
     aspect-ratio: 0.84;
-    clip-path: var(--koma-shape);
-    background: color-mix(in oklch, var(--koma-face) 70%, black);
+    /* Unclipped, so the shadow survives; the layers inside carry the shape. */
     filter: drop-shadow(0 2px 1.5px rgb(0 0 0 / 0.22));
     flex: none;
+  }
+  .koma-edge {
+    position: absolute;
+    inset: 0;
+    clip-path: var(--koma-shape);
+    background: color-mix(in oklch, var(--koma-face) 70%, black);
   }
   .koma-face {
     position: absolute;
