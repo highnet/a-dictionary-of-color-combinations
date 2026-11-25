@@ -12,11 +12,12 @@ export const SITE = {
   ).replace(/\/$/, ""),
 } as const;
 
+/** Primary navigation. Labels are translation keys under common:nav. */
 export const NAV = [
-  { href: "/explore", label: "Explore", icon: "compass" },
-  { href: "/combinations", label: "All combinations", icon: "grid" },
-  { href: "/colours", label: "Colour search", icon: "pipette" },
-  { href: "/wada", label: "Sanzo Wada", icon: "brush" },
-  { href: "/about", label: "About", icon: "info" },
-  { href: "/#agents", label: "For agents", icon: "bot" },
+  { href: "/explore", key: "explore", icon: "compass" },
+  { href: "/combinations", key: "combinations", icon: "grid" },
+  { href: "/colours", key: "colours", icon: "pipette" },
+  { href: "/wada", key: "wada", icon: "brush" },
+  { href: "/about", key: "about", icon: "info" },
+  { href: "/#agents", key: "agents", icon: "bot" },
 ] as const;

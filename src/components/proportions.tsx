@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { RotateCw } from "lucide-react";
 import type { Colour } from "@/lib/dictionary";
+import { useTranslation } from "@/i18n/client";
 
 /**
  * Four studies of the same colours at different weights. "Rotate" changes
@@ -10,6 +11,7 @@ import type { Colour } from "@/lib/dictionary";
  */
 export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "hex">[] }) {
   const [shift, setShift] = useState(0);
+  const { t } = useTranslation("plate");
   const c = colors.map((_, i) => colors[(i + shift) % colors.length]);
   const n = c.length;
   const weights = n === 2 ? [70, 30] : n === 3 ? [60, 30, 10] : [50, 25, 15, 10];
@@ -34,7 +36,7 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
               />
             ))}
           </div>
-          <figcaption className="mt-3 text-xs text-sumi-soft">Ground and figure</figcaption>
+          <figcaption className="mt-3 text-xs text-sumi-soft">{t("proportions.ground")}</figcaption>
         </figure>
         {/* Weighted bands. */}
         <figure>
@@ -44,7 +46,7 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
             ))}
           </div>
           <figcaption className="mt-3 text-xs text-sumi-soft">
-            Bands <span className="ml-1 font-data">{weights.join(" / ")}</span>
+            {t("proportions.bands")} <span className="ml-1 font-data">{weights.join(" / ")}</span>
           </figcaption>
         </figure>
         {/* Nested fields. */}
@@ -61,7 +63,7 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
               );
             })}
           </div>
-          <figcaption className="mt-3 text-xs text-sumi-soft">Nested</figcaption>
+          <figcaption className="mt-3 text-xs text-sumi-soft">{t("proportions.nested")}</figcaption>
         </figure>
         {/* A line of accent across a field. */}
         <figure>
@@ -74,7 +76,7 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
               />
             ))}
           </div>
-          <figcaption className="mt-3 text-xs text-sumi-soft">Accent line</figcaption>
+          <figcaption className="mt-3 text-xs text-sumi-soft">{t("proportions.accent")}</figcaption>
         </figure>
       </div>
       <button
@@ -83,7 +85,7 @@ export function Proportions({ colors }: { colors: Pick<Colour, "id" | "name" | "
         className="mt-6 inline-flex min-h-11 items-center gap-2.5 border border-current/30 px-4 text-sm hover:border-current"
       >
         <RotateCw className="size-4" strokeWidth={1.6} aria-hidden="true" />
-        Rotate the lead colour
+        {t("proportions.rotate")}
         <span className="text-sumi-soft">· {c[0].name}</span>
       </button>
     </div>

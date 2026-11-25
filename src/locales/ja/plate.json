@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "No. {{code}} — {{names}}",
+    "description": "和田三造の配色 No. {{code}}：{{list}}。HEX・RGB・CMYKの値、CSS変数、JSON、SVG、PNGを用意しています。"
+  },
+  "jsonld": {
+    "name": "配色 No. {{code}}",
+    "creator": "和田三造"
+  },
+  "code": "No. {{code}}",
+  "subtitle": "{{chapter}} · 全348配色の{{id}}番目",
+  "neighbours": "前後の配色",
+  "sections": {
+    "label": "このページの目次",
+    "plate": "版",
+    "values": "色の値",
+    "proportion": "色量",
+    "export": "持ち出す",
+    "allies": "縁"
+  },
+  "values": {
+    "title": "一色ずつ、正確に知る。",
+    "note": "CMYKは原本に刷られたとおりの値。HEXとRGBは、そのCMYKを知覚に即して換算したものです。",
+    "swatch": "色見本",
+    "colour": "色名",
+    "usedIn": "登場",
+    "usedCount": "{{n}}配色",
+    "copyLabel": "{{name}}の{{format}}"
+  },
+  "proportion": {
+    "title": "同じ力を、異なる配分で。",
+    "body": "和田が各色を同じ大きさで刷ったのは、便宜のためにすぎない。和田自身こう記している。「この配色表の如く同量同形の色を用ふることは極めて稀れで、寧ろ此の如きことは避くべきことが普通である」<cite></cite>。"
+  },
+  "proportions": {
+    "ground": "地と図",
+    "bands": "帯",
+    "nested": "入れ子",
+    "accent": "差し色の線",
+    "rotate": "主となる色を替える"
+  },
+  "export": {
+    "title": "この配色を持ち出す。",
+    "copyHex": "HEXをすべてコピー",
+    "hexLabel": "すべてのHEX値",
+    "copyCss": "CSS変数をコピー",
+    "cssLabel": "CSS変数",
+    "copyJson": "JSONをコピー",
+    "jsonLabel": "JSON",
+    "copyLink": "リンクをコピー",
+    "linkLabel": "リンク",
+    "format": "コードの形式",
+    "cssTab": "CSS変数",
+    "jsonTab": "JSON"
+  },
+  "cite": {
+    "title": "典拠を示す。",
+    "copyLabel": "MLA形式の引用"
+  },
+  "allies": {
+    "title": "縁——同じ色を分かち合う配色。"
+  },
+  "tile": {
+    "aria": "配色 No. {{code}}：{{names}}",
+    "heading": "配色 No. {{code}}"
+  },
+  "save": {
+    "save": "保存",
+    "saved": "保存済み",
+    "ariaSave": "No. {{code}}を保存",
+    "ariaRemove": "No. {{code}}を保存から外す"
+  },
+  "table": {
+    "jaName": "和名"
+  }
+}

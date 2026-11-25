@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { PlateLink, PlateName } from "./plate-link";
 import type { Palette } from "@/lib/dictionary";
 
 type Density = "compact" | "expanded";
@@ -29,23 +29,19 @@ export function PlateTile({
   const names = palette.colors.map((c) => c.name).join(", ");
   if (density === "compact") {
     return (
-      <Link
-        href={href}
-        className="plate-tile group block focus-visible:outline-offset-4"
-        aria-label={`Combination ${palette.code}: ${names}`}
-      >
+      <PlateLink href={href} code={palette.code} names={names} className="plate-tile group block focus-visible:outline-offset-4">
         <div className="kento flex aspect-[5/3] transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:-translate-y-0.5">
           {palette.colors.map((c) => (
             <span key={c.id} className="flex-1" style={{ backgroundColor: c.hex }} />
           ))}
         </div>
         <p className="mt-3 font-data text-xs text-sumi-soft group-hover:text-sumi">{palette.code}</p>
-      </Link>
+      </PlateLink>
     );
   }
   return (
     <article className="plate-tile group relative @container">
-      <Link href={href} className="block focus-visible:outline-offset-4" aria-label={`Combination ${palette.code}: ${names}`}>
+      <PlateLink href={href} code={palette.code} names={names} className="block focus-visible:outline-offset-4">
         <div className="flex gap-3">
           <span className="cartouche self-start text-[0.8rem]" aria-hidden="true">
             {palette.code}
@@ -56,8 +52,10 @@ export function PlateTile({
             ))}
           </div>
         </div>
-      </Link>
-      <H className="sr-only">Combination {palette.code}</H>
+      </PlateLink>
+      <H className="sr-only">
+        <PlateName code={palette.code} />
+      </H>
       {/* Values sit under their blocks. When the tile is too narrow for one code per
           block, they re-flow into two columns and each code carries its own chip. */}
       <dl className={`mt-5 ml-[2.35rem] grid gap-x-3 gap-y-1.5 ${COLS[palette.size]}`}>

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/i18n/link";
+import { useTranslation } from "@/i18n/client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play, StepForward } from "lucide-react";
 import { SKY, platePath } from "./print";
@@ -31,6 +32,7 @@ function grainTile() {
 }
 
 export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
+  const { t } = useTranslation("home");
   const host = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const [index, setIndex] = useState(0);
@@ -159,14 +161,14 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
           <Link
             href={`/combinations/${current.code}`}
             className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
-            aria-label={`Open combination ${current.code}`}
+            aria-label={t("print.open", { code: current.code })}
           >
             {current.code}
           </Link>
         </div>
       </div>
       <div className="mt-3 flex items-start justify-between gap-x-4 px-[var(--gutter)] lg:px-0">
-        <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={`Colours of combination ${current.code}`}>
+        <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={t("print.colours", { code: current.code })}>
           {current.colors.map((c) => (
             <li key={c.id}>
               <Link href={`/colours/${c.id}`} className="group flex items-center gap-2.5">
@@ -184,12 +186,12 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
             type="button"
             onClick={() => setPlaying((p) => !p)}
             className="grid size-11 place-items-center hover:bg-washi-deep"
-            aria-label={playing ? "Pause" : "Play"}
+            aria-label={playing ? t("print.pause") : t("print.play")}
             aria-pressed={!playing}
           >
             {playing ? <Pause className="size-4" strokeWidth={1.6} /> : <Play className="size-4" strokeWidth={1.6} />}
           </button>
-          <button type="button" onClick={() => go(index + 1)} className="grid size-11 place-items-center hover:bg-washi-deep" aria-label="Print the next combination">
+          <button type="button" onClick={() => go(index + 1)} className="grid size-11 place-items-center hover:bg-washi-deep" aria-label={t("print.next")}>
             <StepForward className="size-4" strokeWidth={1.6} />
           </button>
         </div>

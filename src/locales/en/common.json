@@ -1,0 +1,91 @@
+{
+  "site": {
+    "name": "A Dictionary of Color Combinations",
+    "short": "Wada · Colour",
+    "titleDefault": "A Dictionary of Color Combinations — Sanzo Wada",
+    "description": "All 348 colour combinations compiled by Sanzo Wada (1933–34), in their original order, with HEX, RGB and CMYK values to copy and export.",
+    "homeLabel": "Home — A Dictionary of Color Combinations",
+    "titleLine1": "A Dictionary of",
+    "titleLine2": "Color Combinations"
+  },
+  "shell": {
+    "skip": "Skip to content",
+    "openMenu": "Open menu",
+    "menu": "Menu",
+    "nColours": "{{count}} colours",
+    "chapters": "Chapters",
+    "savedCombinations": "Saved combinations",
+    "saved": "Saved",
+    "foldSidebar": "Fold the sidebar",
+    "foldSidebarLabel": "Collapse or expand the sidebar",
+    "language": "Language",
+    "switchTo": "日本語で読む"
+  },
+  "nav": {
+    "home": "Home",
+    "explore": "Explore",
+    "combinations": "All combinations",
+    "colours": "Colour search",
+    "wada": "Sanzo Wada",
+    "about": "About",
+    "agents": "For agents",
+    "compare": "Compare",
+    "sitemap": "Sitemap",
+    "aboutSources": "About & sources",
+    "primary": "Primary",
+    "footer": "Footer",
+    "breadcrumb": "Breadcrumb"
+  },
+  "chapter": {
+    "2": "Two colours",
+    "3": "Three colours",
+    "4": "Four colours"
+  },
+  "groups": {
+    "0": "Reds & red-purples",
+    "1": "Yellow-reds & yellows",
+    "2": "Yellow-greens & greens",
+    "3": "Blue-greens & blues",
+    "4": "Blue-purples & purples",
+    "5": "Neutrals"
+  },
+  "footer": {
+    "line1": "Autumn colours, set",
+    "line2": "in the order Wada gave —",
+    "line3": "the brush is yours now.",
+    "credit": "Combinations by Sanzo Wada (1883–1967), first published as <i>Haishoku Sōkan</i> <ja>配色總鑑</ja>, 1933–34.",
+    "data": "Colour data from DesLauriers, after Kim, under MIT.",
+    "worksCited": "Works Cited",
+    "independent": "Independent project, not affiliated with the publisher.",
+    "haikuLabel": "A haiku"
+  },
+  "theme": {
+    "toLight": "Switch to the light theme",
+    "toDark": "Switch to the dark theme",
+    "lightTitle": "Light theme",
+    "darkTitle": "Dark theme",
+    "light": "Light paper",
+    "dark": "Night ink"
+  },
+  "eyedropper": {
+    "label": "Eyedropper",
+    "title": "Eyedropper (I)",
+    "hint": "Click to copy · Esc to leave"
+  },
+  "copy": {
+    "copied": "Copied {{label}}",
+    "failed": "Copy failed. Select the value and copy it by hand.",
+    "aria": "Copy {{label}}",
+    "action": "Copy"
+  },
+  "notFound": {
+    "title": "This sheet is blank.",
+    "body": "Go back, and choose another plate.",
+    "metaTitle": "Not found"
+  },
+  "cite": {
+    "mla": "MLA, 9th edition.",
+    "mlaLong": "In MLA style, 9th edition.",
+    "worksCited": "Works Cited"
+  }
+}

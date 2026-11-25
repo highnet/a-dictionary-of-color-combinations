@@ -1,3 +1,4 @@
+import { plateNameJa, plateNameSource } from "./plate-names";
 import { formatCmyk, hexToLab, parseHex } from "./color";
 import {
   COLOURS,
@@ -12,11 +13,18 @@ import { SITE } from "./site";
 
 /** Public JSON shapes for agents. Stable field names; documented in /skills.md. */
 
+/** The Japanese name printed beside the English one on Wada's 1935 plates. */
+function japaneseName(id: string) {
+  const n = plateNameJa(id);
+  return n ? { name: n.name, kana: n.kana, plate: n.plate, volume: n.volume, scan: plateNameSource(n) } : null;
+}
+
 export function colourJson(c: Colour) {
   return {
     id: c.id,
     index: c.index,
     name: c.name,
+    nameJa: japaneseName(c.id),
     variant: c.variant,
     family: GROUPS[c.group],
     hex: c.hex,

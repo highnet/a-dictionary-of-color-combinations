@@ -1,11 +1,15 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/i18n/link";
+import { stripLocale } from "@/i18n/config";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
+/** Compares paths without their locale, so /ja/about and /about match /about. */
 export function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
+  const path = stripLocale(pathname).path;
+  const target = stripLocale(href).path;
+  return path === target || path.startsWith(`${target}/`);
 }
 
 /** Sidebar entry. Active state is a mark (a sumi bar under the icon), not a hue. */
@@ -22,7 +26,7 @@ export function NavLink({
   onNavigate?: () => void;
   size?: "rail" | "drawer";
 }) {
-  const pathname = usePathname();
+  const pathname = usePathname() || "/";
   const active = isActive(pathname, href);
   if (size === "drawer") {
     return (

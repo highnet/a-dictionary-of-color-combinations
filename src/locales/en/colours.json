@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "Colour search",
+    "description": "Enter any HEX value to find the nearest of Sanzo Wada's 159 colours and every combination they appear in."
+  },
+  "title": "Colour search",
+  "lede": "Name the colour you hold. The archive will show its nearest kin and every combination it appears in.",
+  "allColours": "All 159 colours",
+  "search": {
+    "label": "Your colour (HEX)",
+    "pick": "Pick a colour",
+    "help": "Nearest by CIEDE2000. Under 2 is hard to tell apart.",
+    "invalid": "That is not a HEX value. Try #1C4286.",
+    "nearest": "Nearest of Wada’s colours",
+    "nearestLabel": "Nearest colours",
+    "swatch": "{{name}}, {{hex}}, delta E {{distance}}",
+    "everyValue": "Every value for {{name}}",
+    "serves": "Serves in <n>{{n}}</n> combinations."
+  },
+  "detail": {
+    "metaTitle": "{{name}} {{hex}}",
+    "metaDescription": "{{name}} ({{hex}}, {{cmyk}}) from Sanzo Wada's Dictionary of Color Combinations, and the {{n}} combinations it appears in.",
+    "number": "No. {{no}} of 159 · {{group}}",
+    "cmyk": "CMYK (as printed)",
+    "cssVariable": "CSS variable",
+    "variant": "The book prints two different inks under this name. This is printing {{variant}}.",
+    "serves_one": "Serves in {{count}} combination.",
+    "serves_other": "Serves in {{count}} combinations.",
+    "kin": "Nearest kin",
+    "jaName": "Name on Wada’s plates",
+    "jaSource": "As printed on plate {{plate}} (vol. {{volume}}, 1935).",
+    "jaSourceLink": "See the scan"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "hero": {
+    "lede": "Compiled by Sanzo Wada, 1933–34. All 348 combinations, in his order, ready to put to work.",
+    "openArchive": "Open the archive"
+  },
+  "fork": {
+    "heading": "Two ways in",
+    "people": "For people",
+    "peopleLine": "Choose by eye. Copy by hand.",
+    "agents": "For agents",
+    "agentsLine": "Read the guide first, then act. One command; no key.",
+    "skillCommand": "the skill command",
+    "apiSkills": "how to design with the archive",
+    "apiCombinations": "all 348",
+    "apiSearch": "nearest by ΔE2000"
+  },
+  "chapters": {
+    "heading": "Know the number of colours, and you know the shape of the composition.",
+    "line2": "Two colours: a statement.",
+    "line3": "Three: a balance held.",
+    "line4": "Four: a full composition."
+  },
+  "selection": {
+    "heading": "Study the strongest combinations first.",
+    "all": "All 348"
+  },
+  "index": {
+    "heading": "Know every colour, and no combination will surprise you.",
+    "body": "159 colours in six families. Choose one to see every combination it serves."
+  },
+  "wada": {
+    "heading": "Sanzo Wada, 1883–1967.",
+    "roles": "Painter. Costume designer. Teacher. Founder of the Japan Standard Color Association, 1927.",
+    "volumes": "He set down these {{n}} combinations in six volumes, 1933–34. They are still in service.",
+    "life": "His life",
+    "sources": "Sources & method"
+  },
+  "quickFind": {
+    "label": "Number, HEX or colour name",
+    "placeholder": "e.g. 7, 295, #d96629",
+    "empty": "Enter a number from 1 to 348, or a HEX value.",
+    "range": "There are 348 combinations. Choose 1 to 348.",
+    "submit": "Find"
+  },
+  "print": {
+    "open": "Open combination {{code}}",
+    "colours": "Colours of combination {{code}}",
+    "pause": "Pause",
+    "play": "Play",
+    "next": "Print the next combination"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "All combinations",
+    "description": "Browse all 348 of Sanzo Wada's colour combinations in original order. Search by number, HEX or colour name; filter by two, three or four colours."
+  },
+  "title": "All combinations",
+  "lede": "Three hundred and forty-eight combinations. Choose by number, by colour, by strength.",
+  "search": {
+    "label": "Search by number, HEX or colour name",
+    "placeholder": "Number, #hex or colour name",
+    "clear": "Clear search"
+  },
+  "count": {
+    "label": "Number of colours",
+    "all": "All"
+  },
+  "sort": {
+    "label": "Sort",
+    "order": "Original order",
+    "hue": "By hue",
+    "value": "Light to dark"
+  },
+  "view": {
+    "label": "Layout",
+    "expanded": "Expanded",
+    "compact": "Compact"
+  },
+  "saved": "Saved",
+  "results": {
+    "heading": "Results",
+    "count": "<n>{{n}}</n> <soft>of 348 combinations</soft>",
+    "nearest": " · nearest first"
+  },
+  "empty": {
+    "title": "No combination answers.",
+    "noneSaved": "Nothing saved yet. Save a combination from its page.",
+    "widen": "Widen the search: a number from 1 to 348, a HEX value, or part of a colour name.",
+    "clear": "Clear all filters"
+  }
+}

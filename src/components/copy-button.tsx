@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
 import { toast } from "sonner";
+import { tOutside, useTranslation } from "@/i18n/client";
 
 export async function copyText(text: string, label: string) {
   try {
@@ -19,11 +20,11 @@ export async function copyText(text: string, label: string) {
     const ok = document.execCommand("copy");
     ta.remove();
     if (!ok) {
-      toast("Copy failed. Select the value and copy it by hand.");
+      toast(tOutside("copy.failed"));
       return false;
     }
   }
-  toast(`Copied ${label}`);
+  toast(tOutside("copy.copied", { label }));
   return true;
 }
 
@@ -40,6 +41,7 @@ export function CopyValue({
   display?: string;
 }) {
   const [done, setDone] = useState(false);
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -49,8 +51,8 @@ export function CopyValue({
           setTimeout(() => setDone(false), 1400);
         }
       }}
-      className={`group inline-flex min-h-9 items-center gap-2 font-data text-[0.8rem] tracking-tight hover:underline hover:decoration-current/40 ${className}`}
-      aria-label={`Copy ${label ?? value}`}
+      className={`group inline-flex min-h-9 items-center gap-2 text-left font-data text-[0.8rem] tracking-tight hover:underline hover:decoration-current/40 ${className}`}
+      aria-label={t("copy.aria", { label: label ?? value })}
     >
       <span>{display ?? value}</span>
       {done ? (

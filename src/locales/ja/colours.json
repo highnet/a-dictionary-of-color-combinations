@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "title": "色から探す",
+    "description": "HEX値を入力すると、和田三造の159色から最も近い色と、その色が使われているすべての配色を示します。"
+  },
+  "title": "色から探す",
+  "lede": "手もとの色を入れれば、最も近い色と、その色を含むすべての配色が現れる。",
+  "allColours": "全159色",
+  "search": {
+    "label": "あなたの色（HEX）",
+    "pick": "色を選ぶ",
+    "help": "CIEDE2000による近似。2未満なら見分けるのは難しい。",
+    "invalid": "HEX値ではありません。#1C4286 のように入力してください。",
+    "nearest": "和田の色から、最も近いもの",
+    "nearestLabel": "近い色",
+    "swatch": "{{name}}、{{hex}}、ΔE {{distance}}",
+    "everyValue": "{{name}}のすべての値",
+    "serves": "<n>{{n}}</n>の配色に使われています。"
+  },
+  "detail": {
+    "metaTitle": "{{name}} {{hex}}",
+    "metaDescription": "{{name}}（{{hex}}、{{cmyk}}）— 和田三造『配色総鑑』より。この色が使われている{{n}}の配色とあわせて。",
+    "number": "No. {{no}}（全159色）· {{group}}",
+    "cmyk": "CMYK（印刷値）",
+    "cssVariable": "CSS変数",
+    "variant": "原書ではこの名に2種類のインクが刷られています。こちらは刷り{{variant}}です。",
+    "serves_other": "{{count}}の配色に使われています。",
+    "kin": "近しい色",
+    "jaName": "原典の和名",
+    "jaSource": "1935年刷 {{volume}}・第{{plate}}図に印刷された名。",
+    "jaSourceLink": "原本の画像を見る"
+  }
+}

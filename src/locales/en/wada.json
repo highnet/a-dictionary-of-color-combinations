@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "Sanzo Wada",
+    "description": "Sanzo Wada (1883–1967): painter, colour researcher and Academy Award-winning costume designer, who compiled the combinations in A Dictionary of Color Combinations."
+  },
+  "jsonLd": {
+    "birthPlace": "Ikuno, Hyōgo, Japan",
+    "deathPlace": "Tokyo, Japan",
+    "jobTitle": "Painter, colour researcher, costume designer",
+    "awardOscar": "Academy Award for Best Costume Design (Color), 1955",
+    "awardMerit": "Person of Cultural Merit, 1958"
+  },
+  "name": "Sanzo Wada",
+  "nameAlt": "和田三造",
+  "intro": "Painter. Teacher. Costume designer. A surveyor of colour, who mapped its ground before anyone asked him to.",
+  "work": {
+    "heading": "His work",
+    "painter": {
+      "title": "The painter",
+      "text": "Trained in Western oil painting under Kuroda Seiki, he made his name young with South Wind (1907), then spent eight years in Europe."
+    },
+    "researcher": {
+      "title": "The researcher",
+      "text": "He founded the Japan Standard Color Association in 1927, led its successor institute from 1945, and set down Japan's first standard colour chart in 1951."
+    },
+    "designer": {
+      "title": "The designer",
+      "text": "Posters, costume and film. His colour and costume for Gate of Hell won an Academy Award, and the film took the top prize at Cannes."
+    }
+  },
+  "lifeHeading": "A life, set down in order.",
+  "life": {
+    "born": "Born on 3 March in Ikuno, Hyōgo Prefecture.",
+    "fukuoka": "The family moves to Fukuoka.",
+    "tokyo": "Moves to Tokyo to become a painter and begins study under Kuroda Seiki.",
+    "graduates": "Graduates from the Tokyo School of Fine Arts, today Tokyo University of the Arts.",
+    "southWind": "Paints South Wind, now in the National Museum of Modern Art, Tokyo. Leaves for Europe on a Ministry of Education scholarship.",
+    "europe": "Studies Western painting and design, mainly in France.",
+    "association": "Founds the Japan Standard Color Association.",
+    "professor": "Professor of design at the Tokyo School of Fine Arts.",
+    "haishoku": "Publishes Haishoku Sōkan, his colour combinations, in six volumes.",
+    "olympics": "Designs the poster for the 1940 Tokyo Olympic Games, which were later cancelled.",
+    "institute": "Reorganises the association as the Japan Color Research Institute and leads it.",
+    "standards": "Completes Color Standards, Japan's first comprehensive standard colour chart.",
+    "gateOfHell": "Directs colour and costume for Daiei's Gate of Hell, which wins the Grand Prix, the festival's top prize, at Cannes in 1954.",
+    "oscar": "Receives the Academy Award for Best Costume Design (Color) for Gate of Hell, at the 27th Academy Awards.",
+    "merit": "Named a Person of Cultural Merit.",
+    "dies": "Dies in Tokyo on 22 August, aged 84.",
+    "seigensha": "Seigensha publishes A Dictionary of Color Combinations, presenting 348 combinations from the work."
+  },
+  "words": {
+    "heading": "In his own words.",
+    "intro": "Haishoku Sōkan came with a 29-page booklet, <i>Overview and Its Use</i>. Wada wrote its statement of publication and its overview. Three short passages follow, in the original and in our translation.",
+    "note": "Translations are ours. The booklet is open to read in full at the National Diet Library. Its preface is by the painter Wada Eisaku, not Sanzo Wada, so it is not quoted here.",
+    "why": {
+      "title": "Why he made it",
+      "gloss": "In his signed statement of publication, Wada says colour names alone, like “blue” or “rose”, cannot carry a combination, and earlier colour studies were too large and slow for anyone but a specialist. So he set down combinations as printed colour, for everyday use. He notes that the world is turning into a world of colour, in clothing, furniture and the street."
+    },
+    "nature": {
+      "title": "Learn from nature",
+      "gloss": "On composition, Wada treats a standard as a guide, never a rule to force on anyone, and says human invention cannot simply create colour harmony. He sorts combinations into close tones and contrasting tones, each light, dark, pale, deep or pan (from the Greek for “all”), and finds that close tones come easily while contrasting ones are harder but more interesting."
+    },
+    "equal": {
+      "title": "Never in equal parts",
+      "gloss": "The plates show every colour at the same size only for convenience. The set came with paper cut-outs to lay over the plates so readers could vary shape and amount, as a kimono has a sliver of collar, a body of robe and a band of obi. He adds that colours look paler and weaker over large areas than on small swatches."
+    }
+  },
+  "orders": {
+    "heading": "The combinations he left behind.",
+    "text": "<i>Haishoku Sōkan</i> set his sense of colour down in combinations, plate by plate, Japanese and Western names side by side. A century later designers still work from them.",
+    "cta": "Open the archive"
+  },
+  "sourcesNote": "Facts are summarised in our own words. The 1927 founding of the Japan Standard Color Association is also recorded in the Seigensha edition’s introduction."
+}

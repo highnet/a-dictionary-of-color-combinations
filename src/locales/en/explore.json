@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Explore",
+    "description": "See all 348 of Sanzo Wada's combinations at once, placed by hue and lightness. Filter by temperature, value contrast and number of colours; pick several to compare."
+  },
+  "title": "See them all at once.",
+  "lede": "Every combination, placed by its average hue and value. Narrow the range, then look closer.",
+  "filters": {
+    "colours": "Colours",
+    "temperature": "Temperature",
+    "contrast": "Value contrast",
+    "all": "All",
+    "warm": "Warm",
+    "cool": "Cool",
+    "mixed": "Warm + cool",
+    "neutral": "Neutral",
+    "soft": "Soft",
+    "medium": "Medium",
+    "strong": "Strong"
+  },
+  "pick": "Pick to compare",
+  "picking": "Picking to compare",
+  "shown": "<n>{{n}}</n> <s>combinations shown</s>",
+  "picked": "{{n}}/4 picked",
+  "pickedSuffix": ", picked",
+  "compare": "Compare",
+  "mapLabel": "Combinations by hue and lightness",
+  "axis": {
+    "light": "Light",
+    "dark": "Dark",
+    "neutral": "Neutral",
+    "red": "Red",
+    "orange": "Orange",
+    "yellow": "Yellow",
+    "green": "Green",
+    "blue": "Blue",
+    "purple": "Purple"
+  }
+}
