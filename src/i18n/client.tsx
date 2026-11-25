@@ -1,7 +1,7 @@
 "use client";
 
 import type { Resource } from "i18next";
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { localize, type Locale } from "./config";
 import { createI18n } from "./instance";
@@ -19,7 +19,9 @@ export function tOutside(key: string, options?: Record<string, unknown>): string
 /** Wraps the app so Client Components can call useTranslation() and useLang(). */
 export function I18nProvider({ lang, resources, children }: { lang: Locale; resources: Resource; children: ReactNode }) {
   const [i18n] = useState(() => createI18n(lang, resources, [initReactI18next]));
-  active = i18n as unknown as typeof active;
+  useEffect(() => {
+    active = i18n as unknown as typeof active;
+  }, [i18n]);
   return (
     <LangContext value={lang}>
       <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
