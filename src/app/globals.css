@@ -299,6 +299,32 @@
   .sb-label {
     transition: opacity 0.2s;
   }
+  /* Sidebar rows share one height, and the tool rows line their icons up with
+     the nav icons above (p-2 + 0.9rem = 1.4rem). */
+  .sb-row {
+    height: 2.75rem;
+    flex: none;
+  }
+  .sb-chapters {
+    /* Keeps the chapters from running into the tools when the window is short. */
+    margin-bottom: 1.5rem;
+  }
+  @media (max-height: 820px) {
+    #sidebar .sb-row {
+      height: 2.3rem;
+    }
+    #sidebar .sb-nav {
+      margin-top: 0.5rem;
+    }
+    #sidebar .sb-chapters {
+      margin-top: 1.5rem;
+    }
+  }
+  @media (max-height: 640px) {
+    #sidebar .sb-chapters {
+      display: none;
+    }
+  }
   :root[data-sidebar="collapsed"] .sb-label {
     opacity: 0;
     pointer-events: none;
@@ -374,6 +400,17 @@
   }
   .koma-sm .koma-kanji {
     font-size: min(calc(var(--koma-w) * 0.26), calc(var(--koma-w) * 0.8 / var(--koma-chars)));
+  }
+
+  /* The hero print's labels arrive with each new combination, as its plates are inked. */
+  .print-in {
+    animation: print-in 0.7s var(--ease-out-expo) both;
+  }
+  @keyframes print-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.4rem);
+    }
   }
 
   /* Tatami floor behind every page: decorative, barely there. */

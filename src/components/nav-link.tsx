@@ -46,7 +46,7 @@ export function NavLink({
       href={href}
       title={label}
       aria-current={active ? "page" : undefined}
-      className="group relative flex h-11 items-center gap-3.5 px-[1.4rem] text-[0.95rem] transition-colors hover:bg-washi-deep"
+      className="sb-row group relative flex items-center gap-3.5 px-[1.4rem] text-[0.95rem] transition-colors hover:bg-washi-deep"
     >
       {children}
       <span className="sb-label truncate">{label}</span>

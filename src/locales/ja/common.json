@@ -70,7 +70,20 @@
   "eyedropper": {
     "label": "スポイト",
     "title": "スポイト（I）",
-    "hint": "クリックでコピー · Escで終了"
+    "hint": "クリックでコピー · Escで終了",
+    "text": "文字",
+    "exact": "和田の色そのもの",
+    "deltaE": "最も近い和田の色 · ΔE {{d}}",
+    "tray": "スポイト",
+    "keys": "クリックかEnterでコピー · Alt：文字色 · 矢印：微調整 · F：形式 · P：画素 · Esc",
+    "formatLabel": "形式：{{format}}。形式を切り替える",
+    "native": "画面の画素を拾う",
+    "close": "スポイトを閉じる",
+    "recent": "最近拾った色",
+    "open": "{{name}}を開く",
+    "search": "この色に近い配色を探す",
+    "remove": "削除",
+    "empty": "どこでもクリックすると色を拾えます。直近の8色がここに残ります。"
   },
   "copy": {
     "copied": "{{label}}をコピーしました",

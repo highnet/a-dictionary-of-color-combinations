@@ -77,7 +77,7 @@ function Switch(props: Omit<Parameters<typeof SwitchLink>[0], "withQuery">) {
 export function LanguageSwitch() {
   const { t } = useTranslation();
   return (
-    <Switch className="flex h-11 items-center gap-3.5 px-[1.15rem] text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi">
+    <Switch className="sb-row flex items-center gap-3.5 px-[0.9rem] text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi">
       <Languages className="size-[1.15rem] shrink-0" strokeWidth={1.5} aria-hidden="true" />
       <span className="sb-label">{t("shell.switchTo")}</span>
     </Switch>

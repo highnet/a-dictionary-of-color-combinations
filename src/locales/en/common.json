@@ -70,7 +70,20 @@
   "eyedropper": {
     "label": "Eyedropper",
     "title": "Eyedropper (I)",
-    "hint": "Click to copy · Esc to leave"
+    "hint": "Click to copy · Esc to leave",
+    "text": "text",
+    "exact": "Exactly Wada’s colour",
+    "deltaE": "Nearest of Wada’s · ΔE {{d}}",
+    "tray": "Eyedropper",
+    "keys": "Click or Enter to copy · Alt: text · Arrows: nudge · F: format · P: pixel · Esc",
+    "formatLabel": "Format: {{format}}. Change format",
+    "native": "Pick any pixel",
+    "close": "Close the eyedropper",
+    "recent": "Recent picks",
+    "open": "Open {{name}}",
+    "search": "Find combinations near this colour",
+    "remove": "Remove",
+    "empty": "Click anywhere to pick a colour. Your last eight picks stay here."
   },
   "copy": {
     "copied": "Copied {{label}}",

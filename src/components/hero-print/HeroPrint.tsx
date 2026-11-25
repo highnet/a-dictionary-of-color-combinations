@@ -4,7 +4,7 @@ import Link from "@/i18n/link";
 import { useTranslation } from "@/i18n/client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Pause, Play, StepForward } from "lucide-react";
-import { SKY, platePath } from "./print";
+import { SKY, plateCurve, plateDepth, platePath } from "./print";
 
 export interface PrintPlate {
   code: string;
@@ -12,7 +12,28 @@ export interface PrintPlate {
 }
 
 const HOLD_MS = 7000;
-const REINK_MS = 260; // between plates when re-inking
+const STAGGER_MS = 240; // between plates, back to front, when re-inking
+const PASS_MS = 1100; // one plate's pass: lift, sweep of new ink, settle into register
+
+/** One plate's ink: the colour it had, the colour it is taking, and when the pass starts. */
+interface Ink {
+  from: string;
+  to: string;
+  start: number;
+}
+
+const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2);
+
+/** Where the new ink's leading edge is, as a fraction of the sheet's width, at pass progress p. */
+const sweepFront = (p: number) => -0.12 + easeInOut(Math.min(1, Math.max(0, p) / 0.8)) * 1.3;
+
+/** Lift through a pass: up as the ink goes on, then down into register with a small overshoot. */
+function liftAt(p: number) {
+  if (p <= 0 || p >= 1) return 0;
+  if (p < 0.3) return Math.sin(((p / 0.3) * Math.PI) / 2);
+  const x = (p - 0.3) / 0.7;
+  return Math.exp(-5 * x) * Math.cos(2.6 * Math.PI * x);
+}
 
 /** Grain tile: soft paper noise, generated once. */
 function grainTile() {
@@ -38,9 +59,8 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
   const [index, setIndex] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [live, setLive] = useState(false);
-  // Colour currently inked on each plate, and when each was last re-inked.
-  const inked = useRef<string[]>(plates[0].colors.map((c) => c.hex));
-  const reinkAt = useRef<number[]>([-1e9, -1e9, -1e9, -1e9]);
+  // Each plate's ink, and the pass that changes it.
+  const inks = useRef<Ink[]>(plates[0].colors.map((c) => ({ from: c.hex, to: c.hex, start: -1e9 })));
   const indexRef = useRef(0);
   const current = plates[index];
 
@@ -50,12 +70,13 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
       indexRef.current = i;
       setIndex(i);
       const now = performance.now();
-      plates[i].colors.forEach((c, k) => {
-        const at = now + k * REINK_MS;
-        window.setTimeout(() => {
-          inked.current[k] = c.hex;
-        }, k * REINK_MS + 140);
-        reinkAt.current[k] = at;
+      const colors = plates[i].colors;
+      inks.current = colors.map((c, k) => {
+        const prev = inks.current[k];
+        // Start from whatever covers most of the plate now, even mid-pass: the new ink
+        // once its leading edge has passed the crest (near the middle), else the old.
+        const showing = !prev ? c.hex : sweepFront((now - prev.start) / PASS_MS) >= 0.5 ? prev.to : prev.from;
+        return { from: showing, to: c.hex, start: now + k * STAGGER_MS };
       });
     },
     [plates],
@@ -80,6 +101,9 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
     let raf = 0;
     let onScreen = true;
     let stopStill = () => {};
+    // Cursor parallax: the target follows the pointer, the shown value eases after it.
+    const aim = { x: 0, y: 0 };
+    const look = { x: 0, y: 0 };
 
     const draw = (now: number) => {
       const w = el.clientWidth;
@@ -103,13 +127,55 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
         ctx.fillRect(0, 0, w, h);
       }
       const t = hold > 0 ? hold : reduced ? 2 : (now - start) / 1000;
-      const n = inked.current.length;
+      if (!reduced) {
+        look.x += (aim.x - look.x) * 0.06;
+        look.y += (aim.y - look.y) * 0.06;
+      }
+      const list = inks.current;
+      const n = list.length;
       for (let k = 0; k < n; k++) {
-        // A plate being re-inked lifts off register and settles back.
-        const dt = (now - reinkAt.current[k]) / 520;
-        const lift = dt >= 0 && dt < 1 ? Math.sin(Math.PI * dt) : 0;
-        ctx.fillStyle = inked.current[k];
-        ctx.fill(new Path2D(platePath(k, n, w, h, t, lift)));
+        const ink = list[k];
+        const p = reduced ? 1 : Math.min(1, Math.max(0, (now - ink.start) / PASS_MS));
+        const pts = plateCurve(k, n, w, h, t, liftAt(p));
+        const plate = new Path2D();
+        plate.moveTo(pts[0][0], h * 1.1); // well below the sheet, so parallax never lifts it into view
+        for (const [x, y] of pts) plate.lineTo(x, y);
+        plate.lineTo(pts[pts.length - 1][0], h * 1.1);
+        plate.closePath();
+
+        const depth = plateDepth(k, n);
+        ctx.save();
+        ctx.translate(look.x * depth * w * 0.014, look.y * depth * h * 0.008);
+        if (p <= 0 || p >= 1) {
+          ctx.fillStyle = p >= 1 ? ink.to : ink.from;
+          ctx.fill(plate);
+        } else {
+          // The new ink is laid in one pass across the sheet, with a ragged,
+          // slightly wet leading edge, over the old ink.
+          ctx.fillStyle = ink.from;
+          ctx.fill(plate);
+          const front = sweepFront(p) * w;
+          const edge = new Path2D();
+          edge.moveTo(-w, -h);
+          for (let y = -h * 0.1; y <= h * 1.1; y += 6) {
+            edge.lineTo(front + 9 * Math.sin(y * 0.045 + k * 1.7) + 5 * Math.sin(y * 0.13 + k * 3.1), y);
+          }
+          edge.lineTo(-w, h * 2);
+          edge.closePath();
+          ctx.save();
+          ctx.clip(edge);
+          ctx.fillStyle = ink.to;
+          ctx.fill(plate);
+          ctx.restore();
+        }
+        // The crest takes a little more ink, as a block print does at its edge.
+        const crest = new Path2D();
+        crest.moveTo(pts[0][0], pts[0][1]);
+        for (const [x, y] of pts) crest.lineTo(x, y);
+        ctx.strokeStyle = "rgb(24 18 10 / 0.14)";
+        ctx.lineWidth = 1.1;
+        ctx.stroke(crest);
+        ctx.restore();
       }
     };
     const loop = (now: number) => {
@@ -129,6 +195,18 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
     ro.observe(el);
     const onVis = () => !document.hidden && kick();
     document.addEventListener("visibilitychange", onVis);
+    const onPointer = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const r = el.getBoundingClientRect();
+      aim.x = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+      aim.y = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height) * 2 - 1));
+    };
+    const onLeave = () => {
+      aim.x = 0;
+      aim.y = 0;
+    };
+    el.addEventListener("pointermove", onPointer);
+    el.addEventListener("pointerleave", onLeave);
     if (reduced) {
       // A still: redraw only when the combination changes.
       const id = setInterval(() => draw(performance.now()), 300);
@@ -142,6 +220,8 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
       io.disconnect();
       ro.disconnect();
       document.removeEventListener("visibilitychange", onVis);
+      el.removeEventListener("pointermove", onPointer);
+      el.removeEventListener("pointerleave", onLeave);
       stopStill();
     };
   }, []);
@@ -158,19 +238,22 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
             </svg>
           ) : null}
           <canvas ref={canvas} aria-hidden="true" className="absolute inset-0 size-full" />
+          {/* The link stays mounted (keyboard focus survives a change); only its number re-enters. */}
           <Link
             href={`/combinations/${current.code}`}
             className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
             aria-label={t("print.open", { code: current.code })}
           >
-            {current.code}
+            <span key={current.code} className="print-in block">
+              {current.code}
+            </span>
           </Link>
         </div>
       </div>
       <div className="mt-3 flex items-start justify-between gap-x-4 px-[var(--gutter)] lg:px-0">
         <ul className="flex min-w-0 flex-1 flex-wrap gap-x-4 gap-y-1.5 sm:gap-x-5 sm:gap-y-2" aria-live="polite" aria-label={t("print.colours", { code: current.code })}>
-          {current.colors.map((c) => (
-            <li key={c.id}>
+          {current.colors.map((c, k) => (
+            <li key={`${current.code}-${c.id}`} className="print-in" style={{ animationDelay: `${k * STAGGER_MS}ms` }}>
               <Link href={`/colours/${c.id}`} className="group flex items-center gap-2.5">
                 <span className="size-4 shrink-0 ring-1 ring-sumi/15" style={{ backgroundColor: c.hex }} aria-hidden="true" />
                 <span className="text-[0.8rem] leading-tight group-hover:underline">
