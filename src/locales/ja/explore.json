@@ -1,1 +1,39 @@
-{}
+{
+  "meta": {
+    "title": "探す",
+    "description": "和田三造の348の配色を、色相と明度で配置して一望できます。寒暖、明度差、色数で絞り込み、いくつか選んで比べられます。"
+  },
+  "title": "戦場を見渡せ。",
+  "lede": "すべての配色を、平均の色相と明度で配した。地を絞り、そして打って出よ。",
+  "filters": {
+    "colours": "色数",
+    "temperature": "寒暖",
+    "contrast": "明度差",
+    "all": "すべて",
+    "warm": "暖色",
+    "cool": "寒色",
+    "mixed": "暖色＋寒色",
+    "neutral": "中性",
+    "soft": "弱",
+    "medium": "中",
+    "strong": "強"
+  },
+  "pick": "選んで比べる",
+  "picking": "比べる配色を選択中",
+  "shown": "<n>{{n}}</n> <s>件の配色を表示</s>",
+  "picked": "{{n}}/4 選択",
+  "pickedSuffix": "、選択済み",
+  "compare": "比べる",
+  "mapLabel": "色相と明度による配色の配置",
+  "axis": {
+    "light": "明",
+    "dark": "暗",
+    "neutral": "無彩色",
+    "red": "赤",
+    "orange": "橙",
+    "yellow": "黄",
+    "green": "緑",
+    "blue": "青",
+    "purple": "紫"
+  }
+}

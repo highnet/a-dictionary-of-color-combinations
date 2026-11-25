@@ -1,14 +1,16 @@
 import Link from "@/i18n/link";
+import { getT } from "@/i18n/server";
 import { COLOURS, GROUPS } from "@/lib/dictionary";
 
 /** All 159 colours by family, each linking to its page. */
-export function ColourIndex() {
+export async function ColourIndex() {
+  const { t } = await getT();
   return (
     <div className="space-y-14">
       {GROUPS.map((g, gi) => (
         <section key={g} aria-labelledby={`g-${gi}`}>
           <h3 id={`g-${gi}`} className="border-b border-rule pb-3 text-sm text-sumi-soft">
-            {g} <span className="font-data text-xs">· {COLOURS.filter((c) => c.group === gi).length}</span>
+            {t(`groups.${gi}` as "groups.0")} <span className="font-data text-xs">· {COLOURS.filter((c) => c.group === gi).length}</span>
           </h3>
           <ul className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-5 lg:grid-cols-7 2xl:grid-cols-9">
             {COLOURS.filter((c) => c.group === gi).map((c) => (

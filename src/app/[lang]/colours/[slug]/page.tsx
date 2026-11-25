@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "@/i18n/link";
 import { notFound } from "next/navigation";
+import { alternates } from "@/i18n/config";
+import { getT } from "@/i18n/server";
 import { Crumbs } from "@/components/crumbs";
 import { CopyValue } from "@/components/copy-button";
 import { PlateTile } from "@/components/plate";
 import { formatCmyk, formatRgb } from "@/lib/color";
-import { COLOURS, GROUPS, getColour, nearestColours, palettesWithColour } from "@/lib/dictionary";
+import { COLOURS, getColour, nearestColours, palettesWithColour } from "@/lib/dictionary";
 
 export const dynamicParams = false;
 
@@ -17,10 +19,11 @@ export async function generateMetadata({ params }: PageProps<"/[lang]/colours/[s
   const { slug } = await params;
   const c = getColour(slug);
   if (!c) return {};
+  const { t, lang } = await getT("colours");
   return {
-    title: `${c.name} ${c.hex.toUpperCase()}`,
-    description: `${c.name} (${c.hex}, ${formatCmyk(c.cmyk)}) from Sanzo Wada's Dictionary of Color Combinations, and the ${c.combinations.length} combinations it appears in.`,
-    alternates: { canonical: `/colours/${c.id}` },
+    title: t("detail.metaTitle", { name: c.name, hex: c.hex.toUpperCase() }),
+    description: t("detail.metaDescription", { name: c.name, hex: c.hex, cmyk: formatCmyk(c.cmyk), n: c.combinations.length }),
+    alternates: alternates(`/colours/${c.id}`, lang),
   };
 }
 
@@ -28,6 +31,8 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
   const { slug } = await params;
   const c = getColour(slug);
   if (!c) notFound();
+  const { t } = await getT("colours");
+  const { t: tc } = await getT();
   const plates = palettesWithColour(c);
   const kin = nearestColours(c.lab, 7).slice(1);
   const fg = c.ink === "ink" ? "#1f1c19" : "#f6f3ec";
@@ -38,14 +43,14 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
         <Crumbs
           className="pt-6"
           items={[
-            { href: "/colours", label: "Colour search" },
+            { href: "/colours", label: t("title") },
             { href: `/colours/${c.id}`, label: c.name },
           ]}
         />
       </div>
       <section className="shell pt-8 pb-16">
         <div className="kento flex min-h-[min(56vh,34rem)] flex-col justify-end p-6 md:p-10" style={{ backgroundColor: c.hex, color: fg }}>
-          <p className="w-fit bg-washi px-2.5 py-1.5 font-data text-xs text-sumi">No. {String(c.index).padStart(3, "0")} of 159 · {GROUPS[c.group]}</p>
+          <p className="w-fit bg-washi px-2.5 py-1.5 font-data text-xs text-sumi">{t("detail.number", { no: String(c.index).padStart(3, "0"), group: tc(`groups.${c.group}` as "groups.0") })}</p>
           <h1 className="mt-3 font-display text-[clamp(2.4rem,6vw,5rem)] leading-none font-extrabold">
             {c.name}
             {c.variant ? <span className="ml-3 align-middle font-data text-base font-normal">({c.variant})</span> : null}
@@ -61,24 +66,24 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
             <dd><CopyValue value={formatRgb(c.rgb)} display={c.rgb.join(" ")} label="RGB" /></dd>
           </div>
           <div>
-            <dt className="text-xs text-sumi-soft">CMYK (as printed)</dt>
+            <dt className="text-xs text-sumi-soft">{t("detail.cmyk")}</dt>
             <dd><CopyValue value={formatCmyk(c.cmyk)} label="CMYK" /></dd>
           </div>
           <div>
             <dt className="text-xs text-sumi-soft">CSS</dt>
-            <dd><CopyValue value={`--${c.id}: ${c.hex};`} display={`--${c.id}`} label="CSS variable" /></dd>
+            <dd><CopyValue value={`--${c.id}: ${c.hex};`} display={`--${c.id}`} label={t("detail.cssVariable")} /></dd>
           </div>
         </dl>
         {c.variant ? (
           <p className="mt-4 max-w-2xl text-sm text-sumi-soft">
-            The book prints two different inks under this name. This is printing {c.variant}.
+            {t("detail.variant", { variant: c.variant })}
           </p>
         ) : null}
       </section>
 
       <section aria-labelledby="serves" className="shell border-t border-rule py-16 md:py-24">
         <h2 id="serves" className="font-display text-[clamp(1.8rem,3.4vw,3rem)] leading-tight font-bold">
-          Serves in {plates.length} {plates.length === 1 ? "combination" : "combinations"}.
+          {t("detail.serves", { count: plates.length })}
         </h2>
         <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           {plates.map((p) => (
@@ -89,7 +94,7 @@ export default async function ColourPage({ params }: PageProps<"/[lang]/colours/
 
       <section aria-labelledby="kin" className="ground-deep">
         <div className="shell py-16 md:py-24">
-          <h2 id="kin" className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">Nearest kin</h2>
+          <h2 id="kin" className="font-display text-[clamp(1.6rem,3vw,2.4rem)] leading-tight font-bold">{t("detail.kin")}</h2>
           <ul className="mt-10 grid grid-cols-3 gap-4 sm:grid-cols-6">
             {kin.map(({ colour, distance }) => (
               <li key={colour.id}>

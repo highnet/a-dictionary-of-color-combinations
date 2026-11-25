@@ -1,1 +1,24 @@
-{}
+{
+  "meta": {
+    "title": "Compare combinations",
+    "description": "Set up to four of Sanzo Wada's colour combinations side by side and see which colours they share."
+  },
+  "title": "Compare",
+  "lede": "Set the orders side by side. What they share is their strength.",
+  "number": "Combination number",
+  "placeholder": "Add by number",
+  "add": "Add",
+  "errors": {
+    "range": "Choose a number from 1 to 348.",
+    "duplicate": "{{code}} is already here.",
+    "max": "Four at most. Remove one first."
+  },
+  "empty": {
+    "title": "Nothing on the table.",
+    "body": "Add two to four combinations by number, or pick them on the <link>map</link>."
+  },
+  "section": "Combination {{code}}",
+  "remove": "Remove {{code}}",
+  "shared": "shared",
+  "hexLabel": "{{name}} HEX"
+}

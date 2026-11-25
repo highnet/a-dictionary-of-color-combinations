@@ -4,6 +4,8 @@ import Link from "@/i18n/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { useHref, useTranslation } from "@/i18n/client";
+import { rich } from "@/i18n/rich";
 import { PALETTES, type Palette } from "@/lib/dictionary";
 
 // Layout: hue by rank (Wada's palette leans warm, so an angle axis would pile
@@ -91,6 +93,8 @@ function Chips<T extends string | number>({
 }
 
 export function CompositionMap() {
+  const { t } = useTranslation("explore");
+  const href = useHref();
   const router = useRouter();
   const [temp, setTemp] = useState<Temp>("all");
   const [contrast, setContrast] = useState<Contrast>("all");
@@ -122,7 +126,7 @@ export function CompositionMap() {
 
   function activate(p: Palette) {
     if (!selecting) {
-      router.push(`/combinations/${p.code}`);
+      router.push(href(`/combinations/${p.code}`));
       return;
     }
     setPicked((cur) => (cur.includes(p.id) ? cur.filter((x) => x !== p.id) : cur.length >= 4 ? cur : [...cur, p.id]));
@@ -132,32 +136,32 @@ export function CompositionMap() {
     <div>
       <div className="grid grid-cols-1 gap-6 border-y border-rule py-6 md:grid-cols-[repeat(3,auto)_1fr] md:gap-10">
         <Chips<Count>
-          label="Colours"
+          label={t("filters.colours")}
           value={count}
           onChange={setCount}
-          options={[{ value: "all", label: "All" }, { value: 2, label: "2" }, { value: 3, label: "3" }, { value: 4, label: "4" }]}
+          options={[{ value: "all", label: t("filters.all") }, { value: 2, label: "2" }, { value: 3, label: "3" }, { value: 4, label: "4" }]}
         />
         <Chips<Temp>
-          label="Temperature"
+          label={t("filters.temperature")}
           value={temp}
           onChange={setTemp}
           options={[
-            { value: "all", label: "All" },
-            { value: "warm", label: "Warm" },
-            { value: "cool", label: "Cool" },
-            { value: "mixed", label: "Warm + cool" },
-            { value: "neutral", label: "Neutral" },
+            { value: "all", label: t("filters.all") },
+            { value: "warm", label: t("filters.warm") },
+            { value: "cool", label: t("filters.cool") },
+            { value: "mixed", label: t("filters.mixed") },
+            { value: "neutral", label: t("filters.neutral") },
           ]}
         />
         <Chips<Contrast>
-          label="Value contrast"
+          label={t("filters.contrast")}
           value={contrast}
           onChange={setContrast}
           options={[
-            { value: "all", label: "All" },
-            { value: "soft", label: "Soft" },
-            { value: "medium", label: "Medium" },
-            { value: "strong", label: "Strong" },
+            { value: "all", label: t("filters.all") },
+            { value: "soft", label: t("filters.soft") },
+            { value: "medium", label: t("filters.medium") },
+            { value: "strong", label: t("filters.strong") },
           ]}
         />
         <div className="flex items-end justify-start md:justify-end">
@@ -167,14 +171,25 @@ export function CompositionMap() {
             onClick={() => setSelecting((s) => !s)}
             className={`min-h-9 border px-3 text-sm ${selecting ? "border-sumi bg-sumi text-washi" : "border-rule hover:bg-washi-deep"}`}
           >
-            {selecting ? "Picking to compare" : "Pick to compare"}
+            {selecting ? t("picking") : t("pick")}
           </button>
         </div>
       </div>
 
       <div className="mt-4 flex min-h-11 flex-wrap items-center justify-between gap-3 text-sm" aria-live="polite">
         <p>
-          <span className="font-data">{on.size}</span> <span className="text-sumi-soft">combinations shown</span>
+          {rich(t("shown", { n: on.size }), {
+            n: (c, k) => (
+              <span key={k} className="font-data">
+                {c}
+              </span>
+            ),
+            s: (c, k) => (
+              <span key={k} className="text-sumi-soft">
+                {c}
+              </span>
+            ),
+          })}
           {hover ? (
             <span className="ml-4 hidden text-sumi-soft md:inline">
               <span className="font-data text-sumi">{hover.code}</span> · {hover.colors.map((c) => c.name).join(", ")}
@@ -183,10 +198,10 @@ export function CompositionMap() {
         </p>
         {selecting ? (
           <div className="flex items-center gap-3">
-            <span className="text-sumi-soft">{picked.length}/4 picked</span>
+            <span className="text-sumi-soft">{t("picked", { n: picked.length })}</span>
             {picked.length >= 2 ? (
               <Link href={`/compare?ids=${picked.join(",")}`} className="inline-flex min-h-10 items-center gap-2 bg-sumi px-4 text-washi">
-                Compare <ArrowRight className="size-4" aria-hidden="true" />
+                {t("compare")} <ArrowRight className="size-4" aria-hidden="true" />
               </Link>
             ) : null}
           </div>
@@ -195,13 +210,15 @@ export function CompositionMap() {
 
       <div className="-mx-[var(--gutter)] overflow-x-auto px-[var(--gutter)] pb-10">
       <div className="relative mt-8 h-[min(76vh,44rem)] min-h-[30rem] min-w-[46rem] border-l border-b border-sumi/40">
-        <span className="absolute -top-1 left-1 -translate-y-full pb-1 text-xs text-sumi-soft">Light</span>
-        <span className="absolute bottom-2 left-2 text-xs text-sumi-soft">Dark</span>
-        <span className="absolute right-0 -bottom-7 text-xs text-sumi-soft">Neutral</span>
+        <span className="absolute -top-1 left-1 -translate-y-full pb-1 text-xs text-sumi-soft">{t("axis.light")}</span>
+        <span className="absolute bottom-2 left-2 text-xs text-sumi-soft">{t("axis.dark")}</span>
+        <span className="absolute right-0 -bottom-7 text-xs text-sumi-soft">{t("axis.neutral")}</span>
         <div className="absolute inset-x-0 -bottom-7 flex justify-between pr-20 text-xs text-sumi-soft" aria-hidden="true">
-          <span>Red</span><span>Orange</span><span>Yellow</span><span>Green</span><span>Blue</span><span>Purple</span>
+          {(["red", "orange", "yellow", "green", "blue", "purple"] as const).map((h) => (
+            <span key={h}>{t(`axis.${h}`)}</span>
+          ))}
         </div>
-        <ul aria-label="Combinations by hue and lightness">
+        <ul aria-label={t("mapLabel")}>
           {PALETTES.map((p) => {
             const visible = on.has(p.id);
             const isPicked = picked.includes(p.id);
@@ -213,7 +230,7 @@ export function CompositionMap() {
                   onClick={() => activate(p)}
                   onMouseEnter={() => setHover(p)}
                   onFocus={() => setHover(p)}
-                  aria-label={`${p.code}: ${p.colors.map((c) => c.name).join(", ")}${selecting ? (isPicked ? ", picked" : "") : ""}`}
+                  aria-label={`${p.code}: ${p.colors.map((c) => c.name).join(", ")}${selecting && isPicked ? t("pickedSuffix") : ""}`}
                   aria-pressed={selecting ? isPicked : undefined}
                   className={`relative flex h-[46%] w-[86%] transition-[opacity,transform] duration-300 hover:z-10 hover:scale-[1.9] focus-visible:z-10 focus-visible:scale-[1.9] ${visible ? "opacity-100" : "pointer-events-none opacity-[0.07]"} ${isPicked ? "scale-[1.8] outline-2 outline-offset-2 outline-sumi" : ""}`}
                 >
