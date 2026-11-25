@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import Link from "@/i18n/link";
 import { WORKS, worksCited, type WorkId } from "@/lib/citations";
 
 /** Renders *italic* spans and links bare URLs; everything else is plain text. */
@@ -25,9 +26,9 @@ export function MlaText({ text }: { text: string }) {
 export function Cite({ work, page }: { work: WorkId; page?: string | number }) {
   return (
     <span className="whitespace-nowrap">
-      (<a href={`/about#cite-${work}`} className="link-quiet">
+      (<Link href={`/about#cite-${work}`} className="link-quiet" lang="en">
         <MlaText text={WORKS[work].short} />
-      </a>
+      </Link>
       {page != null ? ` ${page}` : ""})
     </span>
   );
@@ -36,7 +37,7 @@ export function Cite({ work, page }: { work: WorkId; page?: string | number }) {
 /** A Works Cited list with hanging indents, the MLA way. */
 export function WorksCited({ ids, className = "" }: { ids: WorkId[]; className?: string }) {
   return (
-    <ul className={`space-y-3 text-sm leading-relaxed ${className}`}>
+    <ul lang="en" className={`space-y-3 text-sm leading-relaxed ${className}`}>
       {worksCited(ids).map((w) => (
         <li key={w.id} id={`cite-${w.id}`} className="scroll-mt-24 pl-8 -indent-8">
           <MlaText text={w.display} />
