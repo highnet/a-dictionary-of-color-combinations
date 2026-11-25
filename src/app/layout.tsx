@@ -4,6 +4,7 @@ import { Sidebar } from "@/components/sidebar";
 import { Topbar } from "@/components/topbar";
 import { SiteFooter } from "@/components/site-footer";
 import { sidebarBootScript } from "@/components/sidebar-toggle";
+import { EyedropperLayer } from "@/components/eyedropper";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SITE } from "@/lib/site";
@@ -100,6 +101,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
         </TooltipProvider>
+        <EyedropperLayer />
         <Toaster />
       </body>
     </html>

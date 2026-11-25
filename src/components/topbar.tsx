@@ -8,6 +8,7 @@ import { LogoMark } from "./logo";
 import { NavLink } from "./nav-link";
 import { NAV } from "@/lib/site";
 import { useFavourites } from "@/lib/favourites";
+import { EyedropperIconToggle } from "./eyedropper";
 
 /** Mobile/tablet bar with a hamburger drawer. Hidden on desktop. */
 export function Topbar() {
@@ -19,6 +20,8 @@ export function Topbar() {
         <LogoMark className="size-8" />
         <span className="font-display text-[0.95rem] font-semibold">Wada · Colour</span>
       </Link>
+      <div className="flex items-center">
+      <EyedropperIconToggle />
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
           className="-mr-2 grid size-11 place-items-center"
@@ -46,6 +49,7 @@ export function Topbar() {
           </SheetClose>
         </SheetContent>
       </Sheet>
+      </div>
     </header>
   );
 }

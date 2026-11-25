@@ -275,6 +275,18 @@
   :root[data-sidebar="collapsed"] .sb-collapse-icon {
     transform: rotate(180deg);
   }
+
+  /* Eyedropper mode: crosshair everywhere, drag-to-sample on touch. */
+  :root[data-eyedropper="on"],
+  :root[data-eyedropper="on"] * {
+    cursor: crosshair !important;
+  }
+  :root[data-eyedropper="on"] [data-eyedropper-ignore] {
+    cursor: pointer !important;
+  }
+  :root[data-eyedropper="on"] body {
+    touch-action: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

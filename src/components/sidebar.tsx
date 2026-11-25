@@ -1,12 +1,13 @@
 import Link from "next/link";
-import { Bot, Brush, Compass, Grid3x3, Info, PanelLeftClose, Pipette } from "lucide-react";
+import { Bot, Brush, Compass, Grid3x3, Info, PanelLeftClose, Search } from "lucide-react";
 import { LogoMark } from "./logo";
 import { NavLink } from "./nav-link";
 import { SidebarToggle } from "./sidebar-toggle";
 import { SavedCount } from "./saved-count";
+import { EyedropperToggle } from "./eyedropper";
 import { NAV } from "@/lib/site";
 
-const ICONS = { compass: Compass, grid: Grid3x3, pipette: Pipette, info: Info, bot: Bot, brush: Brush } as const;
+const ICONS = { compass: Compass, grid: Grid3x3, pipette: Search, info: Info, bot: Bot, brush: Brush } as const;
 
 const CHAPTERS = [
   { n: 2, label: "Two colours", range: "001–120" },
@@ -58,6 +59,7 @@ export function Sidebar() {
       </div>
 
       <div className="mt-auto flex flex-col gap-1 border-t border-rule p-2">
+        <EyedropperToggle />
         <SavedCount />
         <SidebarToggle>
           <PanelLeftClose className="sb-collapse-icon size-[1.15rem] shrink-0 transition-transform" strokeWidth={1.5} aria-hidden="true" />
