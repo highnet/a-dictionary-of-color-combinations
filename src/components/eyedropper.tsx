@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Pipette } from "lucide-react";
 import { copyText } from "./copy-button";
+import { useTranslation } from "@/i18n/client";
 import { hexToLab, inkOn, hexToRgb } from "@/lib/color";
 
 /* ------------------------------------------------------------------ */
@@ -128,20 +129,21 @@ function loadNearest() {
 /** Sidebar row, matching the Saved / Fold rows. */
 export function EyedropperToggle() {
   const on = useEyedropper();
+  const { t } = useTranslation();
   return (
     <button
       type="button"
       onClick={toggleEyedropper}
       aria-pressed={on}
       data-eyedropper-ignore
-      title="Eyedropper (I)"
+      title={t("eyedropper.title")}
       className={`flex h-11 items-center gap-3.5 px-[1.15rem] text-left text-sm transition-colors ${
         on ? "bg-sumi text-washi" : "text-sumi-soft hover:bg-washi-deep hover:text-sumi"
       }`}
     >
       <Pipette className="size-[1.15rem] shrink-0" strokeWidth={1.5} aria-hidden="true" />
       <span className="sb-label flex flex-1 justify-between">
-        Eyedropper <kbd className="font-data text-xs opacity-60">I</kbd>
+        {t("eyedropper.label")} <kbd className="font-data text-xs opacity-60">I</kbd>
       </span>
     </button>
   );
@@ -150,13 +152,14 @@ export function EyedropperToggle() {
 /** Icon-only button for the mobile top bar. */
 export function EyedropperIconToggle() {
   const on = useEyedropper();
+  const { t } = useTranslation();
   return (
     <button
       type="button"
       onClick={toggleEyedropper}
       aria-pressed={on}
       data-eyedropper-ignore
-      aria-label="Eyedropper"
+      aria-label={t("eyedropper.label")}
       className={`grid size-11 place-items-center transition-colors ${on ? "bg-sumi text-washi" : ""}`}
     >
       <Pipette className="size-5" strokeWidth={1.5} aria-hidden="true" />
@@ -173,6 +176,7 @@ const LOUPE = 72;
 /** Mounted once in the layout. Follows the pointer while the picker is on. */
 export function EyedropperLayer() {
   const on = useEyedropper();
+  const { t } = useTranslation();
   const layer = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ x: number; y: number; touch: boolean } | null>(null);
   const [hex, setHex] = useState<string | null>(null);
@@ -297,7 +301,7 @@ export function EyedropperLayer() {
         </div>
       )}
       <p className="absolute top-4 left-1/2 hidden -translate-x-1/2 bg-sumi px-3 py-1.5 text-xs text-washi md:block">
-        Click to copy · Esc to leave
+        {t("eyedropper.hint")}
       </p>
     </div>
   );

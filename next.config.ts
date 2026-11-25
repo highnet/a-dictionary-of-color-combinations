@@ -22,7 +22,10 @@ const nextConfig: NextConfig = {
     return [
       { source: "/combinations/:id(\\d)", destination: "/combinations/00:id", permanent: true },
       { source: "/combinations/:id(\\d\\d)", destination: "/combinations/0:id", permanent: true },
+      { source: "/ja/combinations/:id(\\d)", destination: "/ja/combinations/00:id", permanent: true },
+      { source: "/ja/combinations/:id(\\d\\d)", destination: "/ja/combinations/0:id", permanent: true },
       { source: "/colors/:path*", destination: "/colours/:path*", permanent: true },
+      { source: "/ja/colors/:path*", destination: "/ja/colours/:path*", permanent: true },
     ];
   },
 };

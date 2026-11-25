@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/i18n/link";
 import { COLOURS, GROUPS } from "@/lib/dictionary";
 
 /** All 159 colours by family, each linking to its page. */

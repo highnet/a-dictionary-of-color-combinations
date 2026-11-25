@@ -4,6 +4,7 @@ import { useSyncExternalStore } from "react";
 import { Moon, Sun } from "lucide-react";
 
 import { THEME_KEY } from "@/lib/boot";
+import { useTranslation } from "@/i18n/client";
 
 const listeners = new Set<() => void>();
 
@@ -40,18 +41,19 @@ function toggleTheme() {
 /** Sidebar row, matching the Saved / Fold rows. */
 export function ThemeToggle() {
   const dark = useDark();
+  const { t } = useTranslation();
   const Icon = dark ? Sun : Moon;
   return (
     <button
       type="button"
       onClick={toggleTheme}
       data-eyedropper-ignore
-      aria-label={dark ? "Switch to the light theme" : "Switch to the dark theme"}
-      title={dark ? "Light theme" : "Dark theme"}
+      aria-label={dark ? t("theme.toLight") : t("theme.toDark")}
+      title={dark ? t("theme.lightTitle") : t("theme.darkTitle")}
       className="flex h-11 items-center gap-3.5 px-[1.15rem] text-left text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi"
     >
       <Icon className="size-[1.15rem] shrink-0" strokeWidth={1.5} aria-hidden="true" />
-      <span className="sb-label">{dark ? "Light paper" : "Night ink"}</span>
+      <span className="sb-label">{dark ? t("theme.light") : t("theme.dark")}</span>
     </button>
   );
 }
@@ -59,13 +61,14 @@ export function ThemeToggle() {
 /** Icon-only button for the mobile top bar. */
 export function ThemeIconToggle() {
   const dark = useDark();
+  const { t } = useTranslation();
   const Icon = dark ? Sun : Moon;
   return (
     <button
       type="button"
       onClick={toggleTheme}
       data-eyedropper-ignore
-      aria-label={dark ? "Switch to the light theme" : "Switch to the dark theme"}
+      aria-label={dark ? t("theme.toLight") : t("theme.toDark")}
       className="grid size-11 place-items-center"
     >
       <Icon className="size-5" strokeWidth={1.5} aria-hidden="true" />

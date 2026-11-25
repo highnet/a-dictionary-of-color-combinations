@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import Link from "next/link";
+import Link from "@/i18n/link";
+import { getT } from "@/i18n/server";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,11 +14,12 @@ import { JsonLd } from "./json-ld";
 export type Crumb = { href: string; label: string };
 
 /** Breadcrumb trail + BreadcrumbList structured data. Last crumb is the current page. */
-export function Crumbs({ items, className }: { items: Crumb[]; className?: string }) {
-  const all = [{ href: "/", label: "Home" }, ...items];
+export async function Crumbs({ items, className }: { items: Crumb[]; className?: string }) {
+  const { t, href } = await getT();
+  const all = [{ href: "/", label: t("nav.home") }, ...items];
   return (
     <>
-      <Breadcrumb className={className}>
+      <Breadcrumb className={className} aria-label={t("nav.breadcrumb")}>
         <BreadcrumbList className="text-[0.8rem] text-sumi-soft">
           {all.map((c, i) => {
             const last = i === all.length - 1;
@@ -46,7 +48,7 @@ export function Crumbs({ items, className }: { items: Crumb[]; className?: strin
             "@type": "ListItem",
             position: i + 1,
             name: c.label,
-            item: `${SITE.url}${c.href}`,
+            item: `${SITE.url}${href(c.href)}`,
           })),
         }}
       />

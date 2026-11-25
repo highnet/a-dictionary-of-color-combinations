@@ -3,8 +3,10 @@
 import type { ReactNode } from "react";
 
 import { SIDEBAR_KEY } from "@/lib/boot";
+import { useTranslation } from "@/i18n/client";
 
 export function SidebarToggle({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   function toggle(e: React.MouseEvent<HTMLButtonElement>) {
     const root = document.documentElement;
     const collapsed = root.dataset.sidebar !== "collapsed";
@@ -20,11 +22,11 @@ export function SidebarToggle({ children }: { children: ReactNode }) {
       type="button"
       onClick={toggle}
       aria-controls="sidebar"
-      aria-label="Collapse or expand the sidebar"
+      aria-label={t("shell.foldSidebarLabel")}
       className="flex h-11 items-center gap-3.5 px-[1.15rem] text-left text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi"
     >
       {children}
-      <span className="sb-label">Fold the sidebar</span>
+      <span className="sb-label">{t("shell.foldSidebar")}</span>
     </button>
   );
 }

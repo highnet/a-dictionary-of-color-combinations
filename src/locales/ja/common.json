@@ -1,0 +1,91 @@
+{
+  "site": {
+    "name": "配色総鑑",
+    "short": "和田三造 · 配色",
+    "titleDefault": "配色総鑑 — 和田三造の348の配色",
+    "description": "和田三造が1933〜34年に編んだ348の配色を、原典の順序のまま収録。HEX・RGB・CMYKの値をコピー・書き出しできます。",
+    "homeLabel": "ホーム — 配色総鑑",
+    "titleLine1": "和田三造",
+    "titleLine2": "配色総鑑"
+  },
+  "shell": {
+    "skip": "本文へ移動",
+    "openMenu": "メニューを開く",
+    "menu": "メニュー",
+    "nColours": "{{count}}色",
+    "chapters": "章",
+    "savedCombinations": "保存した配色",
+    "saved": "保存",
+    "foldSidebar": "サイドバーを畳む",
+    "foldSidebarLabel": "サイドバーを畳む・広げる",
+    "language": "言語",
+    "switchTo": "Read in English"
+  },
+  "nav": {
+    "home": "ホーム",
+    "explore": "探す",
+    "combinations": "全配色",
+    "colours": "色から探す",
+    "wada": "和田三造",
+    "about": "このサイトについて",
+    "agents": "エージェント向け",
+    "compare": "比べる",
+    "sitemap": "サイトマップ",
+    "aboutSources": "出典と方法",
+    "primary": "メイン",
+    "footer": "フッター",
+    "breadcrumb": "パンくずリスト"
+  },
+  "chapter": {
+    "2": "二色配色",
+    "3": "三色配色",
+    "4": "四色配色"
+  },
+  "groups": {
+    "0": "赤・赤紫",
+    "1": "黄赤・黄",
+    "2": "黄緑・緑",
+    "3": "青緑・青",
+    "4": "青紫・紫",
+    "5": "無彩色"
+  },
+  "footer": {
+    "line1": "和田の色",
+    "line2": "順はそのまま",
+    "line3": "君の筆",
+    "credit": "配色は和田三造（1883–1967）による。初出は『<i>配色總鑑</i>』（1933–34年）。",
+    "data": "色データ：DesLauriers（Kimの成果に基づく、MITライセンス）。",
+    "worksCited": "引用文献",
+    "independent": "個人による独立したプロジェクトであり、出版社とは関係ありません。",
+    "haikuLabel": "俳句"
+  },
+  "theme": {
+    "toLight": "ライトテーマに切り替える",
+    "toDark": "ダークテーマに切り替える",
+    "lightTitle": "ライトテーマ",
+    "darkTitle": "ダークテーマ",
+    "light": "和紙の白",
+    "dark": "墨の夜"
+  },
+  "eyedropper": {
+    "label": "スポイト",
+    "title": "スポイト（I）",
+    "hint": "クリックでコピー · Escで終了"
+  },
+  "copy": {
+    "copied": "{{label}}をコピーしました",
+    "failed": "コピーできませんでした。値を選択して手動でコピーしてください。",
+    "aria": "{{label}}をコピー",
+    "action": "コピー"
+  },
+  "notFound": {
+    "title": "ここには何もありません。",
+    "body": "一度退いて、よりよい場所を選びましょう。",
+    "metaTitle": "ページが見つかりません"
+  },
+  "cite": {
+    "mla": "MLA形式（第9版）。",
+    "mlaLong": "MLA形式（第9版）による。",
+    "worksCited": "引用文献"
+  }
+}

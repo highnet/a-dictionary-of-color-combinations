@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/i18n/link";
 import type { Palette } from "@/lib/dictionary";
 
 type Density = "compact" | "expanded";
