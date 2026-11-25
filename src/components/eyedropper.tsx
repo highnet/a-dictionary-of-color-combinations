@@ -148,7 +148,7 @@ export function EyedropperToggle() {
       aria-pressed={on}
       data-eyedropper-ignore
       title={t("eyedropper.title")}
-      className={`flex h-11 items-center gap-3.5 px-[1.15rem] text-left text-sm transition-colors ${
+      className={`sb-row flex items-center gap-3.5 px-[0.9rem] text-left text-sm transition-colors ${
         on ? "bg-sumi text-washi" : "text-sumi-soft hover:bg-washi-deep hover:text-sumi"
       }`}
     >

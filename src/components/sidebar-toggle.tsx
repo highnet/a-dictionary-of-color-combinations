@@ -23,7 +23,7 @@ export function SidebarToggle({ children }: { children: ReactNode }) {
       onClick={toggle}
       aria-controls="sidebar"
       aria-label={t("shell.foldSidebarLabel")}
-      className="flex h-11 items-center gap-3.5 px-[1.15rem] text-left text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi"
+      className="sb-row flex items-center gap-3.5 px-[0.9rem] text-left text-sm text-sumi-soft transition-colors hover:bg-washi-deep hover:text-sumi"
     >
       {children}
       <span className="sb-label">{t("shell.foldSidebar")}</span>

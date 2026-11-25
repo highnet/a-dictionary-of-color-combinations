@@ -22,7 +22,7 @@ const CHAPTERS = [
 export async function Sidebar() {
   const { t } = await getT();
   return (
-    <aside id="sidebar" className="sticky top-0 hidden h-dvh flex-col border-r border-rule lg:flex">
+    <aside id="sidebar" className="sticky top-0 hidden h-dvh flex-col overflow-x-hidden overflow-y-auto overscroll-contain border-r border-rule lg:flex">
       <div className="flex h-16 items-center gap-3 px-3.5">
         <Link href="/" className="flex min-w-0 items-center gap-3" aria-label={t("site.homeLabel")}>
           <LogoMark className="size-9 shrink-0" />
@@ -34,7 +34,7 @@ export async function Sidebar() {
         </Link>
       </div>
 
-      <nav aria-label={t("nav.primary")} className="mt-6 flex flex-col">
+      <nav aria-label={t("nav.primary")} className="sb-nav mt-6 flex flex-col">
         {NAV.map((item) => {
           const Icon = ICONS[item.icon];
           return (
@@ -45,7 +45,7 @@ export async function Sidebar() {
         })}
       </nav>
 
-      <div className="sb-hide mt-10 px-5">
+      <div className="sb-hide sb-chapters mt-10 px-5">
         <p className="text-xs tracking-wide text-sumi-soft">{t("shell.chapters")}</p>
         <ul className="mt-3 space-y-2.5">
           {CHAPTERS.map((c) => (
@@ -59,7 +59,7 @@ export async function Sidebar() {
         </ul>
       </div>
 
-      <div className="mt-auto flex flex-col gap-1 border-t border-rule p-2">
+      <div className="sb-tools mt-auto flex flex-col gap-0.5 border-t border-rule p-2 pt-3">
         <EyedropperToggle />
         <ThemeToggle />
         <LanguageSwitch />
