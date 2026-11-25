@@ -26,6 +26,15 @@ export function toggleEyedropper() {
   setActive(!active);
 }
 
+/**
+ * From a toggle button: turn the picker on or off and let go of focus, so
+ * Enter picks a colour instead of pressing the toggle again.
+ */
+function toggleFromButton(e: React.MouseEvent<HTMLButtonElement>) {
+  toggleEyedropper();
+  e.currentTarget.blur();
+}
+
 function useEyedropper() {
   return useSyncExternalStore(
     (l) => {
@@ -139,8 +148,52 @@ type Sampler = (x: number, y: number) => string | null;
  * A sampler for one frame. Computed styles are cached per element, so the
  * magnifier's 121 points cost little more than one.
  */
-function makeSampler(skip: (el: Element) => boolean, mode: "fill" | "text"): Sampler {
+/** A viewport rectangle the sampler will be asked about, so canvases can be read once. */
+interface Region {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+}
+
+/**
+ * Read a canvas over a viewport region in one getImageData call (one GPU
+ * readback), and answer points inside it from that copy.
+ */
+function canvasReader(el: HTMLCanvasElement, region: Region) {
+  try {
+    const ctx = el.getContext("2d");
+    if (!ctx) return null;
+    const r = el.getBoundingClientRect();
+    const sx = el.width / r.width;
+    const sy = el.height / r.height;
+    const px0 = Math.max(0, Math.floor((region.x0 - r.left) * sx));
+    const py0 = Math.max(0, Math.floor((region.y0 - r.top) * sy));
+    const px1 = Math.min(el.width, Math.ceil((region.x1 - r.left) * sx) + 1);
+    const py1 = Math.min(el.height, Math.ceil((region.y1 - r.top) * sy) + 1);
+    if (px1 <= px0 || py1 <= py0) return () => null;
+    const data = ctx.getImageData(px0, py0, px1 - px0, py1 - py0);
+    return (x: number, y: number): string | null => {
+      const px = Math.floor((x - r.left) * sx) - px0;
+      const py = Math.floor((y - r.top) * sy) - py0;
+      if (px < 0 || py < 0 || px >= data.width || py >= data.height) return fromCanvas(el, x, y);
+      const i = (py * data.width + px) * 4;
+      return data.data[i + 3] === 0 ? null : rgbHex(data.data[i], data.data[i + 1], data.data[i + 2]);
+    };
+  } catch {
+    return null; // tainted or not a 2D canvas
+  }
+}
+
+function makeSampler(skip: (el: Element) => boolean, mode: "fill" | "text", region?: Region): Sampler {
   const cache = new Map<Element, string | null>();
+  const canvases = new Map<HTMLCanvasElement, ((x: number, y: number) => string | null) | null>();
+  const readCanvas = (el: HTMLCanvasElement, x: number, y: number) => {
+    if (!region) return fromCanvas(el, x, y);
+    if (!canvases.has(el)) canvases.set(el, canvasReader(el, region));
+    const read = canvases.get(el);
+    return read ? read(x, y) : null;
+  };
   const fill = (el: Element) => {
     if (!cache.has(el)) {
       const style = getComputedStyle(el);
@@ -157,7 +210,7 @@ function makeSampler(skip: (el: Element) => boolean, mode: "fill" | "text"): Sam
     for (const el of document.elementsFromPoint(x, y)) {
       if (skip(el)) continue;
       if (el instanceof HTMLCanvasElement) {
-        const hex = fromCanvas(el, x, y);
+        const hex = readCanvas(el, x, y);
         if (hex) return hex;
         continue;
       }
@@ -266,7 +319,7 @@ export function EyedropperToggle() {
   return (
     <button
       type="button"
-      onClick={toggleEyedropper}
+      onClick={toggleFromButton}
       aria-pressed={on}
       data-eyedropper-ignore
       title={t("eyedropper.title")}
@@ -289,7 +342,7 @@ export function EyedropperIconToggle() {
   return (
     <button
       type="button"
-      onClick={toggleEyedropper}
+      onClick={toggleFromButton}
       aria-pressed={on}
       data-eyedropper-ignore
       aria-label={t("eyedropper.label")}
@@ -453,7 +506,13 @@ export function EyedropperLayer() {
     const sample = () => {
       frame = 0;
       if (last.x < 0) return;
-      const fill = makeSampler(skip, "fill");
+      const reach = ((GRID - 1) / 2) * STEP;
+      const fill = makeSampler(skip, "fill", {
+        x0: last.x - reach,
+        y0: last.y - reach,
+        x1: last.x + reach,
+        y1: last.y + reach,
+      });
       const h = textMode ? makeSampler(skip, "text")(last.x, last.y) : fill(last.x, last.y);
       setPos(last);
       setHex(h);
@@ -535,7 +594,7 @@ export function EyedropperLayer() {
         if (last.x < 0) last = { x: window.innerWidth / 2, y: window.innerHeight / 2, touch: false };
         last = { ...last, x: last.x + move[0], y: last.y + move[1] };
         schedule();
-      } else if (e.key === "Enter" && last.x >= 0 && !el?.closest("button, a")) {
+      } else if (e.key === "Enter" && last.x >= 0 && !(el && tray.current?.contains(el))) {
         e.preventDefault();
         const h = makeSampler(skip, textMode ? "text" : "fill")(last.x, last.y);
         if (h) pick(h);

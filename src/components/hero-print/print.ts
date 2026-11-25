@@ -57,8 +57,8 @@ export function plateCurve(k: number, n: number, w: number, h: number, t: number
 /** Closed SVG path of plate k (curve plus the sheet below it). */
 export function platePath(k: number, n: number, w: number, h: number, t: number, lift = 0) {
   const pts = plateCurve(k, n, w, h, t, lift);
-  const parts = [`M${pts[0][0].toFixed(1)},${h + 2}`];
+  const parts = [`M${pts[0][0].toFixed(1)},${(h * 1.1).toFixed(1)}`];
   for (const [x, y] of pts) parts.push(`L${x.toFixed(1)},${y.toFixed(1)}`);
-  parts.push(`L${pts[pts.length - 1][0].toFixed(1)},${h + 2}Z`);
+  parts.push(`L${pts[pts.length - 1][0].toFixed(1)},${(h * 1.1).toFixed(1)}Z`);
   return parts.join("");
 }

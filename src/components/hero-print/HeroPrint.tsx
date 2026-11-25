@@ -24,6 +24,9 @@ interface Ink {
 
 const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - (-2 * x + 2) ** 3 / 2);
 
+/** Where the new ink's leading edge is, as a fraction of the sheet's width, at pass progress p. */
+const sweepFront = (p: number) => -0.12 + easeInOut(Math.min(1, Math.max(0, p) / 0.8)) * 1.3;
+
 /** Lift through a pass: up as the ink goes on, then down into register with a small overshoot. */
 function liftAt(p: number) {
   if (p <= 0 || p >= 1) return 0;
@@ -70,8 +73,9 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
       const colors = plates[i].colors;
       inks.current = colors.map((c, k) => {
         const prev = inks.current[k];
-        // Start from whatever is showing now, even mid-pass, so a quick "next" never jumps.
-        const showing = !prev ? c.hex : now - prev.start >= PASS_MS * 0.55 ? prev.to : prev.from;
+        // Start from whatever covers most of the plate now, even mid-pass: the new ink
+        // once its leading edge has passed the crest (near the middle), else the old.
+        const showing = !prev ? c.hex : sweepFront((now - prev.start) / PASS_MS) >= 0.5 ? prev.to : prev.from;
         return { from: showing, to: c.hex, start: now + k * STAGGER_MS };
       });
     },
@@ -134,9 +138,9 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
         const p = reduced ? 1 : Math.min(1, Math.max(0, (now - ink.start) / PASS_MS));
         const pts = plateCurve(k, n, w, h, t, liftAt(p));
         const plate = new Path2D();
-        plate.moveTo(pts[0][0], h + 2);
+        plate.moveTo(pts[0][0], h * 1.1); // well below the sheet, so parallax never lifts it into view
         for (const [x, y] of pts) plate.lineTo(x, y);
-        plate.lineTo(pts[pts.length - 1][0], h + 2);
+        plate.lineTo(pts[pts.length - 1][0], h * 1.1);
         plate.closePath();
 
         const depth = plateDepth(k, n);
@@ -150,7 +154,7 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
           // slightly wet leading edge, over the old ink.
           ctx.fillStyle = ink.from;
           ctx.fill(plate);
-          const front = -0.12 * w + easeInOut(Math.min(1, p / 0.8)) * 1.3 * w;
+          const front = sweepFront(p) * w;
           const edge = new Path2D();
           edge.moveTo(-w, -h);
           for (let y = -h * 0.1; y <= h * 1.1; y += 6) {
@@ -234,13 +238,15 @@ export function HeroPrint({ plates }: { plates: PrintPlate[] }) {
             </svg>
           ) : null}
           <canvas ref={canvas} aria-hidden="true" className="absolute inset-0 size-full" />
+          {/* The link stays mounted (keyboard focus survives a change); only its number re-enters. */}
           <Link
-            key={current.code}
             href={`/combinations/${current.code}`}
-            className="print-in cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
+            className="cartouche absolute top-4 right-4 z-10 text-lg transition-transform hover:-translate-y-0.5 md:text-xl"
             aria-label={t("print.open", { code: current.code })}
           >
-            {current.code}
+            <span key={current.code} className="print-in block">
+              {current.code}
+            </span>
           </Link>
         </div>
       </div>
