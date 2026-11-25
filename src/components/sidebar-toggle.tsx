@@ -2,10 +2,7 @@
 
 import type { ReactNode } from "react";
 
-export const SIDEBAR_KEY = "dcc:sidebar";
-
-/** Runs before paint (inlined in <head>) so the rail never flashes open. */
-export const sidebarBootScript = `try{if(localStorage.getItem("${SIDEBAR_KEY}")==="collapsed")document.documentElement.dataset.sidebar="collapsed"}catch(e){}`;
+import { SIDEBAR_KEY } from "@/lib/boot";
 
 export function SidebarToggle({ children }: { children: ReactNode }) {
   function toggle(e: React.MouseEvent<HTMLButtonElement>) {

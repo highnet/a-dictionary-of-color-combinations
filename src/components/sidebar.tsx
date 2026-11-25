@@ -5,6 +5,7 @@ import { NavLink } from "./nav-link";
 import { SidebarToggle } from "./sidebar-toggle";
 import { SavedCount } from "./saved-count";
 import { EyedropperToggle } from "./eyedropper";
+import { ThemeToggle } from "./theme-toggle";
 import { NAV } from "@/lib/site";
 
 const ICONS = { compass: Compass, grid: Grid3x3, pipette: Search, info: Info, bot: Bot, brush: Brush } as const;
@@ -60,6 +61,7 @@ export function Sidebar() {
 
       <div className="mt-auto flex flex-col gap-1 border-t border-rule p-2">
         <EyedropperToggle />
+        <ThemeToggle />
         <SavedCount />
         <SidebarToggle>
           <PanelLeftClose className="sb-collapse-icon size-[1.15rem] shrink-0 transition-transform" strokeWidth={1.5} aria-hidden="true" />

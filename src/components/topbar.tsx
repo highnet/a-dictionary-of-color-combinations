@@ -9,6 +9,7 @@ import { NavLink } from "./nav-link";
 import { NAV } from "@/lib/site";
 import { useFavourites } from "@/lib/favourites";
 import { EyedropperIconToggle } from "./eyedropper";
+import { ThemeIconToggle } from "./theme-toggle";
 
 /** Mobile/tablet bar with a hamburger drawer. Hidden on desktop. */
 export function Topbar() {
@@ -21,6 +22,7 @@ export function Topbar() {
         <span className="font-display text-[0.95rem] font-semibold">Wada · Colour</span>
       </Link>
       <div className="flex items-center">
+      <ThemeIconToggle />
       <EyedropperIconToggle />
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger

@@ -90,6 +90,35 @@
   --fibre: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .18 0 0 0 0 .15 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
 }
 
+
+/*
+ * Night: sumi becomes the ground and washi the ink. Swatches never change.
+ * Follows the system unless the reader picks a theme (html[data-theme]).
+ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --washi: oklch(0.205 0.007 65);
+  --washi-deep: oklch(0.245 0.008 65);
+  --sumi: oklch(0.925 0.006 110);
+  --sumi-soft: oklch(0.74 0.01 90);
+  --shu: oklch(0.6 0.17 33);
+  --fibre: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --washi: oklch(0.205 0.007 65);
+    --washi-deep: oklch(0.245 0.008 65);
+    --sumi: oklch(0.925 0.006 110);
+    --sumi-soft: oklch(0.74 0.01 90);
+    --shu: oklch(0.6 0.17 33);
+    --fibre: none;
+  }
+}
+:root {
+  color-scheme: light;
+}
+
 :root[data-sidebar="collapsed"] {
   --sb-w: var(--sb-rail);
 }
@@ -176,10 +205,21 @@
 
   /* Night interlude grounds. */
   .ground-sumi {
+    /* Always a night ground: in the dark theme it is simply a deeper ink. */
     background-color: var(--sumi);
     color: var(--washi);
     --rule: color-mix(in oklch, var(--washi) 24%, transparent);
     --sumi-soft: oklch(0.8 0.01 80);
+  }
+  :root[data-theme="dark"] .ground-sumi {
+    --sumi: oklch(0.15 0.006 65);
+    --washi: oklch(0.925 0.006 110);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .ground-sumi {
+      --sumi: oklch(0.15 0.006 65);
+      --washi: oklch(0.925 0.006 110);
+    }
   }
   .ground-deep {
     background-color: var(--washi-deep);
@@ -287,6 +327,15 @@
   }
   .dojo-floor[data-ready] {
     opacity: 0.1;
+  }
+  /* The floor is drawn for paper; at night, invert it into the dark. */
+  :root[data-theme="dark"] .dojo-floor canvas {
+    filter: invert(1) hue-rotate(180deg);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .dojo-floor canvas {
+      filter: invert(1) hue-rotate(180deg);
+    }
   }
   .dojo-floor canvas {
     display: block;

@@ -3,7 +3,7 @@ import { Martian_Mono, Shippori_Mincho_B1, Zen_Kaku_Gothic_New } from "next/font
 import { Sidebar } from "@/components/sidebar";
 import { Topbar } from "@/components/topbar";
 import { SiteFooter } from "@/components/site-footer";
-import { sidebarBootScript } from "@/components/sidebar-toggle";
+import { bootScript } from "@/lib/boot";
 import { DojoFloor } from "@/components/dojo-floor";
 import { EyedropperLayer } from "@/components/eyedropper";
 import { Toaster } from "@/components/ui/sonner";
@@ -69,8 +69,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#eceee8",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#eceee8" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c1a18" },
+  ],
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -81,7 +84,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: sidebarBootScript }} />
+        <script dangerouslySetInnerHTML={{ __html: bootScript }} />
       </head>
       <body>
         <a
