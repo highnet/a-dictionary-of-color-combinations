@@ -402,6 +402,17 @@
     font-size: min(calc(var(--koma-w) * 0.26), calc(var(--koma-w) * 0.8 / var(--koma-chars)));
   }
 
+  /* The hero print's labels arrive with each new combination, as its plates are inked. */
+  .print-in {
+    animation: print-in 0.7s var(--ease-out-expo) both;
+  }
+  @keyframes print-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.4rem);
+    }
+  }
+
   /* Tatami floor behind every page: decorative, barely there. */
   .dojo-floor {
     position: fixed;
